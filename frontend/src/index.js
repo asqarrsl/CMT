@@ -1,12 +1,17 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Footer from "./Components/Footer";
+import Header from "./Components/header";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Header />
+      <App />
+    <Footer />
   </React.StrictMode>,
   document.getElementById('root')
 );
