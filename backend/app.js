@@ -21,20 +21,13 @@ const reviewsRoutes = require('./routes/reviews');
 const helmet = require('helmet')
 
 const dbUrl = process.env.DB_URL;
-const dbUrldev ='mongodb://localhost:27017/yelp-camp';
 
-mongoose.connect(dbUrldev,{
+mongoose.connect(dbUrl,{
     useNewUrlParser:true,
     useCreateIndex:true,
     useUnifiedTopology:true,
     useFindAndModify:false
 });
-// mongoose.connect(dbUrl,{
-//     useNewUrlParser:true,
-//     useCreateIndex:true,
-//     useUnifiedTopology:true,
-//     useFindAndModify:false
-// });
 
 const db = mongoose.connection;
 db.on("error",console.error.bind(console,"connection error"));
