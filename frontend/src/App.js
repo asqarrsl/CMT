@@ -12,8 +12,8 @@ const App = (props) =>{
             <NavBar />
             <Router>
                 <Switch>
-                    <Route path="/" component={LandingPage}  exact/>   
-                    <Route path="/payment" component={Payment}  exact/>   
+                    <Route path="/" component={LandingPage}  />
+                    <Route path="/payment" component={Payment} />
                     {/* <Route path="/" component={LandingPage}  exact/>    */}
                 </Switch>
             </Router>
