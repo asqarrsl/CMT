@@ -18,6 +18,9 @@ import EventIndex from './Admin/Views/Event';
 import EditMaterial from './Admin/Views/Material/Edit';
 import AddMaterial from './Admin/Views/Material/Add';
 import MaterialIndex from './Admin/Views/Material';
+import Login from "./User/Views/LoginPage/Login";
+import Register from "./User/Views/RegisterPage/Register";
+import UserProfile from "./User/Views/UserProfilePage/UserProfile";
 
 const App = (props) =>{
     return(
@@ -46,6 +49,10 @@ const App = (props) =>{
                             <Switch>
                                 <Route path='/' exact component={LandingPage} />
                                 <Route path='/payment' component={Payment} />
+                                  <Route path="/payment" component={Payment} />
+                                  <Route path="/login" component={Login} />
+                                  <Route path="/register" component={Register} />
+                                  <Route path="/userprofile" component={UserProfile} />
                             </Switch>
                         </Main>
                     </Route>
