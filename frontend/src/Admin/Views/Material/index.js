@@ -1,27 +1,30 @@
 import React from 'react'
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 
-const AddConference = () =>{
+const MaterialIndex = () =>{
     var titles = [
         {
             name : 'Admin',
             link : '/admin'
         },
         {
-            name : 'Conference',
-            link : '/conference'
-        },
-        {
-            name : 'Add Conference',
-            link : '/add'
+            name : 'Material',
+            link : '/material'
         }
     ]
         
     return(
         <>
-            <Breadcrumb titles={titles} />
+            <div className="row">
+                <div className="col-md-6">
+                    <Breadcrumb titles={titles} />
+                </div>
+                <div className="col-md-6 text-end">
+                    <a className="btn btn-primary" href="/admin/material/add">Add Paper</a>
+                </div>
+            </div>
             <hr />
-            <div className="fs-4">All Papers</div>
+            <div className="fs-4">All Material</div>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -56,4 +59,4 @@ const AddConference = () =>{
 
 }
 
-export default AddConference;
+export default MaterialIndex;

@@ -10,18 +10,14 @@ const SideBar = ({children}) => {
                         <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                             <SidebarTab  link="/admin" title="Dashboard" iconclass="fs-4 bi-house"/>
                             <SidebarTab  link="/admin/user" title="User" iconclass="fs-4 bi-house"/>
-                            <SidebarTab  link="#Events" data-bs-toggle="collapse" title="Events" iconclass="fs-4 bi-house">
-                                <ul className="collapse nav flex-column ms-1" id="Events" data-bs-parent="#menu">
-                                    <SidebarTab  link="/admin/conference" title="Conference" iconclass="fs-4 bi-house"/>
-                                    <SidebarTab  link="/admin/workshop" title="Workshop" iconclass="fs-4 bi-house"/>
-                                </ul>
-                            </SidebarTab>
-                            <SidebarTab  link="#Material" data-bs-toggle="collapse" title="Material" iconclass="fs-4 bi-house">
+                            <SidebarTab  link="/admin/event" title="Event" iconclass="fs-4 bi-house"/>
+                            <SidebarTab  link="/admin/material" title="Material" iconclass="fs-4 bi-house"/>
+                            {/* <SidebarTab  link="#Material" data-bs-toggle="collapse" title="Material" iconclass="fs-4 bi-house">
                                 <ul className="collapse nav flex-column ms-1" id="Material" data-bs-parent="#menu">
                                     <SidebarTab  link="/admin/researchmaterial" title="Research Material" iconclass="fs-4 bi-house"/>
                                     <SidebarTab  link="/admin/workshopmaterial" title="Workshop Material" iconclass="fs-4 bi-house"/>
                                 </ul>
-                            </SidebarTab>                                                       
+                            </SidebarTab>                                                        */}
                         </ul>
                     </div>
                 </div>
