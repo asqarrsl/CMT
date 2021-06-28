@@ -1,5 +1,7 @@
-import React from 'react'
+import React ,{useEffect,useState} from 'react'
+import axios from 'axios';
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
+import EventDataTable from './EventDataTable';
 
 const EventIndex = () =>{
     var titles = [
@@ -12,6 +14,15 @@ const EventIndex = () =>{
             link : '/event'
         }
     ]
+    const [events,setEvents] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/event')
+        .then(response=>{
+            console.log(response.data);
+            setEvents(response.data.events);
+        })
+    },[])
         
     return(
         <>
@@ -25,34 +36,18 @@ const EventIndex = () =>{
             </div>
             <hr />
             <div className="fs-4">All Event</div>
-            <table class="table table-striped table-hover">
+            <table className="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Event Name</th>
+                        <th scope="col">Event Type</th>
+                        <th scope="col">Venue</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                </tbody>
+                <EventDataTable data={events} />
             </table>
         </>
     );

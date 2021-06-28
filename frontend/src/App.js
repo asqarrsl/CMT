@@ -6,7 +6,7 @@ import Footer from './User/Components/Footer/Footer'
 import './App.css'
 import Payment from './User/Views/Payment/Payment';
 import Dashboard from './Admin/Views/Dashboard/Dashboard';
-import AdminRoute from './Admin/AdminRoute'
+import AdminRoute from './Admin/AdminRoute';
 import MainAdmin from './Admin/Components/Layout/MainAdmin';
 import Main from './User/Components/Layout/Main';
 import UserIndex from './Admin/Views/User';
