@@ -3,7 +3,7 @@ import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bs-stepper/dist/css/bs-stepper.min.css";
-import Stepper from "bs-stepper";
+import Step from "../../Components/Stepper/step";
 
 const Register = () => {
   const [step, setStep] = useState(0);
@@ -26,28 +26,23 @@ const Register = () => {
     <div>
       <div id="stepper1" class="bs-stepper">
         <div class="bs-stepper-header">
-          <div class="step">
-            <button class="step-trigger" styles={{ color: "blue" }}>
-              <span class="bs-stepper-circle" />
-              <span class="bs-stepper-label" styles={{ color: "blue" }}>
-                Account Data
-              </span>
-            </button>
-          </div>
+          {step == 0 ? (
+            <Step title="Account Data" dis="false" />
+          ) : (
+            <Step title="Account Data" dis="true" />
+          )}
           <div class="line"></div>
-          <div class="step">
-            <button class="step-trigger" disabled>
-              <span class="bs-stepper-circle" />
-              <span class="bs-stepper-label">User Data</span>
-            </button>
-          </div>
+          {step == 1 ? (
+            <Step title="User Data" dis="false" />
+          ) : (
+            <Step title="User Data" dis="true" />
+          )}
           <div class="line"></div>
-          <div class="step">
-            <button class="step-trigger" disabled>
-              <span class="bs-stepper-circle" />
-              <span class="bs-stepper-label">Confirmation</span>
-            </button>
-          </div>
+          {step == 2 ? (
+            <Step title="Confirmation" dis="false" />
+          ) : (
+            <Step title="Confirmation" dis="true" />
+          )}
         </div>
       </div>
       <div class="customCardOne" style={{ marginLeft: "70px" }}>
