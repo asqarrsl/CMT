@@ -4,6 +4,9 @@ const passport = require('passport');
 const userController = require('../controllers/user');
 const catchAsync = require('../utils/catchAsync');
 
+router.route('/')
+    .get(catchAsync(userController.index));
+    
 router.route('/register')
     .post(catchAsync(userController.register));
 

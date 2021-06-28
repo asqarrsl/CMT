@@ -27,7 +27,6 @@ const userSchema = new Schema({
     },
     participants:{
         type:String,
-        qualification:String,
         designation:String,
         affiliation:String,
         isPaid:String

@@ -8,7 +8,7 @@ module.exports.store = async (req,res)=>{
     campground.reviews.push(review);
     await review.save();
     await campground.save();
-    req.flash('success','Successfully added a Review');
+    // req.flash('success','Successfully added a Review');
     res.redirect(`/campgrounds/${campground._id}`);
 }
 
@@ -16,6 +16,6 @@ module.exports.delete = async (req,res)=>{
     const {id,reviewId} = req.params
     const campground = await Campground.findByIdAndUpdate(id, {$pull :{reviews:reviewId}});
     const review = await Review.findByIdAndDelete(reviewId);
-    req.flash('success','Successfully Deleted a Review!');
+    // req.flash('success','Successfully Deleted a Review!');
     res.redirect(`/campgrounds/${id}`);
 }

@@ -29,6 +29,7 @@ const materialSchema = new Schema ({
         required:true
     },
     tags :String,
+    description : String, 
     images:[imageSchema],
     type :{
         type:String,

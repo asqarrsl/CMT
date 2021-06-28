@@ -15,6 +15,7 @@ module.exports.index = async (req,res)=>{
 module.exports.store = async (req,res)=>{
     const materials = new Material(req.body.materials);
     materials.uid = req.user._id;
+    console.log(req);
     materials.document = req.files.map(f=>({url:f.path,filename:f.filename}));
     await materials.save();
     

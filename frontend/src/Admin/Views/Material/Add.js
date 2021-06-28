@@ -62,20 +62,20 @@ const AddMaterial = () =>{
                 <div className="card-body">
                     <h5 className="card-title">Add Material</h5>
                     <hr />
-                    <form>
+                    <form method="POST" onSubmit={onSubmit}>
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label for="name" className="form-label">Material Name</label>
+                                <label htmlFor="name" className="form-label">Material Name</label>
                                 <input 
                                     type="text"
                                     className="form-control" 
                                     name="name"
                                     id="name" 
-                                    onChange = {(e)=>Name(e.target.value)}
+                                    onChange = {(e)=>setName(e.target.value)}
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label for="eventId" className="form-label">Event</label>
+                                <label htmlFor="eventId" className="form-label">Event</label>
                                 <input 
                                     type="text"
                                     className="form-control" 
@@ -87,33 +87,33 @@ const AddMaterial = () =>{
                         </div>
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label for="type" className="form-label">Material Type</label>
+                                <label htmlFor="type" className="form-label">Material Type</label>
                                 <br />
-                                <div class="form-check form-check-inline">
+                                <div className="form-check form-check-inline">
                                     <input 
-                                        class="form-check-input"
+                                        className="form-check-input"
                                         type="radio" 
                                         name="type" 
                                         id="type1" 
                                         onChange = {(e)=>setType(e.target.value)}
                                         value="Workshop" 
                                     />
-                                    <label class="form-check-label" for="prole1">Workshop</label>
+                                    <label className="form-check-label" htmlFor="prole1">Workshop</label>
                                 </div>
-                                    <div class="form-check form-check-inline">
+                                    <div className="form-check form-check-inline">
                                     <input 
-                                        class="form-check-input"
+                                        className="form-check-input"
                                         type="radio" 
                                         name="type" 
                                         id="type2" 
                                         onChange = {(e)=>setType(e.target.value)}
                                         value="Research" 
                                     />
-                                    <label class="form-check-label" for="prole1">Research</label>
+                                    <label className="form-check-label" htmlFor="prole1">Research</label>
                                 </div>
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label for="tags" className="form-label">Tags</label>
+                                <label htmlFor="tags" className="form-label">Tags</label>
                                 <input 
                                     type="text"
                                     className="form-control" 
@@ -125,7 +125,7 @@ const AddMaterial = () =>{
                         </div>
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label for="images" className="form-label">Images</label>
+                                <label htmlFor="images" className="form-label">Images</label>
                                 <input 
                                     type="file"
                                     className="form-control" 
@@ -135,7 +135,7 @@ const AddMaterial = () =>{
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label for="document" className="form-label">Main Documnet</label>
+                                <label htmlFor="document" className="form-label">Main Documnet</label>
                                 <input 
                                     type="file"
                                     className="form-control" 
@@ -147,7 +147,7 @@ const AddMaterial = () =>{
                         </div>
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <label for="isPaid" className="form-label">isPaid</label>
+                                <label htmlFor="isPaid" className="form-label">isPaid</label>
                                 <input 
                                     type="text"
                                     className="form-control" 
@@ -157,7 +157,7 @@ const AddMaterial = () =>{
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label for="userId" className="form-label">userId</label>
+                                <label htmlFor="userId" className="form-label">userId</label>
                                 <input 
                                     type="text"
                                     className="form-control" 

@@ -17,15 +17,14 @@ const eventSchema = new Schema ({
     eventType : String, 
     venue : String,    
     mainImg : [imageSchema],
-    duration:[{
-        Date : Date,
-        StartTime : Date,
-        StopTime : Date
-    }],
-    presenterId : {
+    duration:{
+        From : Date,
+        To : Date
+    },
+    presenterId : [{
         type:Schema.Types.ObjectId,
         ref:'User'
-    },
+    }],
     editorId : {
         type:Schema.Types.ObjectId,
         ref:'User'
