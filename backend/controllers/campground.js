@@ -15,7 +15,7 @@ module.exports.store = async (req,res)=>{
     campground.author = req.user._id;
     await campground.save();
     
-    req.flash('success','Successfully made a new campground!');
+    // req.flash('success','Successfully made a new campground!');
     res.redirect(`/campgrounds/${campground._id}`);
 }
 module.exports.show = async (req,res)=>{
@@ -26,7 +26,7 @@ module.exports.show = async (req,res)=>{
         }
     }).populate('author');
     if(!campground){
-        req.flash('error',"Couldn't find that Campground!");
+        // req.flash('error',"Couldn't find that Campground!");
         return res.redirect(`/campgrounds`);
     }
     console.log(campground);
@@ -35,7 +35,7 @@ module.exports.show = async (req,res)=>{
 module.exports.edit = async (req,res)=>{  
     const campground = await Campground.findById(req.params.id);
     if(!campground){
-        req.flash('error',"Couldn't find that Campground!");
+        // req.flash('error',"Couldn't find that Campground!");
         return res.redirect(`/campgrounds`);
     }
     res.render('campgrounds/edit',{campground});
@@ -52,12 +52,12 @@ module.exports.update = async (req,res)=>{
         }
         await campground.updateOne({$pull:{images:{filename:{$in:req.body.deleteImages}}}});
     }
-    req.flash('success','Successfully Updated the campground!');
+    // req.flash('success','Successfully Updated the campground!');
     res.redirect(`/campgrounds/${campground._id}`);
 }
 module.exports.delete = async (req,res)=>{
     const {id} = req.params    
     const campground = await Campground.findByIdAndDelete(id);
-    req.flash('success','Successfully Deleted a campground!');
+    // req.flash('success','Successfully Deleted a campground!');
     res.redirect(`/campgrounds`);
 }
