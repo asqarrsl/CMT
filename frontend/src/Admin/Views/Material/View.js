@@ -7,7 +7,7 @@ const ViewMaterial = (props) =>{
     var titles = [
         {name : 'Admin',link : '/admin'},
         {name : 'Material',link : '/material'},
-        {name : 'Edit',link : '/edit'}
+        {name : 'View',link : '/view'}
     ]
     
     const [init, setinit] = useState(true)
@@ -145,7 +145,7 @@ const ViewMaterial = (props) =>{
             <hr />
             <div className="card">
                 <div className="card-body">
-                    <h5 className="card-title">Edit Material</h5>
+                    <h5 className="card-title">View Material</h5>
                     <hr />
                     <form method="POST" onSubmit={onSubmit}>
                         <div className="row">
@@ -255,6 +255,19 @@ const ViewMaterial = (props) =>{
                                 </select>
                             </div>
                             <div className="mb-3 col-md-6">
+                                <label htmlFor="userId" className="form-label">User</label>
+                                <Select 
+                                    options={useroptions}
+                                    className="basic-multi-select"
+                                    name="userId"
+                                    value={useroptions.find(op => {
+                                        return op.value === uid
+                                     })}
+                                     readOnly
+
+                                />
+                            </div>
+                            <div className="mb-3 col-md-6">
                                 <label htmlFor="isApproved" className="form-label">is Approved</label>
                                 <select 
                                     type="text"
@@ -269,18 +282,7 @@ const ViewMaterial = (props) =>{
                                     <option value="Declined">Declined</option>
                                 </select>
                             </div>
-                            <div className="mb-3 col-md-6">
-                                <label htmlFor="userId" className="form-label">User</label>
-                                <Select 
-                                    options={useroptions}
-                                    className="basic-multi-select"
-                                    name="userId"
-                                    value={useroptions.find(op => {
-                                        return op.value === uid
-                                     })}
-                                    onChange={(event)=>setUid(event.value)}
-                                />
-                            </div>
+                            
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
