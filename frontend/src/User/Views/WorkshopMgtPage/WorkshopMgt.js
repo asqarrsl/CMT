@@ -3,16 +3,66 @@ import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import Step from "../../Components/Stepper/step";
 import DatetimeRangePicker from "react-datetime-range-picker";
+import axios from "axios";
 
 const WorkshopMgt = () => {
-  const check = () => {
-    console.log("hey");
+  const [step, setStep] = useState(0);
+  const [presenterId, setPresenterId] = useState("");
+  const [formValid, setFormValid] = useState(false);
+  const [formError, setFormError] = useState(false);
+  const [error, setError] = useState(true);
+  const [init, setinit] = useState(true);
+
+  const [eventName, setEventName] = useState("");
+  const [description, setDescription] = useState("");
+  const [eventType, setEventType] = useState("Workshop");
+  const [venue, setVenue] = useState("");
+  const [mainImg, setMainImg] = useState();
+  const [From, setFrom] = useState("");
+  const [To, setTo] = useState("");
+  const [isApproved, setIsApproved] = useState("");
+
+  const [name, setName] = useState("");
+  const [tags, setTags] = useState("");
+  const [descrip, setDescrip] = useState("");
+  const [type, setType] = useState("Workshop");
+  const [document, setDocument] = useState("");
+  const [image, setImage] = useState("");
+
+  const checknull = (value) => {
+    if (value.trim() == null || value.trim() == "") {
+      return false;
+    } else {
+      return true;
+    }
   };
 
-  const [step, setStep] = useState(0);
-  let submit = (e) => {
-    e.preventDefault();
-    setStep(step + 1);
+  const checkstring = (value) => {
+    if (typeof value != "string") {
+      return false;
+    }
+  };
+
+  function validateEmail(value) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(value).toLowerCase());
+  }
+
+  const onValidate = () => {
+    if (
+      checknull(eventName) &&
+      checknull(description) &&
+      checknull(eventType) &&
+      checknull(venue) &&
+      checknull(mainImg) &&
+      checknull(From) &&
+      checknull(To)
+    ) {
+      setFormValid(true);
+    } else {
+      setFormValid(false);
+    }
   };
 
   let reset = (e) => {
@@ -22,7 +72,60 @@ const WorkshopMgt = () => {
 
   let done = (e) => {
     e.preventDefault();
-    console.log(done);
+    setStep(0);
+    //navigate
+  };
+
+  let submitEvent = (e) => {
+    e.preventDefault();
+    setStep(step + 1);
+
+    setinit(false);
+    onValidate();
+    if (1) {
+      // if(formValid){
+      let event = {
+        eventName,
+        description,
+        eventType,
+        venue,
+        image: mainImg,
+        duration: {
+          From,
+          To,
+        },
+        isApproved,
+      };
+      // var date = new Date(Date);
+      console.log(event);
+      axios
+        .post("http://localhost:3000/event", event)
+        .then((response) => {
+          console.log(response);
+          alert("Successfully Inserted");
+        })
+        .catch((error) => {
+          if (error.response) {
+            setFormError(error.response.data.message);
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+    } else {
+      setError("Invalid");
+    }
+  };
+
+  let submitMaterial = (e) => {
+    e.preventDefault();
+    setStep(step + 1);
   };
 
   const Confirmation = (
@@ -59,55 +162,78 @@ const WorkshopMgt = () => {
 
   const EventData = (
     <div>
-      <form method="post">
-        <input
-          type="text"
-          id="eventName"
-          class="form-control"
-          placeholder="Workshop name"
-          style={{ maxWidth: "400px", margin: "10px" }}
-          required
-        />
-        <input
-          type="text"
-          id="eventVenue"
-          class="form-control"
-          placeholder="Venue link"
-          style={{ maxWidth: "400px", margin: "10px" }}
-          required
-        />
-        <textarea
-          type="text"
-          id="eventDescription"
-          class="form-control"
-          placeholder="Workshop description"
-          style={{ maxWidth: "400px", margin: "10px" }}
-          required
-        />
+      <form method="post" onSubmit={submitEvent}>
+        <div className="row">
+          <div className="mb-3 col-md-12">
+            <input
+              type="text"
+              id="eventName"
+              class="form-control"
+              placeholder="Workshop name"
+              onChange={(event) => setEventName(event.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3 col-md-12">
+            <input
+              type="text"
+              id="eventVenue"
+              class="form-control"
+              placeholder="Venue link"
+              onChange={(event) => setVenue(event.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3 col-md-12">
+            <textarea
+              type="text"
+              id="eventDescription"
+              class="form-control"
+              placeholder="Workshop description"
+              onChange={(event) => setDescription(event.target.value)}
+              required
+            />
+          </div>
+        </div>
         <label for="from" class="addFile">
           Date and duration
         </label>
-        <div
-          style={{
-            maxWidth: "400px",
-            margin: "10px",
-          }}
-        >
-          <DatetimeRangePicker />
+        <div className="row">
+          <div className="mb-6 col-md-6">
+            <input
+              type="datetime-local"
+              className="form-control"
+              name="fromdate"
+              id="fromdate"
+              onChange={(event) => setFrom(event.target.value)}
+            />
+          </div>
+          <div className="mb-6 col-md-6">
+            <input
+              type="datetime-local"
+              className="form-control"
+              name="todate"
+              id="todate"
+              onChange={(event) => setTo(event.target.value)}
+            />
+          </div>
         </div>
-
+        <div style={{ marginBottom: "10px" }} />
+        <label for="wsCover" class="addFile">
+          Submit Workshop cover photo below
+        </label>
         <input
           type="file"
           id="wsCover"
-          class="hidden"
           placeholder="Workshop cover photo"
+          className="form-control"
+          onChange={(event) => setMainImg(event.target.value)}
           required
         />
-        <label for="wsCover" class="addFile">
-          Submit Workshop cover photo -- click here
-        </label>
+        <div style={{ marginBottom: "15px" }} />
+
         <div style={{ float: "right", marginBottom: "10px" }}>
-          <SuccessButton text="Submit" onClick={submit} />
+          <SuccessButton text="Submit" />
         </div>
       </form>
     </div>
@@ -115,59 +241,73 @@ const WorkshopMgt = () => {
 
   const MaterialData = (
     <div>
-      <form method="post">
-        <input
-          type="text"
-          id="materialName"
-          class="form-control"
-          placeholder="Material name"
-          style={{ maxWidth: "400px", margin: "10px" }}
-          required
-        />
-        <input
-          type="text"
-          id="tags"
-          class="form-control"
-          placeholder="Tags"
-          style={{ maxWidth: "400px", margin: "10px" }}
-          required
-        />
-
-        <input
-          type="file"
-          id="proporsal"
-          class="hidden"
-          placeholder="Proporsal"
-          required
-        />
-        <label for="proporsal" class="addFile">
-          Submit proporsal pdf -- click here
+      <form onSubmit={submitMaterial} method="POST">
+        <div className="row">
+          <div className="mb-3 col-md-12">
+            <input
+              type="text"
+              id="materialName"
+              class="form-control"
+              placeholder="Material name"
+              onChange={(event) => setName(event.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3 col-md-12">
+            <input
+              type="text"
+              id="tags"
+              class="form-control"
+              placeholder="Tags"
+              onChange={(event) => setTags(event.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3 col-md-12">
+            <textarea
+              type="text"
+              id="descrip"
+              class="form-control"
+              placeholder="Material description"
+              onChange={(event) => setDescrip(event.target.value)}
+              required
+            />
+          </div>
+        </div>
+        <label for="materialCover" class="addFile">
+          Presentation cover photo below
         </label>
-
         <input
           type="file"
           id="materialCover"
-          class="hidden"
+          className="form-control"
+          style={{
+            maxWidth: "400px",
+            margin: "10px",
+          }}
           placeholder="Presentation photo"
+          onChange={(event) => setImage(event.target.value)}
           required
         />
-        <label for="materialCover" class="addFile">
-          Presentation cover photo -- click here
-        </label>
 
+        <label for="presentation" class="addFile">
+          Submit Presentation below
+        </label>
         <input
           type="file"
           id="presentation"
-          class="hidden"
+          className="form-control"
+          style={{
+            maxWidth: "400px",
+            margin: "10px",
+          }}
           placeholder="Presentation"
+          onChange={(event) => setDocument(event.target.value)}
           required
         />
-        <label for="presentation" class="addFile">
-          Submit Presentation -- click here
-        </label>
 
         <div style={{ float: "right", marginBottom: "10px" }}>
-          <SuccessButton text="Submit" onClick={submit} />
+          <SuccessButton text="Submit" type="submit" />
         </div>
       </form>
     </div>
