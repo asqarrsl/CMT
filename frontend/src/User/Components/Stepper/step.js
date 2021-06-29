@@ -2,16 +2,16 @@ import React from "react";
 
 const Step = (props) => {
   return (
-    <div class="step">
+    <div className="step">
       {props.dis ? (
-        <button class="step-trigger" disabled>
-          <span class="bs-stepper-circle" />
-          <span class="bs-stepper-label">{props.title}</span>
+        <button className="step-trigger" disabled>
+          <span className="bs-stepper-circle" />
+          <span className="bs-stepper-label">{props.title}</span>
         </button>
       ) : (
-        <button class="step-trigger">
-          <span class="bs-stepper-circle" />
-          <span class="bs-stepper-label">{props.title}</span>
+        <button className="step-trigger">
+          <span className="bs-stepper-circle" />
+          <span className="bs-stepper-label">{props.title}</span>
         </button>
       )}
     </div>

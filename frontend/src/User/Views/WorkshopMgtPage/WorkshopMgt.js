@@ -103,9 +103,8 @@ const WorkshopMgt = () => {
           placeholder="Workshop cover photo"
           required
         />
-
-        <label for="cover" class="addFile">
-          Submit cover photo -- click here
+        <label for="wsCover" class="addFile">
+          Submit Workshop cover photo -- click here
         </label>
         <div style={{ float: "right", marginBottom: "10px" }}>
           <SuccessButton text="Submit" onClick={submit} />
