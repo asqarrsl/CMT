@@ -199,9 +199,6 @@ const AddEvent = () =>{
                                 />
                             </div>  
                         </div>
-                        {/* <div className="row">
-                            
-                        </div> */}
                         <div className="row">
                             <div className=" col-md-12 fs-4">Duration</div>
                             <div className="mb-4 col-md-4">
@@ -226,11 +223,6 @@ const AddEvent = () =>{
                                     onChange = {(event)=>setTo(event.target.value)} 
                                 />
                             </div>
-                        {/* </div> */}
-                        {/* <div className="row">
-                       
-                        </div> */}
-                        {/* <div className="row"> */}
                             <div className="mb-4 col-md-4">
                                 <label htmlFor="isApproved" className="form-label">is Approved</label>
                                 <select 

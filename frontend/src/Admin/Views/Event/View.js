@@ -131,7 +131,7 @@ const ViewEvent = (props) =>{
             <hr />
             <div className="card">
                 <div className="card-body">
-                    <h5 className="card-title">Edit Event</h5>
+                    <h5 className="card-title">View Event</h5>
                     <hr />
                     <form method="POST" onSubmit={console.log('ji')}> 
                         <div className="row">
