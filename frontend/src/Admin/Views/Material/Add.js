@@ -138,6 +138,7 @@ const AddMaterial = () =>{
                                     className="form-control" 
                                     name="name"
                                     id="name" 
+                                    value={name}
                                     onChange = {(e)=>setName(e.target.value)}
                                 />
                             </div>
@@ -147,6 +148,7 @@ const AddMaterial = () =>{
                                     options={eventoptions}
                                     className="basic-multi-select"
                                     name="eventId"
+                                    value={eventId}
                                     onChange={(event)=>setEventId(event.value)}
                                 />
                             </div>
@@ -161,6 +163,7 @@ const AddMaterial = () =>{
                                         type="radio" 
                                         name="type" 
                                         id="type1" 
+                                        value={type=="Workshop"}
                                         onChange = {(e)=>setType(e.target.value)}
                                         value="Workshop" 
                                     />
@@ -172,6 +175,7 @@ const AddMaterial = () =>{
                                         type="radio" 
                                         name="type" 
                                         id="type2" 
+                                        value={type=="Research"}
                                         onChange = {(e)=>setType(e.target.value)}
                                         value="Research" 
                                     />
@@ -197,6 +201,7 @@ const AddMaterial = () =>{
                                     className="form-control" 
                                     name="images"
                                     id="images" 
+                                    value={images}
                                     onChange = {(e)=>setImages(e.target.value)}
                                 />
                             </div>
@@ -207,6 +212,7 @@ const AddMaterial = () =>{
                                     className="form-control" 
                                     name="document"
                                     id="document" 
+                                    value={document}
                                     onChange = {(e)=>setDocument(e.target.value)}
                                 />
                             </div>
@@ -219,6 +225,7 @@ const AddMaterial = () =>{
                                     className="form-select" 
                                     name="isPaid"
                                     id="isPaid" 
+                                    value={isPaid}
                                     onChange = {(e)=>setIsPaid(e.target.value)}
                                 >
                                     <option defaultValue>Select is Paid</option>
@@ -233,6 +240,7 @@ const AddMaterial = () =>{
                                     className="form-select" 
                                     name="isApproved"
                                     id="isApproved" 
+                                    value={isApproved}
                                     onChange = {(e)=>setIsApproved(e.target.value)}
                                 >
                                     <option defaultValue value="Pending">Pending</option>
@@ -246,6 +254,7 @@ const AddMaterial = () =>{
                                     options={useroptions}
                                     className="basic-multi-select"
                                     name="userId"
+                                    value={uid}
                                     onChange={(event)=>setUid(event.value)}
                                 />
                             </div>

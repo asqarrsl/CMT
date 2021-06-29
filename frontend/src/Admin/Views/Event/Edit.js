@@ -3,20 +3,20 @@ import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 
 const EditEvent = () =>{
     var titles = [
-        {
-            name : 'Admin',
-            link : '/admin'
-        },
-        {
-            name : 'Event',
-            link : '/event'
-        },
-        {
-            name : 'Edit',
-            link : '/edit'
-        }
+        {name : 'Admin',link : '/admin'},
+        {name : 'Event',link : '/event'},
+        {name : 'Edit',link : '/edit'}
     ]
         
+    const [user,setUser] = useState([]); 
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/users/')
+        .then(response=>{
+            setUser(response.data.Users);
+        })
+    },[])
+
     return(
         <>
             <Breadcrumb titles={titles} />
