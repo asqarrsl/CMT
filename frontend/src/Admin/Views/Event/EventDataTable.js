@@ -18,8 +18,8 @@ const EventDataTable = ({data}) =>{
                     <td>{event.eventName}</td>
                     <td>{event.eventType}</td>
                     <td>{event.venue}</td>
-                    <td>{event.duration.From}</td>
-                    <td>{event.duration.To}</td>
+                    <td>{(event.duration) && event.duration.From}</td>
+                    <td>{(event.duration) && event.duration.To}</td>
                     <td>
                         <a href={viewUrl(event._id)} className="me-3"><i class="far fa-eye"></i></a>
                         <a href={editUrl(event._id)} className="me-3"><i className="fas fa-pen"></i></a>

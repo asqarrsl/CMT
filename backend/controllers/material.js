@@ -11,63 +11,73 @@ module.exports.index = async (req, res) => {
   });
 };
 
-module.exports.store = async (req, res) => {
-  console.log("req.body", req.body);
-  const materials = new Material(req.body);
-  // materials.uid = req.user._id;
-  console.log("req.body", req.body);
-  // materials.document = req.files.map(f=>({url:f.path,filename:f.filename}));
-  await materials.save();
-
-  res.status(202).send({
-    message: "Successfully Updated the materials!",
-    materials,
-  });
-};
-module.exports.show = async (req, res) => {
-  const materials = await Material.findById(req.params.id).populate("uid");
-  if (!materials) {
-    res.status(202).send({
-      message: "Successfully Updated the materials!",
-      materials,
-    });
-  }
-  console.log(materials);
-  res.status(202).send({
-    message: "Successfully Updated the materials!",
-    materials,
-  });
-};
-module.exports.edit = async (req, res) => {
-  const materials = await Material.findById(req.params.id);
-  if (!materials) {
-    res.status(202).send({
-      message: "Successfully Updated the materials!",
-      materials,
-    });
-  }
-  res.status(202).send({
-    message: "Successfully Updated the materials!",
-    materials,
-  });
-};
-module.exports.update = async (req, res) => {
-  const { id } = req.params;
-  const materials = await Material.findByIdAndUpdate(id, { ...req.body });
-  // const editedDoc = req.files.map(f=>({url:f.path,filename:f.filename}))
-  // materials.reviewerId = req.user._id;
-  materials.isApproved = 0;
-  // if(req.user.role == 'Editor'){
-  //     materials.editedVersion.push(...editedDoc);
-  // }else{
-  //     materials.document.push(...editedDoc);
-  // }
-  await materials.save();
-  res.status(202).send({
-    message: "Successfully Updated the materials!",
-    materials,
-  });
-};
+module.exports.store = async (req,res)=>{
+    const materials = new Material(req.body);
+    materials.images = req.files.image.map(f=>({url:f.path,filename:f.filename}));
+    materials.document = req.files.document.map(f=>({url:f.path,filename:f.filename}));
+    await materials.save();
+    
+    res
+      .status(202)
+      .send({
+          message:"Successfully Updated the materials!",
+          materials
+        });
+}
+module.exports.show = async (req,res)=>{
+    const materials = await Material.findById(req.params.id).populate('uid');
+    if(!materials){
+        res
+      .status(202)
+      .send({
+          message:"Successfully Updated the materials!",
+          materials
+        });
+    }
+    console.log(materials);
+    res
+      .status(202)
+      .send({
+          message:"Successfully Updated the materials!",
+          materials
+        });
+}
+module.exports.edit = async (req,res)=>{  
+    const materials = await Material.findById(req.params.id);
+    if(!materials){
+        res
+      .status(202)
+      .send({
+          message:"Successfully Updated the materials!",
+          materials
+        });
+    }
+    res
+      .status(202)
+      .send({
+          message:"Successfully Updated the materials!",
+          materials
+        });
+}
+module.exports.update = async (req,res)=>{
+    const {id} = req.params
+    const materials = await Material.findByIdAndUpdate(id, {...req.body});
+    // const editedDoc = req.files.map(f=>({url:f.path,filename:f.filename}))
+    // materials.reviewerId = req.user._id;
+    materials.isApproved = 0 ;
+    // if(req.user.role == 'Editor'){
+    //     materials.editedVersion.push(...editedDoc);
+    // }else{
+    //     materials.document.push(...editedDoc);
+    // }
+    await materials.save();
+    res
+      .status(202)
+      .send({
+          message:"Successfully Updated the materials!",
+          materials
+        });
+}
 
 module.exports.review = async (req, res) => {
   const { id } = req.params;

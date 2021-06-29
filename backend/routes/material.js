@@ -9,11 +9,15 @@ const { storage } = require("../cloudinary");
 const upload = multer({ storage });
 // const upload = multer({dest:'u ploads/'})
 
-router
-  .route("/")
-  .get(catchAsync(materialController.index))
-  .post(catchAsync(materialController.store));
-// .post(isLoggedIn,upload.array('image'),catchAsync(materialController.store));
+
+router.route('/')
+    .get(catchAsync(materialController.index))
+    .post(upload.fields([
+            {name: "image", maxCount: 1},
+            {name: "document"}
+         ]),catchAsync(materialController.store));
+    // .post(isLoggedIn,upload.array('image'),catchAsync(materialController.store));
+
 
 // router.get('/new',isLoggedIn,materialController.create);
 
