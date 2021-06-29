@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import Step from "../../Components/Stepper/step";
@@ -6,12 +6,14 @@ import DatetimeRangePicker from "react-datetime-range-picker";
 import axios from "axios";
 
 const WorkshopMgt = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const [presenterId, setPresenterId] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [formError, setFormError] = useState(false);
   const [error, setError] = useState(true);
   const [init, setinit] = useState(true);
+  const [useroptions, setUseroptions] = useState([]);
+  const [eventoptions, setEventoptions] = useState([]);
 
   const [eventName, setEventName] = useState("");
   const [description, setDescription] = useState("");
@@ -22,12 +24,15 @@ const WorkshopMgt = () => {
   const [To, setTo] = useState("");
   const [isApproved, setIsApproved] = useState("");
 
-  const [name, setName] = useState("");
-  const [tags, setTags] = useState("");
-  const [descrip, setDescrip] = useState("");
+  const [uid, setUid] = useState();
+  const [name, setName] = useState();
+  const [tags, setTags] = useState();
+  const [descrip, setDescrip] = useState();
+  const [images, setImages] = useState();
   const [type, setType] = useState("Workshop");
-  const [document, setDocument] = useState("");
-  const [image, setImage] = useState("");
+  const [eventId, setEventId] = useState();
+  const [document, setDocument] = useState();
+  const [isPaid, setIsPaid] = useState();
 
   const checknull = (value) => {
     if (value.trim() == null || value.trim() == "") {
@@ -35,6 +40,17 @@ const WorkshopMgt = () => {
     } else {
       return true;
     }
+  };
+
+  let reset = (e) => {
+    e.preventDefault();
+    setStep(0);
+  };
+
+  let done = (e) => {
+    e.preventDefault();
+    setStep(0);
+    //navigate
   };
 
   const checkstring = (value) => {
@@ -49,7 +65,7 @@ const WorkshopMgt = () => {
     return re.test(String(value).toLowerCase());
   }
 
-  const onValidate = () => {
+  const onValidateEvent = () => {
     if (
       checknull(eventName) &&
       checknull(description) &&
@@ -65,15 +81,22 @@ const WorkshopMgt = () => {
     }
   };
 
-  let reset = (e) => {
-    e.preventDefault();
-    setStep(0);
-  };
-
-  let done = (e) => {
-    e.preventDefault();
-    setStep(0);
-    //navigate
+  const onValidateMaterial = () => {
+    if (
+      checknull(uid) &&
+      checknull(name) &&
+      checknull(tags) &&
+      checknull(description) &&
+      checknull(type) &&
+      checknull(isPaid) &&
+      checknull(isApproved)
+    ) {
+      setFormValid(true);
+      return true;
+    } else {
+      setFormValid(false);
+      return false;
+    }
   };
 
   let submitEvent = (e) => {
@@ -81,9 +104,9 @@ const WorkshopMgt = () => {
     setStep(step + 1);
 
     setinit(false);
-    onValidate();
-    if (1) {
-      // if(formValid){
+    onValidateEvent();
+    // if (1) {
+    if (formValid) {
       let event = {
         eventName,
         description,
@@ -123,9 +146,71 @@ const WorkshopMgt = () => {
     }
   };
 
+  useEffect(() => {
+    axios.get("http://localhost:3000/event").then((response) => {
+      console.log(response.data);
+      let data = [];
+      response.data.events.map((item, index) => {
+        let event = {
+          value: item._id,
+          label: item.eventName,
+        };
+        data.push(event);
+      });
+      setEventoptions(data);
+    });
+
+    axios.get("http://localhost:3000/users").then((response) => {
+      let data1 = [];
+      response.data.Users.map((item, index) => {
+        let user = {
+          value: item._id,
+          label: item.name,
+        };
+        data1.push(user);
+      });
+      setUseroptions(data1);
+    });
+  }, []);
+
   let submitMaterial = (e) => {
     e.preventDefault();
     setStep(step + 1);
+
+    setinit(false);
+    if (onValidateMaterial) {
+      let material = {
+        uid,
+        name,
+        tags,
+        description,
+        // images:[imageSchema],
+        type,
+        eventId,
+        // document[documentSchema],
+        isPaid,
+        status: isApproved,
+      };
+      console.log(material);
+      axios
+        .post("http://localhost:3000/material", material)
+        .then((response) => {
+          console.log(response);
+          alert("Successfully Inserted");
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+            setFormError(error.response.data.message);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+        });
+    } else {
+      setError("Invalid");
+    }
   };
 
   const Confirmation = (
@@ -233,7 +318,7 @@ const WorkshopMgt = () => {
         <div style={{ marginBottom: "15px" }} />
 
         <div style={{ float: "right", marginBottom: "10px" }}>
-          <SuccessButton text="Submit" />
+          <SuccessButton text="Submit" type="Submit" />
         </div>
       </form>
     </div>
@@ -286,7 +371,7 @@ const WorkshopMgt = () => {
             margin: "10px",
           }}
           placeholder="Presentation photo"
-          onChange={(event) => setImage(event.target.value)}
+          onChange={(event) => setImages(event.target.value)}
           required
         />
 
