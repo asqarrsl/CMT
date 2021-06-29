@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
 import Select from "react-select";
@@ -11,16 +11,18 @@ const AddMaterial = () => {
   ];
   const [init, setinit] = useState(true);
 
-  const [uid, setUid] = useState();
-  const [name, setName] = useState();
-  const [tags, setTags] = useState();
-  const [description, setDescription] = useState();
-  const [images, setImages] = useState();
-  const [type, setType] = useState();
-  const [eventId, setEventId] = useState();
-  const [document, setDocument] = useState();
-  const [isPaid, setIsPaid] = useState();
-  const [isApproved, setIsApproved] = useState();
+  const [uid, setUid] = useState('');
+  const [name, setName] = useState('');
+  const [tags, setTags] = useState('');
+  const [description, setDescription] = useState('');
+  const [images, setImages] = useState(null);
+  const [type, setType] = useState('');
+  const [eventId, setEventId] = useState('');
+  const [document, setDocument] = useState(null);
+  const [isPaid, setIsPaid] = useState('');
+  const [isApproved, setIsApproved] = useState('');
+
+  const form = useRef(null)
 
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
@@ -103,14 +105,23 @@ const AddMaterial = () => {
         isPaid,
         status:isApproved,
       };
-      axios
-        .post("http://localhost:3000/material", material)
+      const data = new FormData(form.current)
+            // data.append('image',mainImg);
+      axios({
+        method: "post",
+        url: "http://localhost:3000/material",
+        data: data,
+        headers: { "Content-Type": "multipart/form-data" },
+    })
+      // axios
+        // .post("http://localhost:3000/material", material)
         .then((response) => {
           console.log(response);
           alert("Successfully Inserted");
         })
         .catch((error) => {
           if (error.response) {
+
             console.log(error.response.data);
             setFormError(error.response.data.message);
           } else if (error.request) {
@@ -131,7 +142,7 @@ const AddMaterial = () => {
         <div className="card-body">
           <h5 className="card-title">Add Material</h5>
           <hr />
-          <form method="POST" onSubmit={onSubmit}>
+          <form ref={form}  onSubmit={onSubmit}>
             <div className="row">
               <div className="mb-3 col-md-6">
                 <label htmlFor="name" className="form-label">
@@ -154,7 +165,6 @@ const AddMaterial = () => {
                   options={eventoptions}
                   className="basic-multi-select"
                   name="eventId"
-                  value={eventId}
                   onChange={(event) => setEventId(event.value)}
                 />
               </div>
@@ -209,16 +219,15 @@ const AddMaterial = () => {
             </div>
             <div className="row">
               <div className="mb-3 col-md-6">
-                <label htmlFor="images" className="form-label">
+                <label htmlFor="image" className="form-label">
                   Images
                 </label>
                 <input
                   type="file"
                   className="form-control"
-                  name="images"
-                  id="images"
-                  value={images}
-                  onChange={(e) => setImages(e.target.value)}
+                  name="image"
+                  id="image"
+                  onChange={(event)=>{setImages(event.target.files[0])}} 
                 />
               </div>
               <div className="mb-3 col-md-6">
@@ -230,8 +239,7 @@ const AddMaterial = () => {
                   className="form-control"
                   name="document"
                   id="document"
-                  value={document}
-                  onChange={(e) => setDocument(e.target.value)}
+                  onChange={(event) => {setDocument(event.target.files[0])}}
                 />
               </div>
             </div>
@@ -280,7 +288,6 @@ const AddMaterial = () => {
                   options={useroptions}
                   className="basic-multi-select"
                   name="userId"
-                  value={uid}
                   onChange={(event) => setUid(event.value)}
                 />
               </div>

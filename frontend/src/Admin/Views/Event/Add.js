@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useRef, useState} from 'react'
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import axios from 'axios';
 
@@ -15,7 +15,7 @@ const AddEvent = () =>{
     const [description, setDescription] = useState('')
     const [eventType, setEventType] = useState('')
     const [venue, setVenue] = useState('')
-    const [mainImg, setMainImg] = useState('')
+    const [mainImg, setMainImg] = useState(null)
     const [From, setFrom] = useState('')
     const [To, setTo] = useState('')
     const [isApproved, setIsApproved] = useState('')
@@ -23,7 +23,8 @@ const AddEvent = () =>{
     const [formValid,setFormValid] = useState(false);
     const [formError,setFormError] = useState(false);
     const [error,setError] = useState(true);
-
+    const form = useRef(null)
+    
     const checknull = (value)=>{
         if(value.trim()==null || value.trim()==''){
             return false;
@@ -43,7 +44,7 @@ const AddEvent = () =>{
     const onValidate = () => {
         if(
             checknull(eventName) && checknull(description) && checknull(eventType) && 
-            checknull(venue) && checknull(mainImg) &&
+            checknull(venue) && 
             checknull(From) && checknull(To)
         ){
             setFormValid(true);
@@ -71,7 +72,15 @@ const AddEvent = () =>{
             }
             // var date = new Date(Date); 
             console.log(event);
-            axios.post('http://localhost:3000/event',event)
+            const data = new FormData(form.current)
+            data.append('image',mainImg);
+            axios({
+                    method: "post",
+                    url: "http://localhost:3000/event",
+                    data: data,
+                    headers: { "Content-Type": "multipart/form-data" },
+                })
+            // axios.post('http://localhost:3000/event',event)
             .then(response=>{
                 console.log(response);
                 alert("Successfully Inserted")
@@ -81,9 +90,9 @@ const AddEvent = () =>{
                     setFormError(error.response.data.message);
                     // The request was made and the server responded with a status code
                     // that falls out of the range of 2xx
-                    // console.log(error.response.data);
-                    // console.log(error.response.status);
-                    // console.log(error.response.headers);
+                    console.log(error.response);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
                 } else if (error.request) {
                     // The request was made but no response was received
                     // `error.request` is an instance of XMLHttpRequest in the 
@@ -108,7 +117,7 @@ const AddEvent = () =>{
                 <div className="card-body">
                     <h5 className="card-title">Add Event</h5>
                     <hr />
-                    <form method="POST" onSubmit={onSubmit}> 
+                    <form  ref={form} onSubmit={onSubmit} encType="multipart/form-data"> 
                         <div className="row">
                             <div className="mb-3 col-md-6">
                                 <label htmlFor="eventName" className="form-label">Event Name</label>
@@ -172,14 +181,13 @@ const AddEvent = () =>{
                                 </div>
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label htmlFor="mainImage" className="form-label">Main Image</label>
+                                <label htmlFor="image" className="form-label">Main Image</label>
                                 <input 
                                     type="file"
                                     className="form-control" 
-                                    name="mainImage"
-                                    id="mainImage" 
-                                    value={mainImg}
-                                    onChange = {(event)=>setMainImg(event.target.value)} 
+                                    name="image"
+                                    id="image" 
+                                    onChange = {(event)=>{setMainImg(event.target.files[0])}} 
                                 />
                             </div>  
                         </div>
@@ -204,6 +212,7 @@ const AddEvent = () =>{
                                     name="todate"
                                     id="todate" 
                                     value={To}
+                                    min={From}
                                     onChange = {(event)=>setTo(event.target.value)} 
                                 />
                             </div>

@@ -11,7 +11,11 @@ const upload = multer({storage})
 
 router.route('/')
     .get(catchAsync(materialController.index))
-    .post(isLoggedIn,upload.array('image'),catchAsync(materialController.store));
+    .post(upload.fields([
+            {name: "image", maxCount: 1},
+            {name: "document"}
+         ]),catchAsync(materialController.store));
+    // .post(isLoggedIn,upload.array('image'),catchAsync(materialController.store));
 
 // router.get('/new',isLoggedIn,materialController.create);
 

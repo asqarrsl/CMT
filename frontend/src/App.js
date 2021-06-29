@@ -32,16 +32,16 @@ const App = (props) =>{
                     <Route path='/admin/:path?'>
                         <MainAdmin>
                             <Switch>
+                                <Route path='/admin/event/add' exact component={AddEvent} />
                                 <Route path='/admin/event/:id/edit' exact component={EditEvent} />
                                 <Route path='/admin/event/:id' exact component={ViewEvent} />
-                                <Route path='/admin/event/add' exact component={AddEvent} />
                                 <Route path='/admin/event' exact component={EventIndex} />
+                                <Route path='/admin/material/add' exact component={AddMaterial} />
                                 <Route path='/admin/material/:id/edit' exact component={EditMaterial} />
                                 <Route path='/admin/material/:id' exact component={ViewMaterial} />
-                                <Route path='/admin/material/add' exact component={AddMaterial} />
                                 <Route path='/admin/material' exact component={MaterialIndex} />
-                                <Route path='/admin/user/:id/edit' exact component={EditUser} />
                                 <Route path='/admin/user/add' exact component={AddUser} />
+                                <Route path='/admin/user/:id/edit' exact component={EditUser} />
                                 <Route path='/admin/user' exact component={UserIndex} />
                                 <Route path='/admin' exact component={Dashboard} />
                                 <Route path='*' component={Dashboard} />
