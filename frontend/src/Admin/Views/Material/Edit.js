@@ -72,7 +72,7 @@ const EditMaterial = (props) =>{
             setEventId(response.data.materials.eventId)
             setDocument(response.data.materials.document)
             setIsPaid(response.data.materials.isPaid)
-            setIsApproved(response.data.materials.isApproved)
+            setIsApproved(response.data.materials.status)
        })
    },[])
 
@@ -118,7 +118,7 @@ const EditMaterial = (props) =>{
                eventId,
                // document[documentSchema],
                isPaid,
-               isApproved
+               status:isApproved
            }
            axios.put(`http://localhost:3000/material/${props.match.params.id}`,material)
            .then(response=>{

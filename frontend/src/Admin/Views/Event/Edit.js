@@ -39,7 +39,7 @@ const EditEvent = (props) =>{
             setMainImg(response.data.events.mainImg)
             setFrom(moment(response.data.events.duration.From).format("YYYY-MM-DDTkk:mm"))
             setTo(moment(response.data.events.duration.To).format("YYYY-MM-DDTkk:mm"))
-            setIsApproved(response.data.events.isApproved)
+            setIsApproved(response.data.events.status)
         })
     },[])
 
@@ -89,7 +89,7 @@ const EditEvent = (props) =>{
                     From,
                     To
                 },
-                isApproved
+                status:isApproved
             }
             // var date = new Date(Date); 
             console.log(event);

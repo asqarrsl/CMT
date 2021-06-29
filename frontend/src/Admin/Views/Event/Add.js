@@ -67,7 +67,7 @@ const AddEvent = () =>{
                     From,
                     To
                 },
-                isApproved
+                status:isApproved
             }
             // var date = new Date(Date); 
             console.log(event);

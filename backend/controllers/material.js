@@ -98,9 +98,9 @@ module.exports.review = async (req,res)=>{
 
 module.exports.approve = async (req,res)=>{
     const {id} = req.params
-    const materials = await Material.findById(id);
-    materials.isApproved = req.body.isApproved;
-    // materials.reviewdVersion.push(...editedDoc);
+    console.log(req.body);
+    const materials = await Material.findByIdAndUpdate(id, {...req.body});
+    
     await materials.save();
     res
       .status(202)

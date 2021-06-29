@@ -22,6 +22,7 @@ router.route('/:id')
     .delete(isLoggedIn,isAuthor,catchAsync(materialController.delete));
 
 
-// router.get('/:id/edit',isLoggedIn,isAuthor,catchAsync(materialController.edit));
+router.post('/:id/approve',catchAsync(materialController.approve));
+// router.get('/:id/aprove',isLoggedIn,isAuthor,catchAsync(materialController.approve));
 
 module.exports = router;
