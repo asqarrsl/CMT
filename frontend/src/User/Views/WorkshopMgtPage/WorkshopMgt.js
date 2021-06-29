@@ -6,7 +6,7 @@ import DatetimeRangePicker from "react-datetime-range-picker";
 import axios from "axios";
 
 const WorkshopMgt = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [presenterId, setPresenterId] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [formError, setFormError] = useState(false);
