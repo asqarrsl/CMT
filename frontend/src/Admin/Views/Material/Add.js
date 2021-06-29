@@ -1,5 +1,7 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
+import axios from 'axios';
+import Select from 'react-select';
 
 const AddMaterial = () =>{
     var titles = [
@@ -7,7 +9,8 @@ const AddMaterial = () =>{
         {name : 'Material',link : '/material'},
         {name : 'Add Material',link : '/add'}
     ]
-    
+    const [init, setinit] = useState(true)
+
      const [uid,setUid] = useState();
      const [name,setName] = useState();
      const [tags,setTags] = useState();
@@ -19,11 +22,74 @@ const AddMaterial = () =>{
      const [isPaid,setIsPaid] = useState();
      const [isApproved,setIsApproved] = useState();
 
+     const [events,setEvents] = useState([]);
+     const [users,setUsers] = useState([]);
+     const [eventoptions,setEventoptions] = useState([]);
+     const [useroptions,setUseroptions] = useState([]);
+     const [formError,setFormError] = useState(false);
+
+
+     useEffect(() => {
+        axios.get('http://localhost:3000/event')
+        .then(response=>{
+            console.log(response.data);
+            let data =[];
+            response.data.events.map((item,index)=>{
+                let event = {
+                    value: item._id,
+                    label: item.eventName
+                }
+                data.push(event);
+            })
+            setEventoptions(data);
+        })
+
+        axios.get('http://localhost:3000/users')
+        .then(response=>{
+            let data1 =[];
+            response.data.Users.map((item,index)=>{
+                let user = {
+                    value: item._id,
+                    label: item.name
+                }
+                data1.push(user);
+            })
+            setUseroptions(data1);
+        })
+    },[])
+
+    const checknull = (value)=>{
+        if(value.trim()==null || value.trim()==''){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    const checkstring = (value)=>{
+        if(typeof value != "string"){
+            return false;
+        }
+    }
+
+    const onValidate = () => {
+        if(
+            checknull(uid) && checknull(name) && checknull(tags) && 
+            checknull(description) && checknull(type) &&
+            checknull(isPaid) && checknull(isApproved)
+        ){
+            setFormValid(true);
+            return true;
+        }else{
+            setFormValid(false);
+            return false;
+        }
+    }
+
     const onSubmit = (e) =>{
         e.preventDefault();
         setinit(false);
-        onValidate();
-        if(formValid){
+        if(onValidate){
             let material = {
                 uid ,
                 name,
@@ -43,6 +109,7 @@ const AddMaterial = () =>{
             })
             .catch((error)=>{
                 if (error.response) {
+                    console.log(error.response.data);
                     setFormError(error.response.data.message);
                 } else if (error.request) {
                     console.log(error.request);
@@ -76,12 +143,11 @@ const AddMaterial = () =>{
                             </div>
                             <div className="mb-3 col-md-6">
                                 <label htmlFor="eventId" className="form-label">Event</label>
-                                <input 
-                                    type="text"
-                                    className="form-control" 
+                                <Select 
+                                    options={eventoptions}
+                                    className="basic-multi-select"
                                     name="eventId"
-                                    id="eventId" 
-                                    onChange = {(e)=>setEventId(e.target.value)}
+                                    onChange={(event)=>setEventId(event.value)}
                                 />
                             </div>
                         </div>
@@ -148,22 +214,39 @@ const AddMaterial = () =>{
                         <div className="row">
                             <div className="mb-3 col-md-6">
                                 <label htmlFor="isPaid" className="form-label">isPaid</label>
-                                <input 
+                                <select 
                                     type="text"
-                                    className="form-control" 
+                                    className="form-select" 
                                     name="isPaid"
                                     id="isPaid" 
                                     onChange = {(e)=>setIsPaid(e.target.value)}
-                                />
+                                >
+                                    <option defaultValue>Select is Paid</option>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
+                                </select>
+                            </div>
+                            <div className="mb-3 col-md-6">
+                                <label htmlFor="isApproved" className="form-label">is Approved</label>
+                                <select 
+                                    type="text"
+                                    className="form-select" 
+                                    name="isApproved"
+                                    id="isApproved" 
+                                    onChange = {(e)=>setIsApproved(e.target.value)}
+                                >
+                                    <option defaultValue value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Declined">Declined</option>
+                                </select>
                             </div>
                             <div className="mb-3 col-md-6">
                                 <label htmlFor="userId" className="form-label">userId</label>
-                                <input 
-                                    type="text"
-                                    className="form-control" 
+                                <Select 
+                                    options={useroptions}
+                                    className="basic-multi-select"
                                     name="userId"
-                                    id="userId" 
-                                    onChange = {(e)=>setUid(e.target.value)}
+                                    onChange={(event)=>setUid(event.value)}
                                 />
                             </div>
                         </div>

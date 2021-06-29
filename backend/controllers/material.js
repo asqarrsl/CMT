@@ -2,7 +2,7 @@ const Material = require('../models/materials');
 const {cloudinary} = require('../cloudinary')
 
 module.exports.index = async (req,res)=>{
-    const materials = await Material.find({isActive:'1'});
+    const materials = await Material.find({isActive:'1'}).populate('uid').populate('eventId');
     res
       .status(202)
       .send({
@@ -13,10 +13,10 @@ module.exports.index = async (req,res)=>{
 
 
 module.exports.store = async (req,res)=>{
-    const materials = new Material(req.body.materials);
-    materials.uid = req.user._id;
+    const materials = new Material(req.body);
+    // materials.uid = req.user._id;
     console.log(req);
-    materials.document = req.files.map(f=>({url:f.path,filename:f.filename}));
+    // materials.document = req.files.map(f=>({url:f.path,filename:f.filename}));
     await materials.save();
     
     res

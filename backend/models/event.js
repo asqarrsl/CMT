@@ -29,10 +29,11 @@ const eventSchema = new Schema ({
         type:Schema.Types.ObjectId,
         ref:'User'
     },
-    isApproved : {
+    status:{
         type:String,
-        default:'0'
-    }, 
+        default:"Pending"
+    },
+    message:String,
     isDeleteReq : {
         type:String,
         default:'0'

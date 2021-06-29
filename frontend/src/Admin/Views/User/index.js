@@ -38,6 +38,7 @@ const UserIndex = () =>{
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
+                        <th scope="col" colSpan="2">Action</th>
                     </tr>
                 </thead>
                 <UserDataTable data={users} />
