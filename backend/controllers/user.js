@@ -82,7 +82,7 @@ module.exports.update = async (req, res) => {
 module.exports.login = (req, res) => {
     // req.flash('success', 'welcome back!');
 
-    // console.log(req.session);
+    console.log(req);
     // const redirectUrl = req.session.returnTo || '/campgrounds'
     // delete req.session.returnTo;
     // res.send("redirectUrl");
