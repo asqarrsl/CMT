@@ -13,7 +13,7 @@ router.route('/')
     .get(catchAsync(materialController.index))
     .post(isLoggedIn,upload.array('image'),catchAsync(materialController.store));
 
-router.get('/new',isLoggedIn,materialController.create);
+// router.get('/new',isLoggedIn,materialController.create);
 
 router.route('/:id')
     .get(catchAsync(materialController.show))

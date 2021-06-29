@@ -17,23 +17,23 @@ const eventSchema = new Schema ({
     eventType : String, 
     venue : String,    
     mainImg : [imageSchema],
-    duration:[{
-        Date : Date,
-        StartTime : Date,
-        StopTime : Date
-    }],
-    presenterId : {
+    duration:{
+        From : Date,
+        To : Date
+    },
+    presenterId : [{
         type:Schema.Types.ObjectId,
         ref:'User'
-    },
+    }],
     editorId : {
         type:Schema.Types.ObjectId,
         ref:'User'
     },
-    isApproved : {
+    status:{
         type:String,
-        default:'0'
-    }, 
+        default:"Pending"
+    },
+    message:String,
     isDeleteReq : {
         type:String,
         default:'0'

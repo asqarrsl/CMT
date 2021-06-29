@@ -10,9 +10,9 @@ module.exports.index = async (req,res)=>{
 
 
 module.exports.store = async (req,res)=>{
-    const events = new Event(req.body.events);
-    events.presenterId = req.user._id;
-    events.mainImg = req.files.map(f=>({url:f.path,filename:f.filename}));
+    const events = new Event(req.body);
+    // events.presenterId = req.user._id;
+    // events.mainImg = req.files.map(f=>({url:f.path,filename:f.filename}));
     await events.save();
     res
       .status(202)
