@@ -3,20 +3,12 @@ import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 
 const EditMaterial = () =>{
     var titles = [
-        {
-            name : 'Admin',
-            link : '/admin'
-        },
-        {
-            name : 'Material',
-            link : '/material'
-        },
-        {
-            name : 'Edit',
-            link : '/edit'
-        }
+        {name : 'Admin',link : '/admin'},
+        {name : 'Material',link : '/material'},
+        {name : 'Edit',link : '/edit'}
     ]
         
+    
     return(
         <>
             <Breadcrumb titles={titles} />

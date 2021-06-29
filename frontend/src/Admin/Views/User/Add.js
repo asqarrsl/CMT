@@ -76,15 +76,11 @@ const AddUser = () =>{
                 mobile,
                 role,
                 email,
-                reviewer:{
-                    specialization
-                },
-                participants:{
-                    type: ptype,
-                    designation,
-                    affiliation,
-                    isPaid
-                },
+                specialization,
+                participant: ptype,
+                designation,
+                affiliation,
+                isPaid,
                 username,
                 password
             }
@@ -155,7 +151,7 @@ const AddUser = () =>{
                                     className="form-control" 
                                     name="name"
                                     id="name" 
-
+                                    value={name}
                                     onChange = {(event)=>setName(event.target.value)} 
                                 />
                             </div>
@@ -166,7 +162,7 @@ const AddUser = () =>{
                                     className="form-control" 
                                     name="email"
                                     id="email" 
-
+                                    value={email}
                                     onChange = {(event)=>setEmail(event.target.value)} 
                                 />
                                 {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
@@ -180,7 +176,7 @@ const AddUser = () =>{
                                     className="form-control" 
                                     name="mobile"
                                     id="mobile" 
-
+                                    value={mobile}
                                     onChange = {(event)=>setMobile(event.target.value)} 
                                 />
                             </div>
@@ -193,8 +189,8 @@ const AddUser = () =>{
                                         type="radio" 
                                         name="role" 
                                         id="role1" 
-
                                         value="Admin" 
+                                        checked={role=="Admin"}
                                         onChange = {(event)=>setRole(event.target.value)} 
                                     />
                                     <label className="form-check-label" htmlFor="role1">Admin</label>
@@ -205,7 +201,7 @@ const AddUser = () =>{
                                         type="radio" 
                                         name="role" 
                                         id="role2" 
-
+                                        checked={role=="Reviewer"}
                                         value="Reviewer" 
                                         onChange = {(event)=>setRole(event.target.value)} 
                                     />
@@ -217,7 +213,7 @@ const AddUser = () =>{
                                         type="radio" 
                                         name="role" 
                                         id="role3" 
-
+                                        checked={role=="Editor"}
                                         value="Editor" 
                                         onChange = {(event)=>setRole(event.target.value)} 
                                     />
@@ -229,7 +225,7 @@ const AddUser = () =>{
                                         type="radio" 
                                         name="role" 
                                         id="role4" 
-
+                                        checked={role=="Participants"}
                                         value="Participants" 
                                         onChange = {(event)=>setRole(event.target.value)} 
                                     />
@@ -248,7 +244,7 @@ const AddUser = () =>{
                                         type="radio" 
                                         name="participanttype" 
                                         id="prole1" 
-
+                                        checked={ptype=="Researcher"}
                                         value="Researcher" 
                                         onChange = {(event)=>setPtype(event.target.value)} 
                                     />
@@ -260,7 +256,7 @@ const AddUser = () =>{
                                         type="radio" 
                                         name="participanttype" 
                                         id="prole2" 
-
+                                        checked={ptype=="WorkshopConductor"}
                                         value="WorkshopConductor" 
                                         onChange = {(event)=>setPtype(event.target.value)} 
 
@@ -273,7 +269,7 @@ const AddUser = () =>{
                                         type="radio" 
                                         name="participanttype" 
                                         id="prole3" 
-
+                                        checked={ptype=="Participant"}
                                         value="Participant" 
                                         onChange = {(event)=>setPtype(event.target.value)} 
                                     />
@@ -289,7 +285,7 @@ const AddUser = () =>{
                                     className="form-control" 
                                     name="designation"
                                     id="designation" 
-
+                                    value={designation}
                                     onChange = {(event)=>setDesignation(event.target.value)} 
                                 />
                             </div>
@@ -300,7 +296,7 @@ const AddUser = () =>{
                                     className="form-control" 
                                     name="affiliation"
                                     id="affiliation" 
-
+                                    value={affiliation}
                                     onChange = {(event)=>setAffiliation(event.target.value)} 
                                 />
                             </div>
@@ -311,10 +307,11 @@ const AddUser = () =>{
                                     name="isPaid"
                                     id="isPaid" 
                                     aria-label="Default select example"
+                                    value={isPaid}
                                     onChange = {(event)=>setisPaid(event.target.value)}  
                                 >
                                     <option defaultValue>Open this select menu</option>
-                                    <option value="true">Yes</option>
+                                    <option  value="true">Yes</option>
                                     <option value="false">No</option>
                                 </select>
                             </div>
@@ -328,7 +325,7 @@ const AddUser = () =>{
                                     className="form-control" 
                                     name="specialization"
                                     id="specialization" 
-
+                                    value={specialization}
                                     onChange = {(event)=> setSpecialization(event.target.value)} 
                                 />
                             </div>}
@@ -341,7 +338,7 @@ const AddUser = () =>{
                                     className="form-control" 
                                     name="username"
                                     id="username"
-
+                                    value={username}
                                     onChange = {(event)=>setUsername(event.target.value)}  
                                 />
                             </div>

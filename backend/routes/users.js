@@ -9,10 +9,15 @@ router.route('/')
     
 router.route('/register')
     .post(catchAsync(userController.register));
-
+    // .post(catchAsync(userController.register));
+    
 router.route('/login')
     .post(passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), userController.login);
-
+    
 router.get('/logout',userController.logout)
+    
+router.route('/:id')
+    .get(catchAsync(userController.show))
+    .put(catchAsync(userController.update));
 
 module.exports = router;
