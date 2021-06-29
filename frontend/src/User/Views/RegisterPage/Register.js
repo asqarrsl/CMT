@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bs-stepper/dist/css/bs-stepper.min.css";
 import Step from "../../Components/Stepper/step";
 import axios from "axios";
-import workshopMgt from "../WorkshopMgtPage/WorkshopMgt";
 
 const Register = () => {
   const [step, setStep] = useState(0);

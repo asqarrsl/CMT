@@ -38,24 +38,28 @@ module.exports.register = async (req, res) => {
     });
   }
   const registeredUser = await User.register(newUser, password);
-  res.status(202).send(registeredUser);
-  // req.login(registeredUser, err => {
-  //     if (err) return next(err);
-  //     res
-  //     .status(202)
-  //     .send({
-  //         message:"Successfully Updated the events!",
-  //         });
-  // })
+  // res.status(202).send(registeredUser);
+  req.login(registeredUser, (err) => {
+    if (err) return next(err);
+    res.status(202).send({
+      message: "Successfully Registerd and logged in",
+    });
+  });
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = async (req, res) => {
   // req.flash('success', 'welcome back!');
 
   // console.log(req.session);
   // const redirectUrl = req.session.returnTo || '/campgrounds'
   // delete req.session.returnTo;
-  res.send("redirectUrl");
+  // res.send("redirectUrl");
+
+  res.status(202).send({
+    message: "Successfully Logged In!",
+    sessionID: req.sessionID,
+    user: req.user,
+  });
 };
 
 module.exports.logout = (req, res) => {
