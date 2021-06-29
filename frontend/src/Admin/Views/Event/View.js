@@ -1,12 +1,14 @@
-import React , {useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import axios from 'axios';
+import Select from 'react-select';
+import moment from 'moment'
 
-const AddEvent = () =>{
+const ViewEvent = (props) =>{
     var titles = [
         {name : 'Admin',link : '/admin'},
         {name : 'Event',link : '/event'},
-        {name : 'Add Event',link : '/add'}
+        {name : 'View',link : '/view'}
     ]
 
     const [init, setinit] = useState(true)
@@ -24,6 +26,25 @@ const AddEvent = () =>{
     const [formError,setFormError] = useState(false);
     const [error,setError] = useState(true);
 
+    const [events,setEvents] = useState([]); 
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/event/${props.match.params.id}`)
+        .then(response=>{
+            setEvents(response.data.events);
+            setEventName(response.data.events.eventName)
+            setDescription(response.data.events.description)
+            setEventType(response.data.events.eventType)
+            setVenue(response.data.events.venue)
+            setMainImg(response.data.events.mainImg)
+            setFrom(moment(response.data.events.duration.From).format("YYYY-MM-DDTkk:mm"))
+            setTo(moment(response.data.events.duration.To).format("YYYY-MM-DDTkk:mm"))
+            setIsApproved(response.data.events.isApproved)
+        })
+    },[])
+
+
+    
     const checknull = (value)=>{
         if(value.trim()==null || value.trim()==''){
             return false;
@@ -43,20 +64,23 @@ const AddEvent = () =>{
     const onValidate = () => {
         if(
             checknull(eventName) && checknull(description) && checknull(eventType) && 
-            checknull(venue) && checknull(mainImg) &&
+            checknull(venue) && 
             checknull(From) && checknull(To)
         ){
             setFormValid(true);
+            return true;
         }else{
             setFormValid(false);
+            return false;
         }
     }
+
     const onSubmit = (e) =>{
         e.preventDefault();
         setinit(false);
-        onValidate();
+        // onValidate();
         // if(1){
-        if(formValid){
+        if(onValidate){
             let event = {
                 eventName, 
                 description, 
@@ -71,7 +95,7 @@ const AddEvent = () =>{
             }
             // var date = new Date(Date); 
             console.log(event);
-            axios.post('http://localhost:3000/event',event)
+            axios.put(`http://localhost:3000/event/${props.match.params.id}`,event)
             .then(response=>{
                 console.log(response);
                 alert("Successfully Inserted")
@@ -100,15 +124,16 @@ const AddEvent = () =>{
         }
     }
 
+
     return(
         <>
             <Breadcrumb titles={titles} />
             <hr />
             <div className="card">
                 <div className="card-body">
-                    <h5 className="card-title">Add Event</h5>
+                    <h5 className="card-title">Edit Event</h5>
                     <hr />
-                    <form method="POST" onSubmit={onSubmit}> 
+                    <form method="POST" onSubmit={console.log('ji')}> 
                         <div className="row">
                             <div className="mb-3 col-md-6">
                                 <label htmlFor="eventName" className="form-label">Event Name</label>
@@ -118,7 +143,7 @@ const AddEvent = () =>{
                                     name="eventName"
                                     id="eventName" 
                                     value={eventName}
-                                    onChange = {(event)=>setEventName(event.target.value)} 
+                                    readonly
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
@@ -129,7 +154,7 @@ const AddEvent = () =>{
                                     name="venue"
                                     id="venue" 
                                     value={venue}
-                                    onChange = {(event)=>setVenue(event.target.value)} 
+                                    readonly
                                 />
                             </div>
                             <div className="mb-3 col-md-12">
@@ -137,7 +162,7 @@ const AddEvent = () =>{
                                 <textarea 
                                     className="form-control" 
                                     id="description" 
-                                    onChange = {(event)=>setDescription(event.target.value)} 
+                                    readonly
                                     rows="4"
                                     value={description}
                                     name="description"
@@ -153,7 +178,7 @@ const AddEvent = () =>{
                                         name="eventType" 
                                         id="eventType1" 
                                         checked={eventType=="Workshop"}
-                                        onChange = {(event)=>setEventType(event.target.value)} 
+                                        readonly
                                         value="Workshop" 
                                     />
                                     <label className="form-check-label" htmlFor="prole1">Workshop</label>
@@ -165,7 +190,7 @@ const AddEvent = () =>{
                                         name="eventType" 
                                         id="eventType2" 
                                         checked={eventType=="Conference"}
-                                        onChange = {(event)=>setEventType(event.target.value)} 
+                                        readonly
                                         value="Conference" 
                                     />
                                     <label className="form-check-label" htmlFor="prole1">Conference</label>
@@ -179,13 +204,10 @@ const AddEvent = () =>{
                                     name="mainImage"
                                     id="mainImage" 
                                     value={mainImg}
-                                    onChange = {(event)=>setMainImg(event.target.value)} 
+                                    readonly
                                 />
-                            </div>  
+                            </div>    
                         </div>
-                        {/* <div className="row">
-                            
-                        </div> */}
                         <div className="row">
                             <div className=" col-md-12 fs-4">Duration</div>
                             <div className="mb-4 col-md-4">
@@ -196,7 +218,7 @@ const AddEvent = () =>{
                                     name="fromdate"
                                     id="fromdate" 
                                     value={From}
-                                    onChange = {(event)=>setFrom(event.target.value)} 
+                                    readonly
                                 />
                             </div>
                             <div className="mb-4 col-md-4">
@@ -207,12 +229,12 @@ const AddEvent = () =>{
                                     name="todate"
                                     id="todate" 
                                     value={To}
-                                    onChange = {(event)=>setTo(event.target.value)} 
+                                    readonly
                                 />
                             </div>
                         {/* </div> */}
                         {/* <div className="row">
-                       
+                     
                         </div> */}
                         {/* <div className="row"> */}
                             <div className="mb-4 col-md-4">
@@ -223,7 +245,7 @@ const AddEvent = () =>{
                                     name="isApproved"
                                     id="isApproved" 
                                     value={isApproved}
-                                    onChange = {(e)=>setIsApproved(e.target.value)}
+                                    readonly
                                 >
                                     <option defaultValue value="Pending">Pending</option>
                                     <option value="Approved">Approved</option>
@@ -231,7 +253,7 @@ const AddEvent = () =>{
                                 </select>
                             </div>                       
                         </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        {/* <button type="submit" className="btn btn-primary">Submit</button> */}
                     </form>
                 </div>
             </div>
@@ -240,4 +262,4 @@ const AddEvent = () =>{
 
 }
 
-export default AddEvent;
+export default ViewEvent;

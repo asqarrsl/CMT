@@ -17,10 +17,11 @@ router.route('/')
 
 router.route('/:id')
     .get(catchAsync(materialController.show))
-    .put(isLoggedIn,isAuthor,upload.array('image'),catchAsync(materialController.update))
+    .put(catchAsync(materialController.update))
+    // .put(isLoggedIn,isAuthor,upload.array('image'),catchAsync(materialController.update))
     .delete(isLoggedIn,isAuthor,catchAsync(materialController.delete));
 
 
-router.get('/:id/edit',isLoggedIn,isAuthor,catchAsync(materialController.edit));
+// router.get('/:id/edit',isLoggedIn,isAuthor,catchAsync(materialController.edit));
 
 module.exports = router;

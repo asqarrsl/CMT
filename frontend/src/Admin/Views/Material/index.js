@@ -44,7 +44,7 @@ const MaterialIndex = () =>{
                         <th scope="col">Type</th>
                         <th scope="col">Event Name</th>
                         <th scope="col">User</th>
-                        <th scope="col" colSpan="2">Action</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <MaterialDataTable data={materials} />

@@ -3,7 +3,7 @@ import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import axios from 'axios';
 import Select from 'react-select';
 
-const EditMaterial = (props) =>{
+const ViewMaterial = (props) =>{
     var titles = [
         {name : 'Admin',link : '/admin'},
         {name : 'Material',link : '/material'},
@@ -157,7 +157,7 @@ const EditMaterial = (props) =>{
                                     name="name"
                                     id="name" 
                                     value={name}
-                                    onChange = {(e)=>setName(e.target.value)}
+                                    readOnly
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
@@ -184,7 +184,7 @@ const EditMaterial = (props) =>{
                                         name="type" 
                                         id="type1" 
                                         checked={type=="Workshop"}
-                                        onChange = {(e)=>setType(e.target.value)}
+                                        readOnly
                                         value="Workshop" 
                                     />
                                     <label className="form-check-label" htmlFor="prole1">Workshop</label>
@@ -196,7 +196,7 @@ const EditMaterial = (props) =>{
                                         name="type" 
                                         id="type2" 
                                         checked={type=="Research"}
-                                        onChange = {(e)=>setType(e.target.value)}
+                                        readOnly
                                         value="Research" 
                                     />
                                     <label className="form-check-label" htmlFor="prole1">Research</label>
@@ -210,7 +210,7 @@ const EditMaterial = (props) =>{
                                     name="tags"
                                     id="tags" 
                                     value={tags}
-                                    onChange = {(e)=>setTags(e.target.value)}
+                                    readOnly
                                 />
                             </div>
                         </div>
@@ -223,7 +223,7 @@ const EditMaterial = (props) =>{
                                     name="images"
                                     id="images" 
                                     // value={images}
-                                    onChange = {(e)=>setImages(e.target.value)}
+                                    readOnly
                                 />
                             </div>
                             <div className="mb-3 col-md-6">
@@ -234,7 +234,7 @@ const EditMaterial = (props) =>{
                                     name="document"
                                     id="document" 
                                     // value={document}
-                                    onChange = {(e)=>setDocument(e.target.value)}
+                                    readOnly
                                 />
                             </div>
                         </div>
@@ -247,7 +247,7 @@ const EditMaterial = (props) =>{
                                     name="isPaid"
                                     id="isPaid" 
                                     value={isPaid}
-                                    onChange = {(e)=>setIsPaid(e.target.value)}
+                                    readOnly
                                 >
                                     <option defaultValue>Select is Paid</option>
                                     <option value="True">Yes</option>
@@ -262,7 +262,7 @@ const EditMaterial = (props) =>{
                                     name="isApproved"
                                     id="isApproved" 
                                     value={isApproved}
-                                    onChange = {(e)=>setIsApproved(e.target.value)}
+                                    readOnly
                                 >
                                     <option defaultValue value="Pending">Pending</option>
                                     <option value="Approved">Approved</option>
@@ -291,4 +291,4 @@ const EditMaterial = (props) =>{
 
 }
 
-export default EditMaterial;
+export default ViewMaterial;

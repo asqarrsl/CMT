@@ -249,7 +249,7 @@ const AddMaterial = () =>{
                                 </select>
                             </div>
                             <div className="mb-3 col-md-6">
-                                <label htmlFor="userId" className="form-label">userId</label>
+                                <label htmlFor="userId" className="form-label">User</label>
                                 <Select 
                                     options={useroptions}
                                     className="basic-multi-select"

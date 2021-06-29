@@ -36,11 +36,13 @@ module.exports.show = async (req,res)=>{
 }
 
 module.exports.update = async (req,res)=>{
+
     const {id} = req.params
-    const events = await Event.findByIdAndUpdate(id, {...req.body.events});
-    const mainImg = req.files.map(f=>({url:f.path,filename:f.filename}))
-    events.editorId = req.user._id;
-    events.mainImg.push(...mainImg);
+    console.log(req.body);
+    const events = await Event.findByIdAndUpdate(id, {...req.body});
+    // const mainImg = req.files.map(f=>({url:f.path,filename:f.filename}))
+    // events.editorId = req.user._id;
+    // events.mainImg.push(...mainImg);
     await events.save();
 
     res

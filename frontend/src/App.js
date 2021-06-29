@@ -21,6 +21,8 @@ import MaterialIndex from './Admin/Views/Material';
 import Login from "./User/Views/LoginPage/Login";
 import Register from "./User/Views/RegisterPage/Register";
 import UserProfile from "./User/Views/UserProfilePage/UserProfile";
+import ViewEvent from './Admin/Views/Event/View';
+import ViewMaterial from './Admin/Views/Material/View';
 
 const App = (props) =>{
     return(
@@ -31,9 +33,11 @@ const App = (props) =>{
                         <MainAdmin>
                             <Switch>
                                 <Route path='/admin/event/:id/edit' exact component={EditEvent} />
+                                <Route path='/admin/event/:id' exact component={ViewEvent} />
                                 <Route path='/admin/event/add' exact component={AddEvent} />
                                 <Route path='/admin/event' exact component={EventIndex} />
                                 <Route path='/admin/material/:id/edit' exact component={EditMaterial} />
+                                <Route path='/admin/material/:id' exact component={ViewMaterial} />
                                 <Route path='/admin/material/add' exact component={AddMaterial} />
                                 <Route path='/admin/material' exact component={MaterialIndex} />
                                 <Route path='/admin/user/:id/edit' exact component={EditUser} />

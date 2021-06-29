@@ -63,15 +63,15 @@ module.exports.edit = async (req,res)=>{
 }
 module.exports.update = async (req,res)=>{
     const {id} = req.params
-    const materials = await Material.findByIdAndUpdate(id, {...req.body.materials});
-    const editedDoc = req.files.map(f=>({url:f.path,filename:f.filename}))
-    materials.reviewerId = req.user._id;
+    const materials = await Material.findByIdAndUpdate(id, {...req.body});
+    // const editedDoc = req.files.map(f=>({url:f.path,filename:f.filename}))
+    // materials.reviewerId = req.user._id;
     materials.isApproved = 0 ;
-    if(req.user.role == 'editor'){
-        materials.editedVersion.push(...editedDoc);
-    }else{
-        materials.document.push(...editedDoc);
-    }
+    // if(req.user.role == 'Editor'){
+    //     materials.editedVersion.push(...editedDoc);
+    // }else{
+    //     materials.document.push(...editedDoc);
+    // }
     await materials.save();
     res
       .status(202)
