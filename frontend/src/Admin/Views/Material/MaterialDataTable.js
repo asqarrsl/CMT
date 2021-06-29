@@ -1,36 +1,33 @@
 import React from "react";
 
-const MaterialDataTable = ({ data }) => {
-  var editUrl = (obj) => {
-    return `/admin/material/${obj}/edit`;
-  };
-  var deleteUrl = (obj) => {
-    return `/admin/material/${obj}/edit`;
-  };
-  return (
-    <tbody>
-      {data.map((materials, i) => (
-        <tr key={i}>
-          <th scope="row">{i}</th>
-          <td>{materials.name}</td>
-          <td>{materials.type}</td>
-          <td>{materials.eventId.eventName}</td>
-          <td>{materials.uid.name}</td>
-          {console.log(materials)}
-          <td>
-            <a href={editUrl(materials._id)}>
-              <i className="fas fa-pen"></i>
-            </a>
-          </td>
-          <td>
-            <a href={deleteUrl(materials._id)}>
-              <i className="far fa-trash-alt"></i>
-            </a>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  );
-};
+const MaterialDataTable = ({data}) =>{
+    var editUrl = (obj)=>{
+        return `/admin/material/${obj}/edit`
+    }
+    var viewUrl = (obj)=>{
+        return `/admin/material/${obj}`
+    }
+    var deleteUrl = (obj)=>{
+        return `/admin/material/${obj}/edit`
+    }
+    return(
+        <tbody>
+            {data.map((material,i)=>(
+                <tr key={i}> 
+                    <th scope="row">{i+1}</th>
+                    <td>{material.name}</td>
+                    <td>{material.type}</td>
+                    <td>{material.eventId.eventName}</td>
+                    <td>{material.uid.name}</td>
+                    <td>
+                        <a href={viewUrl(material._id)} className="me-3"><i className="far fa-eye"></i></a>
+                        <a href={editUrl(material._id)} className="me-3"><i className="fas fa-pen"></i></a>
+                        <a href={deleteUrl(material._id)} className="me-3"><i className="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    );
+}
 
 export default MaterialDataTable;

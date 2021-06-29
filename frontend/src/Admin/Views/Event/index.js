@@ -45,7 +45,7 @@ const EventIndex = () =>{
                         <th scope="col">Venue</th>
                         <th scope="col">From</th>
                         <th scope="col">To</th>
-                        <th scope="col" colSpan="2">Action</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <EventDataTable data={events} />
