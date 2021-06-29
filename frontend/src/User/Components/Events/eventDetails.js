@@ -5,33 +5,53 @@ import { Card, CardHeader, CardBody, CardFooter } from 'react-simple-card';
 
 const EventDetails = (props) => {
     return (
-        <header className="masthead text-white text-center">
-            <div className="overlay"></div>
-            <div className="container">
-                <div className="row">
-                    <div className="col-xl-9 mx-auto">
-                        <h1 className="mb-5">Event Details</h1>
-                    </div>
-                    <div>
-                        <div className="image-details-container">
-                            <img src="https://hire4event.com/blogs/wp-content/uploads/2019/03/best-Event-company-in-Greater-Noida-.jpg" />
+        <body className="masthead text-black text-center">
+            <div class="container emp-profile">
+                <div class="details_card">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5 col-sm-6">
+                            <div class="profile-img">
+                                <img src="https://hire4event.com/blogs/wp-content/uploads/2019/03/best-Event-company-in-Greater-Noida-.jpg" />
+                            </div>
                         </div>
-                        <Card>
-                            <CardBody>
-                                <p>Event Name:</p><br />
-                                <p>Description:</p><br />
-                                <p>Event Type:</p><br />
-                                <p>Venue:</p><br />
-                                <p>Date:</p><br />
-                                <p>Start Time:</p><br />
-                                <p>Ending Time:</p><br />
-                                <p>Status</p><br />
-                            </CardBody>
-                        </Card>
+                        <div class="col-lg-8 col-md-7 col-sm-6">
+                            <div class="profile-head">
+                                <h6>
+                                    Event Details
+                                </h6>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Event Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Description</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Venue</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Start Time</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label>End Time</label>
+                            </div>
+                            <br></br>
+                            <div class="col-md-6">
+                                <a href="/event_materials">View Materials</a>
+                            </div>
+                            <br></br>
+                            <div class="col-md-6">
+                                <form method="get" action="/events">
+                                    <button type="submit" class="profile-edit-btn" >Apply</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </header>
+        </body>
 
     );
 }

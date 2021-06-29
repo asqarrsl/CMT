@@ -1,10 +1,11 @@
-import React from 'react';
+import React from 'react'
+import './Test.css'
 import './card.css'
 import { Card, CardBody } from 'react-simple-card';
 
-const Events = (props) => {
-  return (
-    <body className="masthead text-white text-center">
+const Test = (props) => {
+    return (
+        <body className="masthead text-white text-center">
             <div class="container emp-profile">
                 <div class="col-md-12">
                     <div class="profile-head">
@@ -25,7 +26,7 @@ const Events = (props) => {
                 <div class="row">
                     <div className="card-container">
                         <div className="image-container">
-                            <img src="https://www.ba-beyond.eu/assets/images/sessions/2020/immersion-workshop-visual.jpg" />
+                            <img src="https://hire4event.com/blogs/wp-content/uploads/2019/03/best-Event-company-in-Greater-Noida-.jpg" />
                         </div>
                         <Card>
                             <CardBody>
@@ -38,7 +39,7 @@ const Events = (props) => {
                     </div>
                     <div className="card-container">
                         <div className="image-container">
-                            <img src="https://www.ba-beyond.eu/assets/images/sessions/2020/immersion-workshop-visual.jpg" />
+                            <img src="https://hire4event.com/blogs/wp-content/uploads/2019/03/best-Event-company-in-Greater-Noida-.jpg" />
                         </div>
                         <Card>
                             <CardBody>
@@ -51,7 +52,7 @@ const Events = (props) => {
                     </div>
                     <div className="card-container">
                         <div className="image-container">
-                            <img src="https://www.ba-beyond.eu/assets/images/sessions/2020/immersion-workshop-visual.jpg" />
+                            <img src="https://hire4event.com/blogs/wp-content/uploads/2019/03/best-Event-company-in-Greater-Noida-.jpg" />
                         </div>
                         <Card>
                             <CardBody>
@@ -65,8 +66,7 @@ const Events = (props) => {
                 </div>
             </div>
         </body>
-
-  );
+    );
 }
 
-export default Events;
+export default Test;
