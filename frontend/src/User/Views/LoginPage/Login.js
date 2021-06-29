@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import axios from "axios";
-
-const check = () => {
-  console.log("hi");
-};
+import { setUserSession } from "../../../Utils/Common";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -45,8 +42,10 @@ const Login = () => {
       axios
         .post("http://localhost:3000/users/login", user)
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
           alert("Successfully logged");
+
+          setUserSession(response.data.sessionID, response.data.user);
 
           // if (response.data.role == "Participants") {
           //   window.location = `/`;
