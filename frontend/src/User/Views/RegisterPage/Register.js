@@ -40,6 +40,10 @@ const Register = () => {
     window.location = `/workshopMgt`;
   };
 
+  const navAddPaper = () => {
+    // window.location = `/workshopMgt`;
+  };
+
   const checkNull = (value) => {
     if (value.trim() == null || value.trim() == "") {
       return false;
@@ -125,6 +129,10 @@ const Register = () => {
 
     if (ptype == "WorkshopConductor") {
       navWorkshopMgt();
+    } else if (ptype == "Researcher") {
+      navAddPaper();
+    } else {
+      null; //change here
     }
   };
 
