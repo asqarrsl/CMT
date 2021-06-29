@@ -55,8 +55,9 @@ module.exports.update = async (req,res)=>{
 
 module.exports.approve = async (req,res)=>{
     const {id} = req.params
-    const events = await Event.findById(id);
-    events.isApproved = '1';
+    console.log(req.body);
+    const events = await Event.findByIdAndUpdate(id, {...req.body});
+
     // events.reviewdVersion.push(...editedDoc);
     await events.save();
     res

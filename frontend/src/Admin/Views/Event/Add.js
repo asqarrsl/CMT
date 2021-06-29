@@ -55,55 +55,70 @@ const AddEvent = () => {
     } else {
       setFormValid(false);
     }
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setinit(false);
-    onValidate();
-    // if(1){
-    if (formValid) {
-      let event = {
-        eventName,
-        description,
-        eventType,
-        venue,
-        image: mainImg,
-        duration: {
-          From,
-          To,
-        },
-        isApproved,
-      };
-      // var date = new Date(Date);
-      console.log(event);
-      axios
-        .post("http://localhost:3000/event", event)
-        .then((response) => {
-          console.log(response);
-          alert("Successfully Inserted");
-        })
-        .catch((error) => {
-          if (error.response) {
-            setFormError(error.response.data.message);
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            // console.log(error.response.data);
-            // console.log(error.response.status);
-            // console.log(error.response.headers);
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the
-            // browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-          }
-        });
-    } else {
-      setError("Invalid");
-    }
+    const onValidate = () => {
+      if (
+        checknull(eventName) &&
+        checknull(description) &&
+        checknull(eventType) &&
+        checknull(venue) &&
+        checknull(mainImg) &&
+        checknull(From) &&
+        checknull(To)
+      ) {
+        setFormValid(true);
+      } else {
+        setFormValid(false);
+      }
+    };
+    const onSubmit = (e) => {
+      e.preventDefault();
+      setinit(false);
+      onValidate();
+      // if(1){
+      if (formValid) {
+        let event = {
+          eventName,
+          description,
+          eventType,
+          venue,
+          image: mainImg,
+          duration: {
+            From,
+            To,
+          },
+          status: isApproved,
+        };
+        // var date = new Date(Date);
+        console.log(event);
+        axios
+          .post("http://localhost:3000/event", event)
+          .then((response) => {
+            console.log(response);
+            alert("Successfully Inserted");
+          })
+          .catch((error) => {
+            if (error.response) {
+              setFormError(error.response.data.message);
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              // console.log(error.response.data);
+              // console.log(error.response.status);
+              // console.log(error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              // `error.request` is an instance of XMLHttpRequest in the
+              // browser and an instance of
+              // http.ClientRequest in node.js
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log("Error", error.message);
+            }
+          });
+      } else {
+        setError("Invalid");
+      }
+    };
   };
 
   return (

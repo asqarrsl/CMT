@@ -22,6 +22,7 @@ router.route('/:id')
     .delete(isLoggedIn,isAuthor,catchAsync(eventController.delete));
 
 
-router.get('/:id/edit',isLoggedIn,isAuthor,catchAsync(eventController.edit));
+router.post('/:id/approve',catchAsync(eventController.approve));
+// router.post('/:id/approve',isLoggedIn,isAuthor,catchAsync(eventController.edit));
 
 module.exports = router;
