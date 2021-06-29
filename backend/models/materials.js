@@ -29,6 +29,7 @@ const materialSchema = new Schema ({
         required:true
     },
     tags :String,
+    description : String, 
     images:[imageSchema],
     type :{
         type:String,
@@ -36,12 +37,12 @@ const materialSchema = new Schema ({
     },
     eventId : {
         type:Schema.Types.ObjectId,
-        ref:'User'
+        ref:'Event'
     },
     document : [documentSchema],
     editorId : {
         type:Schema.Types.ObjectId,
-        ref:'Event'
+        ref:'User'
     },
     reviewerId : {
         type:Schema.Types.ObjectId,
@@ -56,11 +57,12 @@ const materialSchema = new Schema ({
     isDeleteReq : {
         type:String,
         default:'0'
-    }, 
-    isApproved:{
-        type:String,
-        default:'0'
     },
+    status:{
+        type:String,
+        default:"Pending"
+    },
+    message:String,
     isActive:{
         type:String,
         default:'1'
