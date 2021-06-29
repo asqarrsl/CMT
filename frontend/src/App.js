@@ -1,28 +1,30 @@
-import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import LandingPage from './User/Views/LandingPage/LangingPage';
-import NavBar from './User/Components/NavBar/Navbar'
-import Footer from './User/Components/Footer/Footer'
-import './App.css'
-import Payment from './User/Views/Payment/Payment';
-import Dashboard from './Admin/Views/Dashboard/Dashboard';
-import AdminRoute from './Admin/AdminRoute';
-import MainAdmin from './Admin/Components/Layout/MainAdmin';
-import Main from './User/Components/Layout/Main';
-import UserIndex from './Admin/Views/User';
-import AddUser from './Admin/Views/User/Add';
-import EditUser from './Admin/Views/User/Edit';
-import AddEvent from './Admin/Views/Event/Add';
-import EditEvent from './Admin/Views/Event/Edit';
-import EventIndex from './Admin/Views/Event';
-import EditMaterial from './Admin/Views/Material/Edit';
-import AddMaterial from './Admin/Views/Material/Add';
-import MaterialIndex from './Admin/Views/Material';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LandingPage from "./User/Views/LandingPage/LangingPage";
+import NavBar from "./User/Components/NavBar/Navbar";
+import Footer from "./User/Components/Footer/Footer";
+import "./App.css";
+import Payment from "./User/Views/Payment/Payment";
+import Dashboard from "./Admin/Views/Dashboard/Dashboard";
+import AdminRoute from "./Admin/AdminRoute";
+import MainAdmin from "./Admin/Components/Layout/MainAdmin";
+import Main from "./User/Components/Layout/Main";
+import UserIndex from "./Admin/Views/User";
+import AddUser from "./Admin/Views/User/Add";
+import EditUser from "./Admin/Views/User/Edit";
+import AddEvent from "./Admin/Views/Event/Add";
+import EditEvent from "./Admin/Views/Event/Edit";
+import EventIndex from "./Admin/Views/Event";
+import EditMaterial from "./Admin/Views/Material/Edit";
+import AddMaterial from "./Admin/Views/Material/Add";
+import MaterialIndex from "./Admin/Views/Material";
 import Login from "./User/Views/LoginPage/Login";
 import Register from "./User/Views/RegisterPage/Register";
 import UserProfile from "./User/Views/UserProfilePage/UserProfile";
-import ViewEvent from './Admin/Views/Event/View';
-import ViewMaterial from './Admin/Views/Material/View';
+import ViewEvent from "./Admin/Views/Event/View";
+import ViewMaterial from "./Admin/Views/Material/View";
+import WorkshopMgt from "./User/Views/WorkshopMgtPage/WorkshopMgt";
+
 
 const App = (props) =>{
     return(
@@ -57,6 +59,7 @@ const App = (props) =>{
                                   <Route path="/login" component={Login} />
                                   <Route path="/register" component={Register} />
                                   <Route path="/userprofile" component={UserProfile} />
+                                  <Route path="/workshopMgt" component={WorkshopMgt} />
                             </Switch>
                         </Main>
                     </Route>

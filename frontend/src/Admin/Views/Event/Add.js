@@ -2,14 +2,15 @@ import React , {useRef, useState} from 'react'
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import axios from 'axios';
 
-const AddEvent = () =>{
-    var titles = [
-        {name : 'Admin',link : '/admin'},
-        {name : 'Event',link : '/event'},
-        {name : 'Add Event',link : '/add'}
-    ]
 
-    const [init, setinit] = useState(true)
+const AddEvent = () => {
+  var titles = [
+    { name: "Admin", link: "/admin" },
+    { name: "Event", link: "/event" },
+    { name: "Add Event", link: "/add" },
+  ];
+
+  const [init, setinit] = useState(true);
 
     const [eventName, setEventName] = useState('')
     const [description, setDescription] = useState('')
@@ -32,14 +33,30 @@ const AddEvent = () =>{
             return true;
         }
     }
-    const checkstring = (value)=>{
-        if(typeof value != "string"){
-            return false;
-        }
+  };
+  const checkstring = (value) => {
+    if (typeof value != "string") {
+      return false;
     }
-    function validateEmail(value) {
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(value).toLowerCase());
+  };
+  function validateEmail(value) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(value).toLowerCase());
+  }
+  const onValidate = () => {
+    if (
+      checknull(eventName) &&
+      checknull(description) &&
+      checknull(eventType) &&
+      checknull(venue) &&
+      checknull(mainImg) &&
+      checknull(From) &&
+      checknull(To)
+    ) {
+      setFormValid(true);
+    } else {
+      setFormValid(false);
     }
     const onValidate = () => {
         if(
@@ -235,10 +252,77 @@ const AddEvent = () =>{
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
+              </div>
+              <div className="mb-3 col-md-6">
+                <label htmlFor="mainImage" className="form-label">
+                  Main Image
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  name="mainImage"
+                  id="mainImage"
+                  value={mainImg}
+                  onChange={(event) => setMainImg(event.target.value)}
+                />
+              </div>
             </div>
-        </>
-    );
-
-}
+            <div className="row">
+              <div className=" col-md-12 fs-4">Duration</div>
+              <div className="mb-4 col-md-4">
+                <label htmlFor="date" className="form-label">
+                  From
+                </label>
+                <input
+                  type="datetime-local"
+                  className="form-control"
+                  name="fromdate"
+                  id="fromdate"
+                  value={From}
+                  onChange={(event) => setFrom(event.target.value)}
+                />
+              </div>
+              <div className="mb-4 col-md-4">
+                <label htmlFor="date" className="form-label">
+                  To
+                </label>
+                <input
+                  type="datetime-local"
+                  className="form-control"
+                  name="todate"
+                  id="todate"
+                  value={To}
+                  onChange={(event) => setTo(event.target.value)}
+                />
+              </div>
+              <div className="mb-4 col-md-4">
+                <label htmlFor="isApproved" className="form-label">
+                  is Approved
+                </label>
+                <select
+                  type="text"
+                  className="form-select"
+                  name="isApproved"
+                  id="isApproved"
+                  value={isApproved}
+                  onChange={(e) => setIsApproved(e.target.value)}
+                >
+                  <option defaultValue value="Pending">
+                    Pending
+                  </option>
+                  <option value="Approved">Approved</option>
+                  <option value="Declined">Declined</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default AddEvent;

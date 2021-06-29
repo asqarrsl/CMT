@@ -1,16 +1,15 @@
-const Material = require('../models/materials');
-const {cloudinary} = require('../cloudinary')
+const Material = require("../models/materials");
+const { cloudinary } = require("../cloudinary");
 
-module.exports.index = async (req,res)=>{
-    const materials = await Material.find({isActive:'1'}).populate('uid').populate('eventId');
-    res
-      .status(202)
-      .send({
-          message:"Successfully Updated the materials!",
-          materials
-        });
-}
-
+module.exports.index = async (req, res) => {
+  const materials = await Material.find({ isActive: "1" })
+    .populate("uid")
+    .populate("eventId");
+  res.status(202).send({
+    message: "Successfully Updated the materials!",
+    materials,
+  });
+};
 
 module.exports.store = async (req,res)=>{
     const materials = new Material(req.body);
@@ -80,55 +79,52 @@ module.exports.update = async (req,res)=>{
         });
 }
 
-module.exports.review = async (req,res)=>{
-    const {id} = req.params
-    const materials = await Material.findByIdAndUpdate(id, {...req.body.materials});
-    const editedDoc = req.files.map(f=>({url:f.path,filename:f.filename}))
-    materials.editorId = req.user._id;
-    materials.reviewdVersion.push(...editedDoc);
-    await materials.save();
-    res
-      .status(202)
-      .send({
-          message:"Successfully Updated the materials!",
-          materials
-        });
-}
+module.exports.review = async (req, res) => {
+  const { id } = req.params;
+  const materials = await Material.findByIdAndUpdate(id, {
+    ...req.body.materials,
+  });
+  const editedDoc = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
+  materials.editorId = req.user._id;
+  materials.reviewdVersion.push(...editedDoc);
+  await materials.save();
+  res.status(202).send({
+    message: "Successfully Updated the materials!",
+    materials,
+  });
+};
 
-module.exports.approve = async (req,res)=>{
-    const {id} = req.params
-    console.log(req.body);
-    const materials = await Material.findByIdAndUpdate(id, {...req.body});
-    
-    await materials.save();
-    res
-      .status(202)
-      .send({
-          message:"Successfully Updated the materials!",
-          materials
-        });
-}
+module.exports.approve = async (req, res) => {
+  const { id } = req.params;
+  console.log(req.body);
+  const materials = await Material.findByIdAndUpdate(id, { ...req.body });
 
-module.exports.deleteRequest = async (req,res)=>{
-    const {id} = req.params    
-    const materials = await Material.findById(id);
-    materials.isDeleteReq = 1;
-    res
-      .status(202)
-      .send({
-          message:"Successfully Updated the materials!",
-          materials
-        });
-}
+  await materials.save();
+  res.status(202).send({
+    message: "Successfully Updated the materials!",
+    materials,
+  });
+};
 
-module.exports.delete = async (req,res)=>{
-    const {id} = req.params    
-    const materials = await Material.findById(id);
-    materials.isActive = '0';
-    res
-      .status(202)
-      .send({
-          message:"Successfully Updated the materials!",
-          materials
-        });
-}
+module.exports.deleteRequest = async (req, res) => {
+  const { id } = req.params;
+  const materials = await Material.findById(id);
+  materials.isDeleteReq = 1;
+  res.status(202).send({
+    message: "Successfully Updated the materials!",
+    materials,
+  });
+};
+
+module.exports.delete = async (req, res) => {
+  const { id } = req.params;
+  const materials = await Material.findById(id);
+  materials.isActive = "0";
+  res.status(202).send({
+    message: "Successfully Updated the materials!",
+    materials,
+  });
+};
