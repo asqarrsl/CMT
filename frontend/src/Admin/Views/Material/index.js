@@ -1,6 +1,7 @@
-import React from 'react'
+import React ,{useEffect,useState} from 'react'
+import axios from 'axios';
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
-
+import MaterialDataTable from './MaterialDataTable';
 const MaterialIndex = () =>{
     var titles = [
         {
@@ -12,6 +13,16 @@ const MaterialIndex = () =>{
             link : '/material'
         }
     ]
+
+    const [materials,setMaterials] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/material')
+        .then(response=>{
+            console.log(response.data);
+            setMaterials(response.data.materials);
+        })
+    },[])
         
     return(
         <>
@@ -25,34 +36,18 @@ const MaterialIndex = () =>{
             </div>
             <hr />
             <div className="fs-4">All Material</div>
-            <table class="table table-striped table-hover">
+            <table className="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Event Name</th>
+                        <th scope="col">User</th>
+                        <th scope="col" colSpan="2">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                </tbody>
+                <MaterialDataTable data={materials} />
             </table>
         </>
     );

@@ -210,19 +210,19 @@ const AddEvent = () =>{
                         </div>
                         <div className="row">
                             <div className="mb-3 col-md-6">
-                                <div className=" col-md-12 fs-6">Is Approved ? </div>
-                                <div className="form-check form-switch">
-                                    <input 
-                                        className="form-check-input" 
-                                        type="checkbox" 
-                                        id="isApproved" 
-                                        name="isApproved"
-                                        defaultChecked
-                                        onChange = {(event)=>{setIsApproved(event.target.checked)}}
-                                    />
-                                    {/* <label className="form-check-label" htmlFor="isApproved">isApproved </label> */}
-                                </div>
-                            </div>                          
+                                <label htmlFor="isApproved" className="form-label">is Approved</label>
+                                <select 
+                                    type="text"
+                                    className="form-select" 
+                                    name="isApproved"
+                                    id="isApproved" 
+                                    onChange = {(e)=>setIsApproved(e.target.value)}
+                                >
+                                    <option defaultValue value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Declined">Declined</option>
+                                </select>
+                            </div>                       
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>

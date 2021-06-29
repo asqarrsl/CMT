@@ -29,12 +29,15 @@ const userSchema = new Schema({
         type:String,
         designation:String,
         affiliation:String,
-        isPaid:String
+        isPaid:{
+            type:String,
+            default:'0'
+        }
     },
     bio:String,
     isActive:{
         type:String,
-        default:'1',
+        default:'1'
     }
 
 },{
