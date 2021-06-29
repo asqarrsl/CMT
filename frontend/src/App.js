@@ -9,6 +9,7 @@ import Dashboard from './Admin/Views/Dashboard/Dashboard';
 import AdminRoute from './Admin/AdminRoute'
 import MainAdmin from './Admin/Components/Layout/MainAdmin';
 import Main from './User/Components/Layout/Main';
+import WCForm from './User/Views/Workshop/WCForm';
 const App = (props) =>{
     return(
         <>
@@ -23,9 +24,8 @@ const App = (props) =>{
                     </Route>
                     <Route>
                         <Main>
-                            <Switch>
-                                <Route path='/' exact component={LandingPage} />
-                                <Route path='/payment' component={Payment} />
+                            <Switch>                
+                                <Route path="/Payment" component={Payment} />
                             </Switch>
                         </Main>
                     </Route>
