@@ -14,7 +14,7 @@ const MaterialDataTable = ({data}) =>{
         <tbody>
             {data.map((material,i)=>(
                 <tr key={i}> 
-                    <th scope="row">{i}</th>
+                    <th scope="row">{i+1}</th>
                     <td>{material.name}</td>
                     <td>{material.type}</td>
                     <td>{material.eventId.eventName}</td>

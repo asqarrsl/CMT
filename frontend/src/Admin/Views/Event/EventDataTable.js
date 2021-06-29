@@ -14,7 +14,7 @@ const EventDataTable = ({data}) =>{
         <tbody>
             {data.map((event,i)=>(
                 <tr key={i}> 
-                    <th scope="row">{i}</th>
+                    <th scope="row">{i+1}</th>
                     <td>{event.eventName}</td>
                     <td>{event.eventType}</td>
                     <td>{event.venue}</td>

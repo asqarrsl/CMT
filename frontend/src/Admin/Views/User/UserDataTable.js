@@ -11,7 +11,7 @@ const UserDataTable = ({data}) =>{
         <tbody>
             {data.map((user,i)=>(                
                 <tr key={i}> 
-                    <th scope="row">{i}</th>
+                    <th scope="row">{i+1}</th>
                     <td>{user.name}</td>
                     <td>{user.username}</td>
                     <td>{user.email}</td>
