@@ -66,9 +66,10 @@ module.exports.register = async (req, res) => {
 
 }
 
-module.exports.update = async (req, res) => {    
+module.exports.update = async (req, res) => {   
     const {id} = req.params
-    const users = await User.findByIdAndUpdate(id, {...req.body.user});
+    console.log(req.body); 
+    const users = await User.findByIdAndUpdate(id, {...req.body});
     await users.save();
     res
       .status(202)

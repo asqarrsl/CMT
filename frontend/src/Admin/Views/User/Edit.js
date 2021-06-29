@@ -114,7 +114,7 @@ const EditUser = (props) =>{
                 username,
                 password
             }
-            axios.post('http://localhost:3000/users/register',user)
+            axios.put(`http://localhost:3000/users/${props.match.params.id}`,user)
             .then(response=>{
                 console.log(response);
                 alert("Successfully Inserted")
@@ -153,7 +153,7 @@ const EditUser = (props) =>{
                     <h5 className="card-title">Edit User</h5>
                      <hr />
                     {(formError) && <Error message={formError} />}
-                    <form onSubmit={onSubmit} method="POST">
+                    <form onSubmit={onSubmit}>
                         <div className="row">
                             <div className="mb-3 col-md-6">
                                 <label htmlFor="name" className="form-label">Full Name</label>
