@@ -30,6 +30,8 @@ import Register from "./User/Views/RegisterPage/Register";
 import UserProfile from "./User/Views/UserProfilePage/UserProfile";
 import Payment from "./User/Views/Payment/Payment";
 import WorkshopMgt from "./User/Views/WorkshopMgtPage/WorkshopMgt";
+import MaterialAdd from "./User/Views/Material/Add";
+import MaterialEdit from "./User/Views/Material/Edit";
 
 const App = (props) => {
   // const [isAuth, setIsAuth] = useState();
@@ -95,13 +97,15 @@ const App = (props) => {
           <Route>
             <Main>
               <Switch>
-                <PrivateRoute path="/" exact component={LandingPage} />
-                <PublicRoute path="/login" component={Login} />
+                <Route path="/" exact component={LandingPage} />
+                <Route path="/login" component={Login} />
                 <Route path="/payment" component={Payment} />
                 <Route path="/payment" component={Payment} />
                 <Route path="/register" component={Register} />
                 <Route path="/userprofile" component={UserProfile} />
                 <Route path="/workshopMgt" component={WorkshopMgt} />
+                <Route path="/materialadd" component={MaterialAdd} />
+                <Route path="/materialedit" component={MaterialEdit} />
               </Switch>
             </Main>
           </Route>

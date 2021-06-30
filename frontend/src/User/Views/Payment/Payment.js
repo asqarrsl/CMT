@@ -11,13 +11,13 @@ const Payment = () => {
             <h2>Make a Payment </h2>
             <p className="lead">Find and select the relevant prices for the product</p>
           </div>
-          <div className="row">
-            <div className="col-md-4 order-md-2 mb-4">
+          <div className="row ">
+            <div className="col-md-4 order-md-2 mb-4 ">
               <h4 className="d-flex justify-content-between align-items-center mb-3">
                 <span className="text-muted">Cart</span>
                 <span className="badge badge-secondary badge-pill">3</span>
               </h4>
-              <ul className="list-group mb-3">
+              <ul className="list-group mb-3 shadow-lg">
                 <li className="list-group-item d-flex justify-content-between lh-condensed">
                   <div>
                     <h6 className="prod1">Product name</h6>
@@ -38,7 +38,7 @@ const Payment = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-md-8 order-md-1">
+            <div className="col-md-8 order-md-1 shadow-lg mb-4">
               <h4 className="mb-3">Shipping Details</h4>
               <form className="needs-validation" novalidate>
                 <div className="row">
@@ -105,7 +105,7 @@ const Payment = () => {
                 </div>
                 <hr className="mb-4" />
                 <div className="form-check form-switch">
-                  <input className="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
+                  <input className="form-check-input" type="checkbox" id="flexSwitchCheckChecked"  />
                   <label className="form-check-label" for="flexSwitchCheckChecked">Billing address same as the shipping</label>
                 </div>
                 <hr className="mb-4" />
@@ -113,17 +113,17 @@ const Payment = () => {
                 <div className="card-select my-3">               
                     <div className="payment-method custom-radio">
                       <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked/>
-                      <label className="form-check-label margin- " for="exampleRadios1">
+                      <label className="form-check-label ms-2" for="exampleRadios1">
                       Credi Card
                       </label>
                     </div>
                     <div className="payment-method custom-radio">
                       <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" />
-                      <label className="form-check-label gap-3" for="exampleRadios1" >Master Card</label>
+                      <label className="form-check-label ms-2" for="exampleRadios1" >Master Card</label>
                     </div>
                     <div className="payment-method custom-radio -">
                     <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" />
-                      <label className="form-check-label col-sm-8 " for="exampleRadios1">
+                      <label className="form-check-label col-sm-8 ms-2" for="exampleRadios1">
                       Paypal
                       </label>
                     </div>
@@ -160,8 +160,7 @@ const Payment = () => {
                     </div>
                   </div>
                 </div>
-                <hr className="mb-2" />
-                <button className="btn btn-primary btn-lg btn-block mb-4" type="button">checkout</button>
+                <button className="btn btn-primary btn-lg   mb-4 d-flex justify-content-end" type="button">checkout</button>
               </form>
             </div>
           </div>
