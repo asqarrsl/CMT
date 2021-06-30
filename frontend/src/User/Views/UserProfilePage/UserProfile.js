@@ -15,6 +15,21 @@ const UserProfile = (props) => {
     return `/editprofile/${obj}`;
   };
 
+  const linkDiv = () => {
+    if ((users.participants.type = "WorkshopConductor")) {
+      return <a href="/workshopMgt">Create workshop</a>;
+    } else if ((users.participants.type = "Researcher")) {
+      return <a href="/userProfile">Add / Edit paper</a>;
+    } else {
+      return (
+        <div>
+          <a href="/events"> Events </a>
+          <a href="/papers"> Papers </a>{" "}
+        </div>
+      );
+    }
+  };
+
   useEffect(() => {
     // setUser_ID(getUserId());
     // console.log(user_id);
@@ -104,11 +119,8 @@ const UserProfile = (props) => {
           <div className="row">
             <div className="col-md-4">
               <div className="profile-work">
-                <p>Some links here</p>
-                <a href="">Events</a>
-                <br />
-                <a href="">Material</a>
-                <br />
+                <p>Easy access</p>
+                <linkDiv />
               </div>
             </div>
             {/* ======================== Profile details ======================== */}
