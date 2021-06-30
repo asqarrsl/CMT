@@ -3,23 +3,23 @@ import { removeUserSession } from "../../../Utils/Common";
 import axios from "axios";
 
 const NavBar = () => {
-  //   const handleLogout = () => {
-  //     axios
-  //     .post("http://localhost:3000/users/logout", user)
-  //     .then((response) => {
-  //       removeUserSession();
-  //       alert("Successfully logged");
-  //     })
-  //     .catch((error) => {
-  //       if (error.response) {
-  //         // if (error.response.status === 401) setError(error.response.data.message);
-  //         // else setFormError("Something went wrong. Please try again later.");
-  //       } else if (error.request) {
-  //       } else {
-  //       }
-  //     });
-  //     props.history.push('/login');
-  // }
+  const handleLogout = () => {
+    axios
+      .post("http://localhost:3000/users/logout", user)
+      .then((response) => {
+        removeUserSession();
+        alert("Successfully logged");
+      })
+      .catch((error) => {
+        if (error.response) {
+          // if (error.response.status === 401) setError(error.response.data.message);
+          // else setFormError("Something went wrong. Please try again later.");
+        } else if (error.request) {
+        } else {
+        }
+      });
+    props.history.push("/login");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">

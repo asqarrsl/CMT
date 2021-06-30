@@ -2,6 +2,7 @@ import React ,{useEffect,useState} from 'react'
 import axios from 'axios';
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import MaterialDataTable from './MaterialDataTable';
+import DeleteModals from './DeleteModals';
 const MaterialIndex = () =>{
     var titles = [
         {
@@ -49,6 +50,7 @@ const MaterialIndex = () =>{
                 </thead>
                 <MaterialDataTable data={materials} />
             </table>
+            <DeleteModals data={materials} />
         </>
     );
 

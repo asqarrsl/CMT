@@ -42,6 +42,7 @@ const App = (props) => {
 
   useEffect(() => {
     const token = getToken();
+    console.log(token);
     if (!token) {
       return;
     }
@@ -53,10 +54,10 @@ const App = (props) => {
         setAuthLoading(false);
       })
       .catch((error) => {
+        console.log(error);
         removeUserSession();
         setAuthLoading(false);
       });
-    console.log(getToken());
   }, []);
 
   if (authLoading && getToken()) {

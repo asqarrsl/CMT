@@ -59,15 +59,20 @@ const Login = () => {
           // localStorage.setItem('user_id',response.data.user.role);
 
           if (response.data.role == "Participants") {
-            window.location = `/`;
+            props.history.push("/");
+            // window.location = `/`;
           } else if (response.data.role == "Admin") {
-            window.location = `/admin`;
+            props.history.push("/admin");
+            // window.location = `/admin`;
           } else if (response.data.role == "Reviewer") {
-            window.location = `/reviewer`;
+            props.history.push("/reviewer");
+            // window.location = `/reviewer`;
           } else if (response.data.role == "Editor") {
-            window.location = `/editor`;
+            props.history.push("/editor");
+            // window.location = `/editor`;
           } else {
-            window.location = `/`;
+            props.history.push("/");
+            // window.location = `/`;
           }
         })
         .catch((error) => {

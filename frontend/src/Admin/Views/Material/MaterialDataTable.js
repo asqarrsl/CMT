@@ -10,6 +10,9 @@ const MaterialDataTable = ({ data }) => {
   var deleteUrl = (obj) => {
     return `/admin/material/${obj}/edit`;
   };
+  var deletemodal = (obj) => {
+    return `#deleteModal${obj}`;
+  };
   return (
     <tbody>
       {data.map((material, i) => (
@@ -26,7 +29,11 @@ const MaterialDataTable = ({ data }) => {
             <a href={editUrl(material._id)} className="me-3">
               <i className="fas fa-pen"></i>
             </a>
-            <a href={deleteUrl(material._id)} className="me-3">
+            <a
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target={deletemodal(user._id)}
+            >
               <i className="far fa-trash-alt"></i>
             </a>
           </td>
