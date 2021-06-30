@@ -22,24 +22,31 @@ const userSchema = new Schema({
         required:true,
         unique:true
     },
-    reviewer:{
-        specialization:String
-    },
     participants:{
-        type:String,
-        designation:String,
-        affiliation:String,
-        isPaid:{
-            type:String,
-            default:'0'
+        participant:{
+            type:String
+        },
+        designation:{
+            type:String
+        },
+        affiliation:{
+            type:String
         }
+    },
+    reviewer:{
+        specialization:{
+            type:String
+        },
+    },
+    isPaid:{
+        type:String,
+        default:'0'
     },
     bio:String,
     isActive:{
         type:String,
         default:'1'
     }
-
 },{
     timestamps: true
 });

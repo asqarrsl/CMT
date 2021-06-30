@@ -1,30 +1,31 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
 import Select from "react-select";
 
-const AddMaterial = () => {
+const ViewMaterial = (props) => {
   var titles = [
     { name: "Admin", link: "/admin" },
     { name: "Material", link: "/material" },
-    { name: "Add Material", link: "/add" },
+    { name: "View", link: "/view" },
   ];
+
   const [init, setinit] = useState(true);
 
-  const [uid, setUid] = useState('');
-  const [name, setName] = useState('');
-  const [tags, setTags] = useState('');
-  const [description, setDescription] = useState('');
-  const [images, setImages] = useState(null);
-  const [type, setType] = useState('');
-  const [eventId, setEventId] = useState('');
-  const [document, setDocument] = useState(null);
-  const [isPaid, setIsPaid] = useState('');
-  const [isApproved, setIsApproved] = useState('');
-
-  const form = useRef(null)
+  const [uid, setUid] = useState();
+  const [name, setName] = useState();
+  const [tags, setTags] = useState();
+  const [description, setDescription] = useState();
+  const [images, setImages] = useState();
+  const [type, setType] = useState();
+  const [eventId, setEventId] = useState();
+  const [document, setDocument] = useState();
+  const [isPaid, setIsPaid] = useState();
+  const [isApproved, setIsApproved] = useState();
+  const [reason, setReason] = useState();
 
   const [events, setEvents] = useState([]);
+  const [materials, setMaterials] = useState([]);
   const [users, setUsers] = useState([]);
   const [eventoptions, setEventoptions] = useState([]);
   const [useroptions, setUseroptions] = useState([]);
@@ -55,6 +56,23 @@ const AddMaterial = () => {
       });
       setUseroptions(data1);
     });
+
+    axios
+      .get(`http://localhost:3000/material/${props.match.params.id}`)
+      .then((response) => {
+        setMaterials(response.data.materials);
+        setUid(response.data.materials.uid._id);
+        setName(response.data.materials.name);
+        setTags(response.data.materials.tags);
+        setDescription(response.data.materials.description);
+        setImages(response.data.materials.images);
+        setType(response.data.materials.type);
+        setEventId(response.data.materials.eventId);
+        setDocument(response.data.materials.document);
+        setIsPaid(response.data.materials.isPaid);
+        setIsApproved(response.data.materials.status);
+        setReason(response.data.materials.message);
+      });
   }, []);
 
   const checknull = (value) => {
@@ -94,34 +112,20 @@ const AddMaterial = () => {
     setinit(false);
     if (onValidate) {
       let material = {
-        uid,
-        name,
-        tags,
-        description,
-        // images:[imageSchema],
-        type,
-        eventId,
-        // document[documentSchema],
-        isPaid,
-        status:isApproved,
+        status: isApproved,
+        message: reason,
       };
-      const data = new FormData(form.current)
-            // data.append('image',mainImg);
-      axios({
-        method: "post",
-        url: "http://localhost:3000/material",
-        data: data,
-        headers: { "Content-Type": "multipart/form-data" },
-    })
-      // axios
-        // .post("http://localhost:3000/material", material)
+      axios
+        .post(
+          `http://localhost:3000/material/${props.match.params.id}/approve`,
+          material
+        )
         .then((response) => {
           console.log(response);
           alert("Successfully Inserted");
         })
         .catch((error) => {
           if (error.response) {
-
             console.log(error.response.data);
             setFormError(error.response.data.message);
           } else if (error.request) {
@@ -140,9 +144,9 @@ const AddMaterial = () => {
       <hr />
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Add Material</h5>
+          <h5 className="card-title">View Material</h5>
           <hr />
-          <form ref={form}  onSubmit={onSubmit}>
+          <form method="POST" onSubmit={onSubmit}>
             <div className="row">
               <div className="mb-3 col-md-6">
                 <label htmlFor="name" className="form-label">
@@ -154,7 +158,7 @@ const AddMaterial = () => {
                   name="name"
                   id="name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  readOnly
                 />
               </div>
               <div className="mb-3 col-md-6">
@@ -165,6 +169,9 @@ const AddMaterial = () => {
                   options={eventoptions}
                   className="basic-multi-select"
                   name="eventId"
+                  value={eventoptions.find((op) => {
+                    return op.value === eventId;
+                  })}
                   onChange={(event) => setEventId(event.value)}
                 />
               </div>
@@ -181,8 +188,8 @@ const AddMaterial = () => {
                     type="radio"
                     name="type"
                     id="type1"
-                    value={type == "Workshop"}
-                    onChange={(e) => setType(e.target.value)}
+                    checked={type == "Workshop"}
+                    readOnly
                     value="Workshop"
                   />
                   <label className="form-check-label" htmlFor="prole1">
@@ -195,8 +202,8 @@ const AddMaterial = () => {
                     type="radio"
                     name="type"
                     id="type2"
-                    value={type == "Research"}
-                    onChange={(e) => setType(e.target.value)}
+                    checked={type == "Research"}
+                    readOnly
                     value="Research"
                   />
                   <label className="form-check-label" htmlFor="prole1">
@@ -213,21 +220,23 @@ const AddMaterial = () => {
                   className="form-control"
                   name="tags"
                   id="tags"
-                  onChange={(e) => setTags(e.target.value)}
+                  value={tags}
+                  readOnly
                 />
               </div>
             </div>
             <div className="row">
               <div className="mb-3 col-md-6">
-                <label htmlFor="image" className="form-label">
+                <label htmlFor="images" className="form-label">
                   Images
                 </label>
                 <input
                   type="file"
                   className="form-control"
-                  name="image"
-                  id="image"
-                  onChange={(event)=>{setImages(event.target.files[0])}} 
+                  name="images"
+                  id="images"
+                  // value={images}
+                  readOnly
                 />
               </div>
               <div className="mb-3 col-md-6">
@@ -239,7 +248,8 @@ const AddMaterial = () => {
                   className="form-control"
                   name="document"
                   id="document"
-                  onChange={(event) => {setDocument(event.target.files[0])}}
+                  // value={document}
+                  readOnly
                 />
               </div>
             </div>
@@ -254,12 +264,28 @@ const AddMaterial = () => {
                   name="isPaid"
                   id="isPaid"
                   value={isPaid}
-                  onChange={(e) => setIsPaid(e.target.value)}
+                  readOnly
+                  disabled
                 >
                   <option defaultValue>Select is Paid</option>
                   <option value="True">Yes</option>
                   <option value="False">No</option>
                 </select>
+              </div>
+              <div className="mb-3 col-md-6">
+                <label htmlFor="userId" className="form-label">
+                  User
+                </label>
+                <Select
+                  options={useroptions}
+                  className="basic-multi-select"
+                  name="userId"
+                  value={useroptions.find((op) => {
+                    return op.value === uid;
+                  })}
+                  readOnly
+                  disabled
+                />
               </div>
               <div className="mb-3 col-md-6">
                 <label htmlFor="isApproved" className="form-label">
@@ -273,25 +299,29 @@ const AddMaterial = () => {
                   value={isApproved}
                   onChange={(e) => setIsApproved(e.target.value)}
                 >
-                  <option defaultValue value="Pending">
-                    Pending
-                  </option>
+                  <option value="Pending">Pending</option>
                   <option value="Approved">Approved</option>
                   <option value="Declined">Declined</option>
                 </select>
               </div>
-              <div className="mb-3 col-md-6">
-                <label htmlFor="userId" className="form-label">
-                  User
-                </label>
-                <Select
-                  options={useroptions}
-                  className="basic-multi-select"
-                  name="userId"
-                  onChange={(event) => setUid(event.value)}
-                />
-              </div>
             </div>
+            {isApproved == "Declined" && (
+              <div className="row">
+                <div className="mb-3 col-md-12">
+                  <label htmlFor="reason" className="form-label">
+                    Reason Of Decline
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="reason"
+                    onChange={(e) => setReason(e.target.value)}
+                    rows="4"
+                    value={reason}
+                    name="reason"
+                  ></textarea>
+                </div>
+              </div>
+            )}
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
@@ -302,4 +332,4 @@ const AddMaterial = () => {
   );
 };
 
-export default AddMaterial;
+export default ViewMaterial;

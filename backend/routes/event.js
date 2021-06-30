@@ -11,17 +11,19 @@ const upload = multer({storage})
 
 router.route('/')
     .get(catchAsync(eventController.index))
-    .post(catchAsync(eventController.store));
+    .post(upload.array('image'),catchAsync(eventController.store));
     // .post(isLoggedIn,upload.array('image'),catchAsync(eventController.store));
 
 // router.get('/new',isLoggedIn,eventController.create);
 
 router.route('/:id')
     .get(catchAsync(eventController.show))
-    .put(isLoggedIn,isAuthor,upload.array('image'),catchAsync(eventController.update))
-    .delete(isLoggedIn,isAuthor,catchAsync(eventController.delete));
+    .put(isLoggedIn,upload.array('image'),catchAsync(eventController.update))
+    .delete(isLoggedIn,catchAsync(eventController.delete));
+    // .delete(isLoggedIn,catchAsync(eventController.delete));
 
 
-router.get('/:id/edit',isLoggedIn,isAuthor,catchAsync(eventController.edit));
+router.post('/:id/approve',catchAsync(eventController.approve));
+// router.post('/:id/approve',isLoggedIn,isAuthor,catchAsync(eventController.edit));
 
 module.exports = router;

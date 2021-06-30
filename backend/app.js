@@ -14,6 +14,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 var cors = require('cors')
+const jwt = require('jsonwebtoken');
 
 const ExpressError = require('./utils/ExpressError');
 const User = require('./models/user');
@@ -69,7 +70,7 @@ const sessionConfig = {
     store,
     name:'soner',
     secret,
-    resave:false,
+    resave:true,
     saveUninitialized:true,
     cookie :{
         httpOnly:true,
@@ -90,22 +91,17 @@ passport.deserializeUser(User.deserializeUser())
 
 
 
-// app.use((req,res,next)=>{
-    // res.locals.currentUser = req.user
+app.use((req,res,next)=>{
+    res.locals.currentUser = req.user
     // res.locals.success = req.flash('success');
     // res.locals.error = req.flash('error');
-//     next();
-// })
+    next();
+})
 
 app.get('/',(req,res)=>{
     res.send('home');
 });
 
-app.get('/fakeuser',async (req,res)=>{
-    const user = new User({email:'asqarrsl@gmail.com',username:'ashique'});
-    const newUser = await User.register(user,'asqarrsl');
-    res.send(newUser);
-});
 
 app.use('/users',userRoutes);
 app.use('/material',materialRoutes);

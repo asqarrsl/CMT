@@ -1,4 +1,5 @@
 const Event = require('../models/event');
+const Notification = require('../models/notification');
 const {cloudinary} = require('../cloudinary')
 
 module.exports.index = async (req,res)=>{
@@ -12,7 +13,7 @@ module.exports.index = async (req,res)=>{
 module.exports.store = async (req,res)=>{
     const events = new Event(req.body);
     // events.presenterId = req.user._id;
-    // events.mainImg = req.files.map(f=>({url:f.path,filename:f.filename}));
+    events.mainImg = req.files.map(f=>({url:f.path,filename:f.filename}));
     await events.save();
     res
       .status(202)
@@ -36,8 +37,10 @@ module.exports.show = async (req,res)=>{
 }
 
 module.exports.update = async (req,res)=>{
+
     const {id} = req.params
-    const events = await Event.findByIdAndUpdate(id, {...req.body.events});
+    console.log(req.body);
+    const events = await Event.findByIdAndUpdate(id, {...req.body});
     const mainImg = req.files.map(f=>({url:f.path,filename:f.filename}))
     events.editorId = req.user._id;
     events.mainImg.push(...mainImg);
@@ -53,10 +56,17 @@ module.exports.update = async (req,res)=>{
 
 module.exports.approve = async (req,res)=>{
     const {id} = req.params
-    const events = await Event.findById(id);
-    events.isApproved = '1';
-    // events.reviewdVersion.push(...editedDoc);
+    console.log(req.body);
+    const events = await Event.findByIdAndUpdate(id, {...req.body});
     await events.save();
+    const notify_message ={
+      'UID':events.presenterId,
+      'Status':events.status,
+      'Description':events.message,
+      'Message':'Event Approval'
+    }
+    const notification = new Notification(notify_message);
+    await notification.save();
     res
       .status(202)
       .send({
@@ -78,6 +88,7 @@ module.exports.deleteRequest = async (req,res)=>{
 }
 
 module.exports.delete = async (req,res)=>{
+  console.log(req);
     const {id} = req.params    
     const events = await Event.findById(id);
     events.isActive = 0;

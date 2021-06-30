@@ -1,4 +1,6 @@
 import React from "react";
+import { removeUserSession } from '../../../Utils/Common';
+import axios from "axios";
 
 const NavBar = () => {
     return (

@@ -1,12 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
+import Select from "react-select";
+import moment from "moment";
 
-const AddEvent = () => {
+const ViewEvent = (props) => {
   var titles = [
     { name: "Admin", link: "/admin" },
     { name: "Event", link: "/event" },
-    { name: "Add Event", link: "/add" },
+    { name: "View", link: "/view" },
   ];
 
   const [init, setinit] = useState(true);
@@ -15,15 +17,38 @@ const AddEvent = () => {
   const [description, setDescription] = useState("");
   const [eventType, setEventType] = useState("");
   const [venue, setVenue] = useState("");
-  const [mainImg, setMainImg] = useState(null);
+  const [mainImg, setMainImg] = useState("");
   const [From, setFrom] = useState("");
   const [To, setTo] = useState("");
   const [isApproved, setIsApproved] = useState("");
+  const [reason, setReason] = useState("");
 
   const [formValid, setFormValid] = useState(false);
   const [formError, setFormError] = useState(false);
   const [error, setError] = useState(true);
-  const form = useRef(null);
+
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/event/${props.match.params.id}`)
+      .then((response) => {
+        setEvents(response.data.events);
+        setEventName(response.data.events.eventName);
+        setDescription(response.data.events.description);
+        setEventType(response.data.events.eventType);
+        setVenue(response.data.events.venue);
+        setMainImg(response.data.events.mainImg);
+        setReason(response.data.events.message);
+        setFrom(
+          moment(response.data.events.duration.From).format("YYYY-MM-DDTkk:mm")
+        );
+        setTo(
+          moment(response.data.events.duration.To).format("YYYY-MM-DDTkk:mm")
+        );
+        setIsApproved(response.data.events.status);
+      });
+  }, []);
 
   const checknull = (value) => {
     if (value.trim() == null || value.trim() == "") {
@@ -32,30 +57,15 @@ const AddEvent = () => {
       return true;
     }
   };
-};
-const checkstring = (value) => {
-  if (typeof value != "string") {
-    return false;
-  }
-};
-function validateEmail(value) {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(value).toLowerCase());
-}
-const onValidate = () => {
-  if (
-    checknull(eventName) &&
-    checknull(description) &&
-    checknull(eventType) &&
-    checknull(venue) &&
-    checknull(mainImg) &&
-    checknull(From) &&
-    checknull(To)
-  ) {
-    setFormValid(true);
-  } else {
-    setFormValid(false);
+  const checkstring = (value) => {
+    if (typeof value != "string") {
+      return false;
+    }
+  };
+  function validateEmail(value) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(value).toLowerCase());
   }
   const onValidate = () => {
     if (
@@ -67,39 +77,25 @@ const onValidate = () => {
       checknull(To)
     ) {
       setFormValid(true);
+      return true;
     } else {
       setFormValid(false);
+      return false;
     }
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
     setinit(false);
-    onValidate();
-    // if(1){
-    if (formValid) {
+
+    if (onValidate) {
       let event = {
-        eventName,
-        description,
-        eventType,
-        venue,
-        image: mainImg,
-        duration: {
-          From,
-          To,
-        },
         status: isApproved,
+        message :reason
       };
-      // var date = new Date(Date);
-      console.log(event);
-      const data = new FormData(form.current);
-      data.append("image", mainImg);
-      axios({
-        method: "post",
-        url: "http://localhost:3000/event",
-        data: data,
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-        // axios.post('http://localhost:3000/event',event)
+
+      axios
+        .post(`http://localhost:3000/event/${props.match.params.id}/approve`, event)
         .then((response) => {
           console.log(response);
           alert("Successfully Inserted");
@@ -109,9 +105,9 @@ const onValidate = () => {
             setFormError(error.response.data.message);
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            console.log(error.response);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            // console.log(error.response.data);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
           } else if (error.request) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the
@@ -134,9 +130,9 @@ const onValidate = () => {
       <hr />
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Add Event</h5>
+          <h5 className="card-title">View Event</h5>
           <hr />
-          <form ref={form} onSubmit={onSubmit} encType="multipart/form-data">
+          <form method="POST" onSubmit={onSubmit}>
             <div className="row">
               <div className="mb-3 col-md-6">
                 <label htmlFor="eventName" className="form-label">
@@ -148,7 +144,7 @@ const onValidate = () => {
                   name="eventName"
                   id="eventName"
                   value={eventName}
-                  onChange={(event) => setEventName(event.target.value)}
+                  readOnly
                 />
               </div>
               <div className="mb-3 col-md-6">
@@ -161,7 +157,7 @@ const onValidate = () => {
                   name="venue"
                   id="venue"
                   value={venue}
-                  onChange={(event) => setVenue(event.target.value)}
+                  readOnly
                 />
               </div>
               <div className="mb-3 col-md-12">
@@ -171,7 +167,7 @@ const onValidate = () => {
                 <textarea
                   className="form-control"
                   id="description"
-                  onChange={(event) => setDescription(event.target.value)}
+                  readOnly
                   rows="4"
                   value={description}
                   name="description"
@@ -189,7 +185,7 @@ const onValidate = () => {
                     name="eventType"
                     id="eventType1"
                     checked={eventType == "Workshop"}
-                    onChange={(event) => setEventType(event.target.value)}
+                    readOnly
                     value="Workshop"
                   />
                   <label className="form-check-label" htmlFor="prole1">
@@ -203,7 +199,7 @@ const onValidate = () => {
                     name="eventType"
                     id="eventType2"
                     checked={eventType == "Conference"}
-                    onChange={(event) => setEventType(event.target.value)}
+                    readOnly
                     value="Conference"
                   />
                   <label className="form-check-label" htmlFor="prole1">
@@ -212,17 +208,16 @@ const onValidate = () => {
                 </div>
               </div>
               <div className="mb-3 col-md-6">
-                <label htmlFor="image" className="form-label">
+                <label htmlFor="mainImage" className="form-label">
                   Main Image
                 </label>
                 <input
                   type="file"
                   className="form-control"
-                  name="image"
-                  id="image"
-                  onChange={(event) => {
-                    setMainImg(event.target.files[0]);
-                  }}
+                  name="mainImage"
+                  id="mainImage"
+                  value={mainImg}
+                  readOnly
                 />
               </div>
             </div>
@@ -238,7 +233,7 @@ const onValidate = () => {
                   name="fromdate"
                   id="fromdate"
                   value={From}
-                  onChange={(event) => setFrom(event.target.value)}
+                  readOnly
                 />
               </div>
               <div className="mb-4 col-md-4">
@@ -251,8 +246,7 @@ const onValidate = () => {
                   name="todate"
                   id="todate"
                   value={To}
-                  min={From}
-                  onChange={(event) => setTo(event.target.value)}
+                  readOnly
                 />
               </div>
               <div className="mb-4 col-md-4">
@@ -265,16 +259,31 @@ const onValidate = () => {
                   name="isApproved"
                   id="isApproved"
                   value={isApproved}
-                  onChange={(e) => setIsApproved(e.target.value)}
+                  onChange={(e) => {console.log(isApproved); setIsApproved(e.target.value)}}
                 >
-                  <option defaultValue value="Pending">
-                    Pending
-                  </option>
+                  <option value="Pending">Pending</option>
                   <option value="Approved">Approved</option>
                   <option value="Declined">Declined</option>
                 </select>
               </div>
             </div>
+            {isApproved == "Declined" && (
+              <div className="row">
+                <div className="mb-3 col-md-12">
+                  <label htmlFor="reason" className="form-label">
+                    Reason Of Decline
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="reason"
+                    onChange={(e) => setReason(e.target.value)}
+                    rows="4"
+                    value={reason}
+                    name="reason"
+                  ></textarea>
+                </div>
+              </div>
+            )}
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
@@ -285,4 +294,4 @@ const onValidate = () => {
   );
 };
 
-export default AddEvent;
+export default ViewEvent;
