@@ -2,7 +2,7 @@ import React from 'react'
 import './card.css'
 import { Card, CardHeader, CardBody, CardFooter } from 'react-simple-card';
 
-const Papers = (props) => {
+const researchPapers = (props) => {
   return (
     <body className="masthead text-white text-center">
       <div class="container emp-profile">
@@ -13,10 +13,10 @@ const Papers = (props) => {
             </h6>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" id="workshop-tab" data-toggle="tab" href="/papers" role="tab" aria-controls="home" aria-selected="true">Workshop</a>
+                <a class="nav-link" id="workshop-tab" data-toggle="tab" href="/papers" role="tab" aria-controls="home" aria-selected="true">Workshop</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="research-tab" data-toggle="tab" href="/research_papers" role="tab" aria-controls="home" aria-selected="false">Research</a>
+                <a class="nav-link active" id="research-tab" data-toggle="tab" href="/research_papers" role="tab" aria-controls="home" aria-selected="false">Research</a>
               </li>
             </ul>
           </div>
@@ -25,7 +25,7 @@ const Papers = (props) => {
         <div class="row">
           <div className="card-container">
             <div className="image-container">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPEZkRlu5xIvlEA6q7q04xGyDxe__XZSD8cQ&usqp=CAU" />
+              <img src="https://www.press.umich.edu/images/covers/190h/0472086391.jpg" />
             </div>
             <Card>
               <CardBody>
@@ -38,7 +38,7 @@ const Papers = (props) => {
           </div>
           <div className="card-container">
             <div className="image-container">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPEZkRlu5xIvlEA6q7q04xGyDxe__XZSD8cQ&usqp=CAU" />
+              <img src="https://www.press.umich.edu/images/covers/190h/0472086391.jpg" />
             </div>
             <Card>
               <CardBody>
@@ -51,7 +51,7 @@ const Papers = (props) => {
           </div>
           <div className="card-container">
             <div className="image-container">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPEZkRlu5xIvlEA6q7q04xGyDxe__XZSD8cQ&usqp=CAU" />
+              <img src="https://www.press.umich.edu/images/covers/190h/0472086391.jpg" />
             </div>
             <Card>
               <CardBody>
@@ -69,4 +69,4 @@ const Papers = (props) => {
   );
 }
 
-export default Papers;
+export default researchPapers;

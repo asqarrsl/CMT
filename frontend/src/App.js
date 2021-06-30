@@ -1,22 +1,23 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LandingPage from './User/Views/LandingPage/LangingPage';
-import NavBar from './User/Components/NavBar/Navbar'
-import Footer from './User/Components/Footer/Footer'
 import './App.css'
 import Payment from './User/Views/Payment/Payment';
 import Dashboard from './Admin/Views/Dashboard/Dashboard';
-import AdminRoute from './Admin/AdminRoute'
 import MainAdmin from './Admin/Components/Layout/MainAdmin';
 import Main from './User/Components/Layout/Main';
 import Events from './User/Components/Events/events';
 import Papers from './User/Components/Papers/papers';
 import EventDetails from './User/Components/Events/eventDetails';
 import PaperDetails from './User/Components/Papers/paperDetails';
+import Test from './User/Components/Test/Test';
+import researchPapers from './User/Components/Papers/ressearchPapers';
+import conference from './User/Components/Events/conference';
+import eventMaterials from './User/Components/Events/eventMaterials';
 
 
-const App = (props) =>{
-    return(
+const App = (props) => {
+    return (
         <>
             <Router>
                 <Switch>
@@ -35,7 +36,11 @@ const App = (props) =>{
                                 <Route path='/events' component={Events} />
                                 <Route path='/papers' component={Papers} />
                                 <Route path='/event_details' component={EventDetails} />
+                                <Route path='/conference' component={conference} />
+                                <Route path='/event_materials' component={eventMaterials} />
                                 <Route path='/paper_details' component={PaperDetails} />
+                                <Route path='/research_papers' component={researchPapers} />
+                                <Route path='/test' component={Test} />
                             </Switch>
                         </Main>
                     </Route>
