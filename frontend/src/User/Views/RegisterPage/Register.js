@@ -112,10 +112,6 @@ const Register = () => {
           if (error.response) {
             setFormError(error.response.data.message);
             setUserSession(response.data.token, response.data.user);
-            // console.log(error.response.data.message);
-            // console.log(error.response);
-            // console.log(error.response.status);
-            // console.log(error.response.headers);
           } else if (error.request) {
             console.log(error.request);
           } else {
