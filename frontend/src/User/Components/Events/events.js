@@ -1,61 +1,79 @@
-import React from 'react';
-import { render } from 'react-dom';
-import './card.css'
-import { Card, CardHeader, CardBody, CardFooter } from 'react-simple-card';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./card.css";
+import { Card, CardBody } from "react-simple-card";
+import EventCard from "./eventCard";
 
 const Events = (props) => {
+  const [event, setEvent] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/event")
+      .then((response) => {
+        // console.log(response.data);
+        setEvent(response.data.events);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  const data = event.map((sevent, i) => [
+    {
+      id: "0",
+      eventName: sevent.eventName,
+      id: "1",
+      description: sevent.description,
+      id: "2",
+      mainImg: sevent.mainImg,
+      id: "3",
+      venue: sevent.venue,
+    },
+  ]);
+
   return (
-    <header className="masthead text-white text-center">
-      <div className="overlay"></div>
-      <div className="container">
-        <div className="row">
-          <div className="col-xl-9 mx-auto">
-            <h1 className="mb-5">Event Details</h1>
-          </div>
-          <div className="card-container">
-            <div className="image-container">
-              <img src="https://hire4event.com/blogs/wp-content/uploads/2019/03/best-Event-company-in-Greater-Noida-.jpg" />
-            </div>
-            <Card>
-              <CardBody>
-                <p>Event Name</p><br />
-                <p>Description:</p><br />
-                <p>Venue:</p><br />
-                <a href="/event_details">View More</a>
-              </CardBody>
-            </Card>
-          </div>
-          <div className="card-container">
-            <div className="image-container">
-              <img src="https://hire4event.com/blogs/wp-content/uploads/2019/03/best-Event-company-in-Greater-Noida-.jpg" />
-            </div>
-            <Card>
-              <CardBody>
-                <p>Event Name</p><br />
-                <p>Description:</p><br />
-                <p>Venue:</p><br />
-                <a href="/event_details">View More</a>
-              </CardBody>
-            </Card>
-          </div>
-          <div className="card-container">
-            <div className="image-container">
-              <img src="https://hire4event.com/blogs/wp-content/uploads/2019/03/best-Event-company-in-Greater-Noida-.jpg" />
-            </div>
-            <Card>
-              <CardBody>
-                <p>Event Name</p><br />
-                <p>Description:</p><br />
-                <p>Venue:</p><br />
-                <a href="/event_details">View More</a>
-              </CardBody>
-            </Card>
+    <body className="masthead text-white text-center">
+      <div class="container emp-profile">
+        <div class="col-md-12">
+          <div class="profile-head">
+            <h6>Events</h6>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="workshop-tab"
+                  data-toggle="tab"
+                  href="/events"
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="true"
+                >
+                  Workshops
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="conference-tab"
+                  data-toggle="tab"
+                  href="/conference"
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="false"
+                >
+                  Conferences
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
+        <div className="row">
+          <EventCard data={data} />
+        </div>
       </div>
-    </header>
-
+    </body>
   );
-}
+};
 
 export default Events;

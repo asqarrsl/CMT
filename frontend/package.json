@@ -14,10 +14,22 @@
     "parcel-bundler": "^1.12.5"
   },
   "dependencies": {
-    "react": "^17.0.2",
+    "@popperjs/core": "^2.9.2",
+    "axios": "^0.21.1",
+    "bootstrap": "^5.0.2",
+    "bs-stepper": "^1.7.0",
+    "config": "^3.3.6",
+    "history": "^5.0.0",
+    "mdbreact": "^5.0.2",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0",
+    "react-datetime": "^2.16.3",
+    "react-datetime-range-picker": "^3.0.0",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.4",
+    "react-simple-card": "^2.0.2",
+    "react-form-stepper": "^1.4.1",
     "react-router-dom": "^5.2.0",
-    "react-simple-card": "^2.0.2"
+    "react-select": "^4.3.1",
+    "rxjs": "^7.1.0"
   }
 }

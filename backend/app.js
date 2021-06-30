@@ -8,17 +8,20 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
-const ejsMate = require('ejs-mate');
-const ExpressError = require('./utils/ExpressError');
 const passport = require('passport');
 const localStratergy = require('passport-local');
-const User = require('./models/user');
 const mongoSanitize = require('express-mongo-sanitize');
 const MongoStore = require('connect-mongo');
+const bodyParser = require('body-parser');
+var cors = require('cors')
+const jwt = require('jsonwebtoken');
+
+const ExpressError = require('./utils/ExpressError');
+const User = require('./models/user');
 const userRoutes = require('./routes/users'); 
-const campgroundsRoutes = require('./routes/campground'); 
-const reviewsRoutes = require('./routes/reviews'); 
-const helmet = require('helmet')
+const materialRoutes = require('./routes/material'); 
+const eventRoutes = require('./routes/event'); 
+// const campgroundsRoutes = require('./routes/campground'); 
 
 const dbUrl = process.env.DB_URL;
 
@@ -36,22 +39,25 @@ db.once("open",()=>{
 });
 
 const app = express();
-app.engine('ejs',ejsMate);
-app.set('view engine','ejs');
-app.set('views',path.join(__dirname,'views'));
 
-app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public')))
 
+app.use(cors())
 
 app.use(mongoSanitize({
     replaceWith: '_'
 }));
+
 const secret = process.env.SECRET||'testsectret';
 
 const store = new MongoStore({
-    mongoUrl : dbUrldev,
+    mongoUrl : dbUrl,
     secret,
     touchAfter:20*60*60
 });
@@ -64,7 +70,7 @@ const sessionConfig = {
     store,
     name:'soner',
     secret,
-    resave:false,
+    resave:true,
     saveUninitialized:true,
     cookie :{
         httpOnly:true,
@@ -74,53 +80,8 @@ const sessionConfig = {
     }
 }
 app.use(session(sessionConfig));
-app.use(flash());
-app.use(helmet())
+// app.use(flash());
 
-const scriptSrcUrls = [
-    "https://stackpath.bootstrapcdn.com/",
-    "https://api.tiles.mapbox.com/",
-    "https://api.mapbox.com/",
-    "https://kit.fontawesome.com/",
-    "https://cdnjs.cloudflare.com/",
-    "https://cdn.jsdelivr.net/",
-];
-const styleSrcUrls = [
-    "https://kit-free.fontawesome.com/",
-    "https://stackpath.bootstrapcdn.com/",
-    "https://api.mapbox.com/",
-    "https://api.tiles.mapbox.com/",
-    "https://fonts.googleapis.com/",
-    "https://use.fontawesome.com/",
-    "https://cdn.jsdelivr.net/",
-];
-const connectSrcUrls = [
-    "https://api.mapbox.com/",
-    "https://a.tiles.mapbox.com/",
-    "https://b.tiles.mapbox.com/",
-    "https://events.mapbox.com/",
-];
-const fontSrcUrls = [];
-app.use(
-    helmet.contentSecurityPolicy({
-        directives: {
-            defaultSrc: [],
-            connectSrc: ["'self'", ...connectSrcUrls],
-            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-            workerSrc: ["'self'", "blob:"],
-            objectSrc: [],
-            imgSrc: [
-                "'self'",
-                "blob:",
-                "data:",
-                "https://res.cloudinary.com/asqarrsl/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
-                "https://images.unsplash.com/",
-            ],
-            fontSrc: ["'self'", ...fontSrcUrls],
-        },
-    })
-);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -132,31 +93,31 @@ passport.deserializeUser(User.deserializeUser())
 
 app.use((req,res,next)=>{
     res.locals.currentUser = req.user
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
+    // res.locals.success = req.flash('success');
+    // res.locals.error = req.flash('error');
     next();
 })
 
 app.get('/',(req,res)=>{
-    res.render('home');
+    res.send('home');
 });
-app.get('/fakeuser',async (req,res)=>{
-    const user = new User({email:'asqarrsl@gmail.com',username:'ashique'});
-    const newUser = await User.register(user,'asqarrsl');
-    res.send(newUser);
-});
-app.use('/',userRoutes);
-app.use('/campgrounds',campgroundsRoutes);
-app.use('/campgrounds/:id/reviews',reviewsRoutes);
+
+
+app.use('/users',userRoutes);
+app.use('/material',materialRoutes);
+app.use('/event',eventRoutes);
+// app.use('/campgrounds',campgroundsRoutes);
 
 app.all('*',(req,res,next)=>{
     next(new ExpressError('Page Not Found',404));
 })
+
 app.use((err,req,res,next)=>{
-    const {statusCode = 500}= err;
+    const {statusCode = 500} = err;    
     if(!err.message) err.message = 'Something Went Wrong' 
-    res.status(statusCode).render('error',{err});
+    res.status(statusCode).send(err);
 })
+
 app.listen(3000,()=>{
     console.log('Serving on port 3000!');
 })

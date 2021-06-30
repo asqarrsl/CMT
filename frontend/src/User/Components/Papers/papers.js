@@ -4,46 +4,67 @@ import { Card, CardHeader, CardBody, CardFooter } from 'react-simple-card';
 
 const Papers = (props) => {
   return (
-    <header className="masthead text-white text-center">
-      <div className="overlay"></div>
-      <div className="container">
+    <body className="masthead text-white text-center">
+      <div className="container emp-profile">
+        <div className="col-md-12">
+          <div className="profile-head">
+            <h6>
+              Material Papers
+            </h6>
+            <ul className="nav nav-tabs" id="myTab" role="tablist">
+              <li className="nav-item">
+                <a className="nav-link active" id="workshop-tab" data-toggle="tab" href="/papers" role="tab" aria-controls="home" aria-selected="true">Workshop</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" id="research-tab" data-toggle="tab" href="/research_papers" role="tab" aria-controls="home" aria-selected="false">Research</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         <div className="row">
-          <div className="col-xl-9 mx-auto">
-            <h1 className="mb-5">Papers</h1>
-          </div>
           <div className="card-container">
+            <div className="image-container">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPEZkRlu5xIvlEA6q7q04xGyDxe__XZSD8cQ&usqp=CAU" />
+            </div>
             <Card>
               <CardBody>
-                <p>Paper Name:</p><br />
-                <p>Description:</p><br />
-                <p>Author:</p><br />
+                <p>Paper Name:</p>
+                <p>Description:</p>
+                <p>Author:</p>
                 <a href="/paper_details">View More</a>
               </CardBody>
             </Card>
           </div>
           <div className="card-container">
+            <div className="image-container">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPEZkRlu5xIvlEA6q7q04xGyDxe__XZSD8cQ&usqp=CAU" />
+            </div>
             <Card>
               <CardBody>
-                <p>Paper Name:</p><br />
-                <p>Description:</p><br />
-                <p>Author:</p><br />
+                <p>Paper Name:</p>
+                <p>Description:</p>
+                <p>Author:</p>
                 <a href="/paper_details">View More</a>
               </CardBody>
             </Card>
           </div>
           <div className="card-container">
+            <div className="image-container">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPEZkRlu5xIvlEA6q7q04xGyDxe__XZSD8cQ&usqp=CAU" />
+            </div>
             <Card>
               <CardBody>
-                <p>Paper Name:</p><br />
-                <p>Description:</p><br />
-                <p>Author:</p><br />
+                <p>Paper Name:</p>
+                <p>Description:</p>
+                <p>Author:</p>
                 <a href="/paper_details">View More</a>
               </CardBody>
             </Card>
           </div>
         </div>
       </div>
-    </header>
+    </body>
 
   );
 }
