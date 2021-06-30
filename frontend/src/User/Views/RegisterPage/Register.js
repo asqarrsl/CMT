@@ -93,12 +93,10 @@ const Register = () => {
         mobile,
         role,
         email,
-        participants: {
-          type: ptype,
-          designation,
-          affiliation,
-          isPaid,
-        },
+        participant: ptype,
+        designation,
+        affiliation,
+        isPaid,
         username,
         password,
       };

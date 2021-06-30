@@ -8,30 +8,45 @@ import { getUserId, getToken } from "../../../Utils/Common";
 const UserProfile = (props) => {
   const [togBtn, setTogBtn] = useState("about");
   const [users, setUsers] = useState([]);
-  const [user_id, setUser_ID] = useState();
+  const [userID, setUserID] = useState(getUserId());
   const token = getToken();
 
+  var editUrl = (obj) => {
+    return `/editprofile/${obj}`;
+  };
+
   useEffect(() => {
-    setUser_ID(getUserId());
+    // setUser_ID(getUserId());
     // console.log(user_id);
     axios
-      .get(`http://localhost:3000/users/${user_id}`)
+      .get(`http://localhost:3000/users/${userID}`)
       .then((response) => {
         // console.log(respose);
-        setUsers(response.data.Users);
+        // setUsers(response.data.Users);
+        // console.log(users);
+        // console.log(response);
+        setUsers(response.data.user);
         // console.log(users);
       })
       .catch((error) => {
         // console.log(error);
       });
-  }, []);
+  }, [userID]);
 
   const userDetails = [
     { id: "0", title: "Name", info: users.name },
     { id: "1", title: "Email", info: users.email },
     { id: "2", title: "Mobile", info: users.mobile },
-    { id: "3", title: "Designation", info: users.designation },
-    { id: "4", title: "Affiliation", info: users.affiliation },
+    {
+      id: "3",
+      title: "Designation",
+      info: users.participants ? users.participants.designation : "",
+    },
+    {
+      id: "4",
+      title: "Affiliation",
+      info: users.participants ? users.participants.affiliation : "",
+    },
   ];
 
   return (
@@ -41,8 +56,9 @@ const UserProfile = (props) => {
           <div className="row" style={{ maxHeight: "150px" }}>
             {/* ======================== Profile photo sector ======================== */}
             <div className="col-md-4" style={{ paddingLeft: "60px" }}>
-              <h5>User name here</h5>
-              <h6>User role here</h6>
+              <h3 style={{ color: "#1367D3", fontWeight: "bold" }}>
+                {users.username}
+              </h3>
             </div>
             {/* ======================== Profile summary sector ======================== */}
             <div className="col-md-6">
@@ -74,12 +90,14 @@ const UserProfile = (props) => {
 
             {/* ======================== Edit profile button ======================== */}
             <div className="col-md-2">
-              <input
+              <a
                 type="submit"
                 className="profile-edit-btn"
                 name="btnAddMore"
-                value="Edit Profile"
-              />
+                href={editUrl(users._id)}
+              >
+                Edit Profile
+              </a>
             </div>
           </div>
           {/* ======================== Side Pannel ======================== */}
@@ -96,7 +114,11 @@ const UserProfile = (props) => {
             {/* ======================== Profile details ======================== */}
             <div
               className="col-md-7"
-              style={{ backgroundColor: "#FFFFFF", minHeight: "200px" }}
+              style={{
+                backgroundColor: "#FFFFFF",
+                minHeight: "250px",
+                padding: "20px",
+              }}
             >
               <div className="tab-content inbox-tab" id="myTabContent">
                 {togBtn == "about" && <About about={userDetails} />}

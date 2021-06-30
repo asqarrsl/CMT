@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import axios from "axios";
-import { setUserSession } from "../../../Utils/Common";
+import { getRole, setUserSession } from "../../../Utils/Common";
 const check = () => {
   console.log("hi");
 };
@@ -49,7 +49,7 @@ const Login = () => {
       axios
         .post("http://localhost:3000/users/login", user)
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
           alert("Successfully logged");
           setLoading(false);
           setUserSession(response.data.token, response.data.username , response.data.role , response.data.id);
@@ -59,19 +59,14 @@ const Login = () => {
           // localStorage.setItem('user_id',response.data.user.role);
 
           if (response.data.role == "Participants") {
-            // props.history.push("/");
             window.location = `/`;
-          } else if (response.data.role == "Admin") {
-            // props.history.push("/admin");
+          } else if (getRole() == "Admin") {
             window.location = `/admin`;
-          } else if (response.data.role == "Reviewer") {
-            // props.history.push("/reviewer");
+          } else if (getRole() == "Reviewer") {
             window.location = `/reviewer`;
-          } else if (response.data.role == "Editor") {
-            // props.history.push("/editor");
+          } else if (getRole() == "Editor") {
             window.location = `/editor`;
           } else {
-            // props.history.push("/");
             window.location = `/`;
           }
         })
