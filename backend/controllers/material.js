@@ -103,6 +103,16 @@ module.exports.approve = async (req, res) => {
   const materials = await Material.findByIdAndUpdate(id, { ...req.body });
 
   await materials.save();
+
+  const notify_message ={
+    'UID':materials.uid,
+    'Status':materials.status,
+    'Description':materials.message,
+    'Message':'Material Approval'
+  }
+  const notification = new Notification(notify_message);
+  await notification.save();
+
   res.status(202).send({
     message: "Successfully Updated the materials!",
     materials,

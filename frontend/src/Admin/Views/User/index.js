@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import UserDataTable from './UserDataTable';
+
 const UserIndex = () =>{
     var titles = [
         {name : 'Admin',link : '/admin'},

@@ -1,4 +1,5 @@
 const Event = require('../models/event');
+const Notification = require('../models/notification');
 const {cloudinary} = require('../cloudinary')
 
 module.exports.index = async (req,res)=>{
@@ -40,9 +41,9 @@ module.exports.update = async (req,res)=>{
     const {id} = req.params
     console.log(req.body);
     const events = await Event.findByIdAndUpdate(id, {...req.body});
-    // const mainImg = req.files.map(f=>({url:f.path,filename:f.filename}))
-    // events.editorId = req.user._id;
-    // events.mainImg.push(...mainImg);
+    const mainImg = req.files.map(f=>({url:f.path,filename:f.filename}))
+    events.editorId = req.user._id;
+    events.mainImg.push(...mainImg);
     await events.save();
 
     res
@@ -57,9 +58,15 @@ module.exports.approve = async (req,res)=>{
     const {id} = req.params
     console.log(req.body);
     const events = await Event.findByIdAndUpdate(id, {...req.body});
-
-    // events.reviewdVersion.push(...editedDoc);
     await events.save();
+    const notify_message ={
+      'UID':events.presenterId,
+      'Status':events.status,
+      'Description':events.message,
+      'Message':'Event Approval'
+    }
+    const notification = new Notification(notify_message);
+    await notification.save();
     res
       .status(202)
       .send({

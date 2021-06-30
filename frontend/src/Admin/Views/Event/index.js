@@ -2,6 +2,7 @@ import React ,{useEffect,useState} from 'react'
 import axios from 'axios';
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import EventDataTable from './EventDataTable';
+import DeleteModals from './DeleteModals';
 
 const EventIndex = () =>{
     var titles = [
@@ -50,6 +51,7 @@ const EventIndex = () =>{
                 </thead>
                 <EventDataTable data={events} />
             </table>
+            <DeleteModals data={materials} />
         </>
     );
 

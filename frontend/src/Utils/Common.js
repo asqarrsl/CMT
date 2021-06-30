@@ -35,4 +35,8 @@ export const setUserSession = (token, user) => {
   localStorage.setItem('user_id', user._id);
   localStorage.setItem('user_role', user.role);
   localStorage.setItem('user_username', user.username);
+
+  console.log(localStorage.getItem('user_username') );
+  console.log(localStorage.getItem('user_id') );
+  console.log(localStorage.getItem('user_id') );
 }

@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const token = process.env.TOKEN_SECRET;
 const token_exp = process.env.REFRESH_TOKEN_EXPIRY;
 
+let curruser = '';
+
 module.exports.index = async (req, res) => {
   const Users = await User.find({
     isActive: "1",
@@ -61,6 +63,7 @@ module.exports.register = async (req, res) => {
   const registeredUser = await User.register(newUser, password);
   req.login(registeredUser, (err) => {
     if (err) return next(err);
+    curruser = registeredUser;
     const token = generateAccessToken({ username: username });
     res.status(202).send({
       user: registeredUser,
@@ -83,7 +86,7 @@ module.exports.update = async (req, res) => {
 
 module.exports.login = async (req, res) => {
   const token = generateAccessToken({ username: req.body.username });
-
+  curruser = req.user;
   res.status(202).send({
     token,
     user: req.user,
@@ -92,18 +95,18 @@ module.exports.login = async (req, res) => {
 
 module.exports.verify = async (req, res) => {
   const { token } = req.query;
-  console.log(token);
 
-  jwt.verify(token, "shhhhh", function (err, decoded) {
+  jwt.verify(token, process.env.TOKEN_SECRET, function (err, decoded) {
     res.status(202).send({
       token,
-      user: req.user,
+      user: curruser,
     });
   });
 };
 
 module.exports.logout = (req, res) => {
   req.logOut();
+  curruser = '';
   res.status(202).send({
     message: "Successfully Updated the events!",
   });

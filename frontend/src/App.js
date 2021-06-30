@@ -37,6 +37,7 @@ const App = (props) =>{
 
     useEffect(() => {
       const token = getToken();
+      console.log(token);
       if (!token) {
         return;
       }
@@ -45,6 +46,7 @@ const App = (props) =>{
         setUserSession(response.data.token, response.data.user);
         setAuthLoading(false);
       }).catch(error => {
+          console.log(error);
         removeUserSession();
         setAuthLoading(false);
       });
