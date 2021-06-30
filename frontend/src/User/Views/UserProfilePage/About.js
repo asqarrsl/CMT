@@ -4,7 +4,7 @@ const About = (props) => {
   const datas = props.about;
   return (
     <div
-      class="tab-pane fade show active"
+      className="tab-pane fade show active"
       id="about"
       role="tabpanel"
       aria-labelledby="about"

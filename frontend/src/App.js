@@ -32,12 +32,13 @@ import eventMaterials from "./User/Components/Events/eventMaterials";
 
 import Register from "./User/Views/RegisterPage/Register";
 import UserProfile from "./User/Views/UserProfilePage/UserProfile";
+import EditProfile from "./User/Views/UserProfilePage/EditProfile";
 import ViewEvent from "./Admin/Views/Event/View";
 import ViewMaterial from "./Admin/Views/Material/View";
 import WorkshopMgt from "./User/Views/WorkshopMgtPage/WorkshopMgt";
-
 import PrivateRoute from "./Utils/PrivateRoute";
 import PublicRoute from "./Utils/PublicRoute";
+
 import {
   getRole,
   getToken,
@@ -191,6 +192,8 @@ const App = (props) => {
                 <PublicRoute path="/login" component={Login} />
                 <PublicRoute path="/register" component={Register} />
                 <PrivateRoute path="/userprofile" component={UserProfile} />
+                <Route path="/editprofile/:id" exact component={EditProfile} />
+
                 <PrivateRoute path="/workshopMgt" component={WorkshopMgt} />
                 <Route path="/events" component={Events} />
                 <Route path="/papers" component={Papers} />

@@ -53,6 +53,7 @@ const WorkshopMgt = () => {
   let done = (e) => {
     e.preventDefault();
     setStep(0);
+    window.location = `/`;
     //navigate
   };
 

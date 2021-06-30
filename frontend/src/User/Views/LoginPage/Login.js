@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import axios from "axios";
-import { setUserSession } from "../../../Utils/Common";
+import { getRole, setUserSession } from "../../../Utils/Common";
 const check = () => {
   console.log("hi");
 };
@@ -49,7 +49,7 @@ const Login = () => {
       axios
         .post("http://localhost:3000/users/login", user)
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
           alert("Successfully logged");
           setLoading(false);
           setUserSession(response.data.token, response.data.user);
@@ -59,19 +59,14 @@ const Login = () => {
           // localStorage.setItem('user_id',response.data.user.role);
 
           if (response.data.role == "Participants") {
-            // props.history.push("/");
             window.location = `/`;
-          } else if (response.data.role == "Admin") {
-            // props.history.push("/admin");
+          } else if (getRole() == "Admin") {
             window.location = `/admin`;
-          } else if (response.data.role == "Reviewer") {
-            // props.history.push("/reviewer");
+          } else if (getRole() == "Reviewer") {
             window.location = `/reviewer`;
-          } else if (response.data.role == "Editor") {
-            // props.history.push("/editor");
+          } else if (getRole() == "Editor") {
             window.location = `/editor`;
           } else {
-            // props.history.push("/");
             window.location = `/`;
           }
         })
@@ -100,40 +95,40 @@ const Login = () => {
   };
 
   return (
-    <div class="rootBody">
-      <div class="customCardOne">
-        <div class="card-header">
+    <div className="rootBody">
+      <div className="customCardOne">
+        <div className="card-header">
           <center>
             <h3>Sign In</h3>
           </center>
         </div>
-        <div class="card-body">
+        <div className="card-body">
           <form onSubmit={handleLogin} method="POST">
-            <div class="form-group">
+            <div className="form-group">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Username"
                 style={{ border: "1", borderColor: "#1286C1" }}
                 onChange={(event) => setUsername(event.target.value)}
               />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <input
                 type="password"
-                class="form-control"
+                className="form-control"
                 placeholder="Password"
                 style={{ border: "1", borderColor: "#1286C1" }}
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <SuccessButton text="Login" type="submit" position="center" />
             </div>
           </form>
         </div>
-        <div class="card-footer">
-          <div class="form-group">
+        <div className="card-footer">
+          <div className="form-group">
             <a href="#" style={{ color: "#1286C1", fontSize: "14px" }}>
               Don't have an account? Sign Up
             </a>
