@@ -4,7 +4,7 @@ import SuccessButton from "../../Components/Button/SuccessButton";
 import Step from "../../Components/Stepper/step";
 import DatetimeRangePicker from "react-datetime-range-picker";
 import axios from "axios";
-
+import moment from "moment";
 const WorkshopMgt = () => {
   const [step, setStep] = useState(0);
   const [presenterId, setPresenterId] = useState("");
@@ -33,6 +33,7 @@ const WorkshopMgt = () => {
   const [eventId, setEventId] = useState();
   const [document, setDocument] = useState();
   const [isPaid, setIsPaid] = useState();
+  const [now, setNow] = useState();
 
   const checknull = (value) => {
     if (value.trim() == null || value.trim() == "") {
@@ -41,6 +42,8 @@ const WorkshopMgt = () => {
       return true;
     }
   };
+
+  var myCurrentDate = new Date();
 
   let reset = (e) => {
     e.preventDefault();
@@ -290,6 +293,7 @@ const WorkshopMgt = () => {
               className="form-control"
               name="fromdate"
               id="fromdate"
+              min={moment(myCurrentDate).format("YYYY-MM-DDTkk:mm")}
               onChange={(event) => setFrom(event.target.value)}
             />
           </div>
@@ -299,6 +303,7 @@ const WorkshopMgt = () => {
               className="form-control"
               name="todate"
               id="todate"
+              min={From}
               onChange={(event) => setTo(event.target.value)}
             />
           </div>

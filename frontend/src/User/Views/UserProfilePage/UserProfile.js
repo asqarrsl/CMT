@@ -16,25 +16,13 @@ const UserProfile = () => {
         <form method="post">
           <div class="row" style={{ maxHeight: "150px" }}>
             {/* ======================== Profile photo sector ======================== */}
-            <div class="col-md-4">
-              <div class="profileImg">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                  alt=""
-                  style={{ maxHeight: "150px", maxWidth: "250px" }}
-                />
-                <div class="file btn btn-lg btn-primary">
-                  Change Photo
-                  <input type="file" name="file" />
-                </div>
-              </div>
+            <div class="col-md-4" style={{ paddingLeft: "60px" }}>
+              <h5>User name here</h5>
+              <h6>User role here</h6>
             </div>
             {/* ======================== Profile summary sector ======================== */}
             <div class="col-md-6">
               <div class="profile-summary">
-                <h5>User name here</h5>
-                <h6>User role here</h6>
-
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item" style={{ marginRight: "10px" }}>
                     <a
