@@ -197,9 +197,9 @@ const App = (props) => {
                 <PrivateRoute path="/workshopMgt" component={WorkshopMgt} />
                 <Route path="/events" component={Events} />
                 <Route path="/materials" component={Materials} />
-                <Route path="/event_details/:id" component={EventDetails} />
+                <PrivateRoute path="/event_details/:id" component={EventDetails} />
                 <Route path="/event_materials" component={eventMaterials} />
-                <Route path="/material_details/:id" component={MaterialDetails} />
+                <PrivateRoute path="/material_details/:id" component={MaterialDetails} />
               </Switch>
             </Main>
           </Route>
