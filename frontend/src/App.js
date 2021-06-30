@@ -200,6 +200,7 @@ const App = (props) => {
                 <Route path="/event_materials" component={eventMaterials} />
                 <Route path="/paper_details" component={PaperDetails} />
                 <Route path="/research_papers" component={researchPapers} />
+                <Route path="/test" component={Test} />
               </Switch>
             </Main>
           </Route>
