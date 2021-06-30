@@ -2,35 +2,33 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./card.css";
 import { Card, CardBody } from "react-simple-card";
-import EventCard from "./eventCard";
+import MaterialCard from "./materialCard";
 
-const Events = (props) => {
-  const [event, setEvent] = useState([]);
+const Materials = (props) => {
+  const [material, setMaterial] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/event")
+      .get("http://localhost:3000/material")
       .then((response) => {
         // console.log(response.data);
-        setEvent(response.data.events);
+        setMaterial(response.data.materials);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  const data = event.map((sevent, i) => [
+  const data = material.map((smaterial, i) => [
     {
       id: "0",
-      eventName: sevent.eventName,
+      name: smaterial.name,
       id: "1",
-      description: sevent.description,
+      description: smaterial.description,
       id: "2",
-      mainImg: sevent.mainImg,
+      images: smaterial.images,
       id: "3",
-      venue: sevent.venue,
-      id: "4",
-      event_id: sevent._id,
+      material_id: smaterial._id,
     },
   ]);
 
@@ -39,43 +37,43 @@ const Events = (props) => {
       <div class="container emp-profile">
         <div class="col-md-12">
           <div class="profile-head">
-            <h6>Events</h6>
+            <h6>Materials</h6>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item">
                 <a
                   class="nav-link active"
                   id="workshop-tab"
                   data-toggle="tab"
-                  href="/events"
+                  href="/materials"
                   role="tab"
                   aria-controls="home"
                   aria-selected="true"
                 >
-                  Workshops
+                  Workshop
                 </a>
               </li>
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  id="conference-tab"
+                  id="reasearch-tab"
                   data-toggle="tab"
-                  href="/events"
+                  href="/materials"
                   role="tab"
                   aria-controls="home"
                   aria-selected="false"
                 >
-                  Conferences
+                  Research
                 </a>
               </li>
             </ul>
           </div>
         </div>
         <div className="row">
-          <EventCard data={data} />
+          <MaterialCard data={data} />
         </div>
       </div>
     </body>
   );
 };
 
-export default Events;
+export default Materials;

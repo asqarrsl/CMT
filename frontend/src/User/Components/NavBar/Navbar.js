@@ -111,7 +111,7 @@ const NavBar = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/conference">
+                  <a className="dropdown-item" href="/events">
                     conferences
                   </a>
                 </li>
@@ -126,16 +126,16 @@ const NavBar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Papers
+                Materials
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="/papers">
+                  <a className="dropdown-item" href="/materials">
                     Workshop Papers
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/research_papers">
+                  <a className="dropdown-item" href="/materials">
                     Research Papers
                   </a>
                 </li>
