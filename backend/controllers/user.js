@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const token = process.env.TOKEN_SECRET;
 const token_exp = process.env.REFRESH_TOKEN_EXPIRY;
 
-let curruser = '';
+let curruser = "";
 
 module.exports.index = async (req, res) => {
   const Users = await User.find({
@@ -106,7 +106,7 @@ module.exports.verify = async (req, res) => {
 
 module.exports.logout = (req, res) => {
   req.logOut();
-  curruser = '';
+  curruser = "";
   res.status(202).send({
     message: "Successfully Updated the events!",
   });

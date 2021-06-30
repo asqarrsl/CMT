@@ -5,8 +5,8 @@ const AboutEntry = (props) => {
   const info = props.data.info;
   return (
     <div class="row">
-      <div class="col-md-6">
-        <label>{title}</label>
+      <div class="col-md-3">
+        <p style={{ fontWeight: "bold" }}>{title}</p>
       </div>
       <div class="col-md-6">
         <p>{info}</p>
