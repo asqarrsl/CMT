@@ -1,6 +1,5 @@
 const Event = require('../models/event');
 const Notification = require('../models/notification');
-const {cloudinary} = require('../cloudinary')
 
 module.exports.index = async (req,res)=>{
     const events = await Event.find({isActive:'1'});
@@ -71,7 +70,7 @@ module.exports.approve = async (req,res)=>{
     res
       .status(202)
       .send({
-          message:"Successfully Updated the events!",
+          message:"Successfully Approved the events!",
           events
         });
 }
@@ -83,7 +82,7 @@ module.exports.deleteRequest = async (req,res)=>{
     res
       .status(202)
       .send({
-          message:"Successfully Updated the events!",
+          message:"Successfully Requested to Deleted the events!",
           events
         });
 }

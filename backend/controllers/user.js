@@ -1,7 +1,5 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const token = process.env.TOKEN_SECRET;
-const token_exp = process.env.REFRESH_TOKEN_EXPIRY;
 
 
 module.exports.index = async (req, res) => {
@@ -60,12 +58,6 @@ module.exports.register = async (req, res) => {
   });
 
   const registeredUser = await User.register(newUser, password);
-  // req.login(registeredUser, (err) => {
-  //   if (err) return next(err);
-  //   curruser = registeredUser;
-  //   const token = generateAccessToken({ username: username });
-  // });
-  
   res.status(202).send({
     user: registeredUser,
     message : "Successfully Registered"

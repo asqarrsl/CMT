@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const materialController = require("../controllers/material");
-const { isLoggedIn, isAuthor, authenticateJWT } = require("../middleware");
+const {authenticateJWT } = require("../middleware");
 
 const multer = require("multer");
 const { storage } = require("../cloudinary");
@@ -23,6 +23,5 @@ router
   .delete(authenticateJWT, catchAsync(materialController.delete));
 
 router.post('/:id/approve',authenticateJWT,catchAsync(materialController.approve));
-// router.get('/:id/aprove',isLoggedIn,isAuthor,catchAsync(materialController.approve));
 
 module.exports = router;

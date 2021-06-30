@@ -26,11 +26,7 @@ module.exports.paperApproved = async (req,res)=>{
     res
       .status(202)
       .send({
-          message:"Successfully Updated the materials!",
+          message:"Successfully Paper Approved!",
           payments
         });
-
-    // res.redirect(`/payments/${payments._id}`);
-    // res.json(payments);
 }
-//call on hold ah mcn wait i will cm in a mint OK
