@@ -39,7 +39,7 @@ module.exports.show = async (req,res)=>{
 module.exports.update = async (req,res)=>{
 
     const {id} = req.params
-    console.log(req.body);
+    // console.log(req.body);
     const events = await Event.findByIdAndUpdate(id, {...req.body});
     const mainImg = req.files.map(f=>({url:f.path,filename:f.filename}))
     events.editorId = req.user._id;
@@ -56,11 +56,12 @@ module.exports.update = async (req,res)=>{
 
 module.exports.approve = async (req,res)=>{
     const {id} = req.params
-    console.log(req.body);
+    // console.log(req.body);
     const events = await Event.findByIdAndUpdate(id, {...req.body});
     await events.save();
+    // console.log(events);
     const notify_message ={
-      'UID':events.presenterId,
+      'UID':(events.presenterId)?events.presenterId : '',
       'Status':events.status,
       'Description':events.message,
       'Message':'Event Approval'
@@ -88,7 +89,7 @@ module.exports.deleteRequest = async (req,res)=>{
 }
 
 module.exports.delete = async (req,res)=>{
-  console.log(req);
+  // console.log(req);
     const {id} = req.params    
     const events = await Event.findById(id);
     events.isActive = 0;

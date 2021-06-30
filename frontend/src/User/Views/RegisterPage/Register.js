@@ -105,7 +105,7 @@ const Register = () => {
       axios
         .post("http://localhost:3000/users/register", user)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           alert("Successfully Inserted");
         })
         .catch((error) => {
@@ -113,13 +113,13 @@ const Register = () => {
             setFormError(error.response.data.message);
             setUserSession(response.data.token, response.data.user);
           } else if (error.request) {
-            console.log(error.request);
+            // console.log(error.request);
           } else {
-            console.log("Error", error.message);
+            // console.log("Error", error.message);
           }
         });
     } else {
-      console.log(formValid);
+      // console.log(formValid);
       setError("Invalid");
     }
 

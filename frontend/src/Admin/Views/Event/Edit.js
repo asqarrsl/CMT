@@ -3,6 +3,7 @@ import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import axios from 'axios';
 import Select from 'react-select';
 import moment from 'moment'
+import { getToken } from '../../../Utils/Common';
 
 const EditEvent = (props) =>{
     var titles = [
@@ -77,6 +78,7 @@ const EditEvent = (props) =>{
         e.preventDefault();
         setinit(false);
         // onValidate();
+        const token = getToken();
         // if(1){
         if(onValidate){
             let event = {
@@ -92,8 +94,14 @@ const EditEvent = (props) =>{
                 status:isApproved
             }
             // var date = new Date(Date); 
-            console.log(event);
-            axios.put(`http://localhost:3000/event/${props.match.params.id}`,event)
+            // console.log(event);
+
+            axios({
+                method: "put",
+                url: `http://localhost:3000/event/${props.match.params.id}`,
+                data: event,
+                headers: { authorization: token },
+              })
             .then(response=>{
                 console.log(response);
                 alert("Successfully Inserted")
@@ -203,7 +211,6 @@ const EditEvent = (props) =>{
                                     className="form-control" 
                                     name="mainImage"
                                     id="mainImage" 
-                                    value={mainImg}
                                     onChange = {(event)=>setMainImg(event.target.value)} 
                                 />
                             </div>    

@@ -29,7 +29,7 @@ module.exports.show = async (req,res)=>{
         // req.flash('error',"Couldn't find that Campground!");
         return res.redirect(`/campgrounds`);
     }
-    console.log(campground);
+    // console.log(campground);
     res.render('campgrounds/show',{campground});
 }
 module.exports.edit = async (req,res)=>{  

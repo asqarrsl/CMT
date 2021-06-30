@@ -21,8 +21,7 @@ const User = require('./models/user');
 const userRoutes = require('./routes/users'); 
 const materialRoutes = require('./routes/material'); 
 const eventRoutes = require('./routes/event'); 
-const campgroundsRoutes = require('./routes/campground'); 
-const reviewsRoutes = require('./routes/reviews'); 
+// const campgroundsRoutes = require('./routes/campground'); 
 
 const dbUrl = process.env.DB_URL;
 
@@ -54,6 +53,7 @@ app.use(cors())
 app.use(mongoSanitize({
     replaceWith: '_'
 }));
+
 const secret = process.env.SECRET||'testsectret';
 
 const store = new MongoStore({
@@ -106,8 +106,7 @@ app.get('/',(req,res)=>{
 app.use('/users',userRoutes);
 app.use('/material',materialRoutes);
 app.use('/event',eventRoutes);
-app.use('/campgrounds',campgroundsRoutes);
-app.use('/campgrounds/:id/reviews',reviewsRoutes);
+// app.use('/campgrounds',campgroundsRoutes);
 
 app.all('*',(req,res,next)=>{
     next(new ExpressError('Page Not Found',404));

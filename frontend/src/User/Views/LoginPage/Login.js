@@ -52,7 +52,7 @@ const Login = () => {
           console.log(response);
           alert("Successfully logged");
           setLoading(false);
-          setUserSession(response.data.token, response.data.user);
+          setUserSession(response.data.token, response.data.username , response.data.role , response.data.id);
           // localStorage.setItem('token',response.data.token);
           // localStorage.setItem('user',response.data.user);
           // localStorage.setItem('user_id',response.data.user._id);

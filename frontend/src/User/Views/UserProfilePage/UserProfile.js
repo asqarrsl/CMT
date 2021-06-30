@@ -13,16 +13,16 @@ const UserProfile = (props) => {
 
   useEffect(() => {
     setUser_ID(getUserId());
-    console.log(user_id);
+    // console.log(user_id);
     axios
       .get(`http://localhost:3000/users/${user_id}`)
       .then((response) => {
-        console.log(respose);
+        // console.log(respose);
         setUsers(response.data.Users);
-        console.log(users);
+        // console.log(users);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 

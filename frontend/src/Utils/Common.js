@@ -1,9 +1,9 @@
 // return the user data from the session storage
-export const getUser = () => {
-  const userStr = localStorage.getItem("user");
-  if (userStr) return JSON.parse(userStr);
-  else return null;
-};
+// export const getUser = () => {
+//   const userStr = localStorage.getItem("user");
+//   if (userStr) return JSON.parse(userStr);
+//   else return null;
+// };
 
 // return the token from the session storage
 export const getToken = () => {
@@ -25,17 +25,17 @@ export const getUsername = () => {
 // remove the token and user from the session storage
 export const removeUserSession = () => {
   localStorage.removeItem("token");
-  localStorage.removeItem("user");
+  // localStorage.removeItem("user");
   localStorage.removeItem("user_id");
   localStorage.removeItem("user_role");
   localStorage.removeItem("user_username");
 };
 
 // set the token and user from the session storage
-export const setUserSession = (token, user) => {
+export const setUserSession = (token, username,role,id) => {
   localStorage.setItem("token", token);
-  localStorage.setItem("user", JSON.stringify(user));
-  localStorage.setItem("user_id", user._id);
-  localStorage.setItem("user_role", user.role);
-  localStorage.setItem("user_username", user.username);
+  // localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("user_id", id);
+  localStorage.setItem("user_role", role);
+  localStorage.setItem("user_username", username);
 };

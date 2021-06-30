@@ -34,7 +34,7 @@ module.exports.show = async (req,res)=>{
           materials
         });
     }
-    console.log(materials);
+    // console.log(materials);
     res
       .status(202)
       .send({
@@ -99,15 +99,16 @@ module.exports.review = async (req, res) => {
 
 module.exports.approve = async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
+  // console.log(req.body);
+  const materials1 = await Material.findById(id);
   const materials = await Material.findByIdAndUpdate(id, { ...req.body });
-
+  
+  // console.log(materials1);
   await materials.save();
-
   const notify_message ={
-    'UID':materials.uid,
-    'Status':materials.status,
-    'Description':materials.message,
+    'UID':materials1.uid,
+    'Status':materials1.status,
+    'Description':materials1.message,
     'Message':'Material Approval'
   }
   const notification = new Notification(notify_message);

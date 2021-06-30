@@ -3,7 +3,7 @@ import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
 import Select from "react-select";
 import moment from "moment";
-
+import { getToken } from "../../../Utils/Common";
 const ViewEvent = (props) => {
   var titles = [
     { name: "Admin", link: "/admin" },
@@ -87,15 +87,19 @@ const ViewEvent = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     setinit(false);
-
+    const token = getToken();
     if (onValidate) {
       let event = {
         status: isApproved,
-        message :reason
+        message: reason,
       };
 
-      axios
-        .post(`http://localhost:3000/event/${props.match.params.id}/approve`, event)
+      axios({
+        method: "post",
+        url: `http://localhost:3000/event/${props.match.params.id}/approve`,
+        data: event,
+        headers: { authorization: token },
+      })
         .then((response) => {
           console.log(response);
           alert("Successfully Inserted");
@@ -113,10 +117,10 @@ const ViewEvent = (props) => {
             // `error.request` is an instance of XMLHttpRequest in the
             // browser and an instance of
             // http.ClientRequest in node.js
-            console.log(error.request);
+            // console.log(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
+            // console.log("Error", error.message);
           }
         });
     } else {
@@ -216,7 +220,6 @@ const ViewEvent = (props) => {
                   className="form-control"
                   name="mainImage"
                   id="mainImage"
-                  value={mainImg}
                   readOnly
                 />
               </div>
@@ -259,7 +262,10 @@ const ViewEvent = (props) => {
                   name="isApproved"
                   id="isApproved"
                   value={isApproved}
-                  onChange={(e) => {console.log(isApproved); setIsApproved(e.target.value)}}
+                  onChange={(e) => {
+                    // console.log(isApproved);
+                    setIsApproved(e.target.value);
+                  }}
                 >
                   <option value="Pending">Pending</option>
                   <option value="Approved">Approved</option>

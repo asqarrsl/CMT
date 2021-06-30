@@ -32,7 +32,7 @@ const AddMaterial = () => {
 
   useEffect(() => {
     axios.get("http://localhost:3000/event").then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       let data = [];
       response.data.events.map((item, index) => {
         let event = {
@@ -116,18 +116,18 @@ const AddMaterial = () => {
       // axios
         // .post("http://localhost:3000/material", material)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           alert("Successfully Inserted");
         })
         .catch((error) => {
           if (error.response) {
 
-            console.log(error.response.data);
+            // console.log(error.response.data);
             setFormError(error.response.data.message);
           } else if (error.request) {
-            console.log(error.request);
+            // console.log(error.request);
           } else {
-            console.log("Error", error.message);
+            // console.log("Error", error.message);
           }
         });
     } else {

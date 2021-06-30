@@ -52,7 +52,7 @@ const App = (props) => {
 
   useEffect(() => {
     const token = getToken();
-    console.log(token);
+    // console.log(token);
     if (!token) {
       return;
     }
@@ -60,7 +60,7 @@ const App = (props) => {
     axios
       .get(`http://localhost:3000/users/verify?token=${token}`)
       .then((response) => {
-        setUserSession(response.data.token, response.data.user);
+        setUserSession(response.data.token, response.data.username, response.data.role,  response.data.id);
         setAuthLoading(false);
       })
       .catch((error) => {

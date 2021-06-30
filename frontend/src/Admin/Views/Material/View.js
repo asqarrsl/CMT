@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
 import Select from "react-select";
+import { getToken } from "../../../Utils/Common";
 
 const ViewMaterial = (props) => {
   var titles = [
@@ -110,16 +111,19 @@ const ViewMaterial = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     setinit(false);
+    const token = getToken();
     if (onValidate) {
       let material = {
         status: isApproved,
         message: reason,
       };
-      axios
-        .post(
-          `http://localhost:3000/material/${props.match.params.id}/approve`,
-          material
-        )
+
+      axios({
+        method: "post",
+        url: `http://localhost:3000/material/${props.match.params.id}/approve`,
+        data: material,
+        headers: { authorization: token },
+      })
         .then((response) => {
           console.log(response);
           alert("Successfully Inserted");

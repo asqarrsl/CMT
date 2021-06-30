@@ -123,7 +123,7 @@ const WorkshopMgt = () => {
         isApproved,
       };
       // var date = new Date(Date);
-      console.log(event);
+      // console.log(event);
       axios
         .post("http://localhost:3000/event", event)
         .then((response) => {
@@ -133,16 +133,16 @@ const WorkshopMgt = () => {
         .catch((error) => {
           if (error.response) {
             setFormError(error.response.data.message);
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            // console.log(error.response.data);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
           } else if (error.request) {
-            console.log(error.request);
-            console.log(error.request);
+            // console.log(error.request);
+            // console.log(error.request);
           } else {
-            console.log("Error", error.message);
+            // console.log("Error", error.message);
           }
-          console.log(error.config);
+          // console.log(error.config);
         });
     } else {
       setError("Invalid");
@@ -151,7 +151,7 @@ const WorkshopMgt = () => {
 
   useEffect(() => {
     axios.get("http://localhost:3000/event").then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       let data = [];
       response.data.events.map((item, index) => {
         let event = {
@@ -194,21 +194,21 @@ const WorkshopMgt = () => {
         isPaid,
         status: isApproved,
       };
-      console.log(material);
+      // console.log(material);
       axios
         .post("http://localhost:3000/material", material)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           alert("Successfully Inserted");
         })
         .catch((error) => {
           if (error.response) {
-            console.log(error.response.data);
+            // console.log(error.response.data);
             setFormError(error.response.data.message);
           } else if (error.request) {
-            console.log(error.request);
+            // console.log(error.request);
           } else {
-            console.log("Error", error.message);
+            // console.log("Error", error.message);
           }
         });
     } else {

@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import axios from 'axios';
 import Select from 'react-select';
+import { getToken } from '../../../Utils/Common';
 
 const EditMaterial = (props) =>{
     var titles = [
@@ -34,7 +35,7 @@ const EditMaterial = (props) =>{
     useEffect(() => {
        axios.get('http://localhost:3000/event')
        .then(response=>{
-           console.log(response.data);
+        //    console.log(response.data);
            let data =[];
            response.data.events.map((item,index)=>{
                let event = {
@@ -107,6 +108,7 @@ const EditMaterial = (props) =>{
    const onSubmit = (e) =>{
        e.preventDefault();
        setinit(false);
+       const token = getToken();
        if(onValidate){
            let material = {
                uid ,
@@ -120,19 +122,25 @@ const EditMaterial = (props) =>{
                isPaid,
                status:isApproved
            }
-           axios.put(`http://localhost:3000/material/${props.match.params.id}`,material)
+           
+           axios({
+            method: "put",
+            url: `http://localhost:3000/material/${props.match.params.id}`,
+            data: material,
+            headers: { authorization: token },
+          })
            .then(response=>{
-               console.log(response);
+            //    console.log(response);
                alert("Successfully Inserted")
            })
            .catch((error)=>{
                if (error.response) {
-                   console.log(error.response.data);
+                //    console.log(error.response.data);
                    setFormError(error.response.data.message);
                } else if (error.request) {
-                   console.log(error.request);
+                //    console.log(error.request);
                } else {
-                   console.log('Error', error.message);
+                //    console.log('Error', error.message);
                }
            })
        }else{

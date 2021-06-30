@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { getToken } from "../../../Utils/Common";
 const DeleteModals = ({ data }) => {
 
   var deletemodalid = (obj) => {
@@ -7,12 +8,18 @@ const DeleteModals = ({ data }) => {
   };
 
   const onDeleteHandle = (obj) =>{
-    axios.delete(`http://localhost:3000/material/${obj}`)
+
+    const token = getToken();
+    axios({
+      method: "delete",
+      url: `http://localhost:3000/material/${obj}`,
+      headers: { authorization: token },
+    })
     .then(response=>{
-      console.log(response);
+      // console.log(response);
     })
     .catch(err=>{
-      console.log(err);
+      // console.log(err);
     })
   }
 

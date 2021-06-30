@@ -20,7 +20,7 @@ const EventIndex = () =>{
     useEffect(() => {
         axios.get('http://localhost:3000/event')
         .then(response=>{
-            console.log(response.data);
+            // console.log(response.data);
             setEvents(response.data.events);
         })
     },[])

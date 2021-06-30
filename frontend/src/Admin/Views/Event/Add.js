@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
-
+import { getToken } from "../../../Utils/Common";
 const AddEvent = () => {
   var titles = [
     { name: "Admin", link: "/admin" },
@@ -90,18 +90,18 @@ const onValidate = () => {
         status: isApproved,
       };
       // var date = new Date(Date);
-      console.log(event);
+      // console.log(event);
       const data = new FormData(form.current);
       data.append("image", mainImg);
       axios({
         method: "post",
         url: "http://localhost:3000/event",
         data: data,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multipart/form-data", authorization:  getToken()},
       })
         // axios.post('http://localhost:3000/event',event)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           alert("Successfully Inserted");
         })
         .catch((error) => {
@@ -109,18 +109,18 @@ const onValidate = () => {
             setFormError(error.response.data.message);
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            console.log(error.response);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            // console.log(error.response);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
           } else if (error.request) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the
             // browser and an instance of
             // http.ClientRequest in node.js
-            console.log(error.request);
+            // console.log(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
+            // console.log("Error", error.message);
           }
         });
     } else {

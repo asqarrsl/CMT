@@ -36,24 +36,24 @@ const NavBar = () => {
           <div>
             <a
               type="button"
-              className="btn btn-outline-primary"
+              class="btn btn-outline-primary"
               style={{ marginRight: "10px", borderRadius: "30px" }}
               href="/userProfile"
             >
-              <i className="fas fa-user-circle"></i>
+              <i class="fas fa-user-circle"></i>
             </a>
             <button
               className="btn btn-outline-warning"
               type="submit"
               onClick={handleLogout}
             >
-              <i className="fas fa-sign-out-alt" /> Logout
+              <i class="fas fa-sign-out-alt" /> Logout
             </button>
           </div>
         ) : (
           <div>
             <a className="btn btn-outline-warning" href="/login">
-              <i className="fas fa-sign-in-alt" /> Login
+              <i class="fas fa-sign-in-alt" /> Login
             </a>
           </div>
         )}
