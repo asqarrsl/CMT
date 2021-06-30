@@ -6,6 +6,7 @@ const MaterialDetails = (props) => {
   const [material, setMaterial] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [document, setDocument] = useState('');
 
   useEffect(() => {
     axios
@@ -14,7 +15,7 @@ const MaterialDetails = (props) => {
         setMaterial(response.data.materials);
         setName(response.data.materials.name);
         setDescription(response.data.materials.description);
-
+        setDocument(response.data.materials.document[0].url);
       })
       .catch((error) => {
         console.log(error);
@@ -48,9 +49,8 @@ const MaterialDetails = (props) => {
             <div className="col-md-6">
             </div>
             <div className="col-md-6">
-              <form method="get" action="/:id" download>
-                <button type="submit" className="profile-edit-btn" download><i className="fas fa-download" />Download</button>
-              </form>
+              <a className="btn profile-edit-btn" href={document} download><i className="fas fa-download" />Download</a>
+
             </div>
           </div>
         </div>

@@ -28,17 +28,18 @@ module.exports.show = async (req,res)=>{
     const materials = await Material.findById(req.params.id).populate('uid');
     if(!materials){
         res
-      .status(202)
+      .status(402)
       .send({
-          message:"Successfully Loaded the materials!",
+          message:"No Materials Found!",
           materials
         });
     }
     // console.log(materials);
     res
-      .status(402)
+      .status(202)
       .send({
-          message:"No Materials Found!",
+          message:"Successfully Loaded the materials!",
+          materials
         });
 }
 
