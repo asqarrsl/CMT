@@ -178,11 +178,11 @@ const App = (props) => {
             <Main>
               <Switch>
                 <Route path="/" exact component={LandingPage} />
-                <Route path="/payment" component={Payment} />
+                <PrivateRoute path="/payment" component={Payment} />
                 <PublicRoute path="/login" component={Login} />
                 <PublicRoute path="/register" component={Register} />
-                <Route path="/userprofile" component={UserProfile} />
-                <Route path="/workshopMgt" component={WorkshopMgt} />
+                <PrivateRoute path="/userprofile" component={UserProfile} />
+                <PrivateRoute path="/workshopMgt" component={WorkshopMgt} />
               </Switch>
             </Main>
           </Route>

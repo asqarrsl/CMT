@@ -26,6 +26,9 @@ export const getUsername = () => {
 export const removeUserSession = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
+  localStorage.removeItem("user_id");
+  localStorage.removeItem("user_role");
+  localStorage.removeItem("user_username");
 };
 
 // set the token and user from the session storage
@@ -35,8 +38,4 @@ export const setUserSession = (token, user) => {
   localStorage.setItem("user_id", user._id);
   localStorage.setItem("user_role", user.role);
   localStorage.setItem("user_username", user.username);
-
-  console.log(localStorage.getItem("user_username"));
-  console.log(localStorage.getItem("user_id"));
-  console.log(localStorage.getItem("user_id"));
 };

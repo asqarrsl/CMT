@@ -3,18 +3,27 @@ import axios from "axios";
 import "../../../App.css";
 import About from "./About";
 import Inbox from "./Inbox";
-import { getUserId } from "../../../Utils/Common";
+import { getUserId, getToken } from "../../../Utils/Common";
+
 const UserProfile = (props) => {
   const [togBtn, setTogBtn] = useState("about");
   const [users, setUsers] = useState([]);
   const [user_id, setUser_ID] = useState();
+  const token = getToken();
+
   useEffect(() => {
     setUser_ID(getUserId());
     console.log(user_id);
-    axios.get(`http://localhost:3000/users/${user_id}`).then((response) => {
-      setUsers(response.data.Users);
-      console.log(users);
-    });
+    axios
+      .get(`http://localhost:3000/users/${user_id}`)
+      .then((response) => {
+        console.log(respose);
+        setUsers(response.data.Users);
+        console.log(users);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const userDetails = [

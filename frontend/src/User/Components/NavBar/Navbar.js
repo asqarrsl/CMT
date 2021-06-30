@@ -1,14 +1,22 @@
-import React from "react";
-import { removeUserSession } from "../../../Utils/Common";
+import React, { useEffect, useState } from "react";
+import { removeUserSession, getToken } from "../../../Utils/Common";
 import axios from "axios";
 
 const NavBar = () => {
-  const handleLogout = () => {
+  const [loggedin, setloggedin] = useState(false);
+  useEffect(() => {
+    const token = getToken();
+    setloggedin(token);
+  }, []);
+  const handleLogout = (e) => {
+    e.preventDefault();
     axios
-      .post("http://localhost:3000/users/logout", user)
+      .get("http://localhost:3000/users/logout")
       .then((response) => {
         removeUserSession();
-        alert("Successfully logged");
+        setloggedin(false);
+        window.location = `/`;
+        alert("Successfully logged out");
       })
       .catch((error) => {
         if (error.response) {
@@ -18,7 +26,39 @@ const NavBar = () => {
         } else {
         }
       });
-    props.history.push("/login");
+    // window.location = `/`;
+  };
+
+  const CheckLoggedin = () => {
+    return (
+      <div>
+        {loggedin ? (
+          <div>
+            <a
+              type="button"
+              class="btn btn-outline-primary"
+              style={{ marginRight: "10px", borderRadius: "30px" }}
+              href="/userProfile"
+            >
+              <i class="fas fa-user-circle"></i>
+            </a>
+            <button
+              className="btn btn-outline-warning"
+              type="submit"
+              onClick={handleLogout}
+            >
+              <i class="fas fa-sign-out-alt" /> Logout
+            </button>
+          </div>
+        ) : (
+          <div>
+            <a className="btn btn-outline-warning" href="/login">
+              <i class="fas fa-sign-in-alt" /> Login
+            </a>
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -86,17 +126,7 @@ const NavBar = () => {
               {/* <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> */}
             </li>
           </ul>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+          <CheckLoggedin />
         </div>
       </div>
     </nav>
