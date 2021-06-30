@@ -61,14 +61,14 @@ module.exports.register = async (req, res) => {
   });
 
   const registeredUser = await User.register(newUser, password);
-  req.login(registeredUser, (err) => {
-    if (err) return next(err);
-    curruser = registeredUser;
-    const token = generateAccessToken({ username: username });
-    res.status(202).send({
-      user: registeredUser,
-      token,
-    });
+  // req.login(registeredUser, (err) => {
+  //   if (err) return next(err);
+  //   curruser = registeredUser;
+  //   const token = generateAccessToken({ username: username });
+  // });
+  res.status(202).send({
+    user: registeredUser,
+    message : "Successfully Registered"
   });
 };
 

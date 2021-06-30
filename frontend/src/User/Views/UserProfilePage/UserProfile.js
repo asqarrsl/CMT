@@ -36,21 +36,21 @@ const UserProfile = (props) => {
 
   return (
     <div>
-      <div class="container profile">
+      <div className="container profile">
         <form method="post">
-          <div class="row" style={{ maxHeight: "150px" }}>
+          <div className="row" style={{ maxHeight: "150px" }}>
             {/* ======================== Profile photo sector ======================== */}
-            <div class="col-md-4" style={{ paddingLeft: "60px" }}>
+            <div className="col-md-4" style={{ paddingLeft: "60px" }}>
               <h5>User name here</h5>
               <h6>User role here</h6>
             </div>
             {/* ======================== Profile summary sector ======================== */}
-            <div class="col-md-6">
-              <div class="profile-summary">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item" style={{ marginRight: "10px" }}>
+            <div className="col-md-6">
+              <div className="profile-summary">
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                  <li className="nav-item" style={{ marginRight: "10px" }}>
                     <a
-                      class="nav-link active"
+                      className="nav-link active"
                       id="about"
                       style={{ cursor: "pointer" }}
                       onClick={(e) => setTogBtn("about")}
@@ -58,9 +58,9 @@ const UserProfile = (props) => {
                       About
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <li className="nav-item">
                     <a
-                      class="nav-link active"
+                      className="nav-link active"
                       id="inbox"
                       style={{ cursor: "pointer" }}
                       onClick={(e) => setTogBtn("inbox")}
@@ -73,19 +73,19 @@ const UserProfile = (props) => {
             </div>
 
             {/* ======================== Edit profile button ======================== */}
-            <div class="col-md-2">
+            <div className="col-md-2">
               <input
                 type="submit"
-                class="profile-edit-btn"
+                className="profile-edit-btn"
                 name="btnAddMore"
                 value="Edit Profile"
               />
             </div>
           </div>
           {/* ======================== Side Pannel ======================== */}
-          <div class="row">
-            <div class="col-md-4">
-              <div class="profile-work">
+          <div className="row">
+            <div className="col-md-4">
+              <div className="profile-work">
                 <p>Some links here</p>
                 <a href="">Events</a>
                 <br />
@@ -95,10 +95,10 @@ const UserProfile = (props) => {
             </div>
             {/* ======================== Profile details ======================== */}
             <div
-              class="col-md-7"
+              className="col-md-7"
               style={{ backgroundColor: "#FFFFFF", minHeight: "200px" }}
             >
-              <div class="tab-content inbox-tab" id="myTabContent">
+              <div className="tab-content inbox-tab" id="myTabContent">
                 {togBtn == "about" && <About about={userDetails} />}
                 {togBtn == "inbox" && <Inbox />}
               </div>

@@ -102,15 +102,11 @@ const EditUser = (props) =>{
                 mobile,
                 role,
                 email,
-                reviewer:{
-                    specialization
-                },
-                participants:{
-                    type: ptype,
-                    designation,
-                    affiliation,
-                    isPaid
-                },
+                specialization,
+                participant: ptype,
+                designation,
+                affiliation,
+                isPaid,
                 username,
                 password
             }
