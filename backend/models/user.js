@@ -27,15 +27,17 @@ const userSchema = new Schema({
     },
     participants:{
         type:String,
-        qualification:String,
         designation:String,
         affiliation:String,
-        isPaid:String
+        isPaid:{
+            type:String,
+            default:'0'
+        }
     },
     bio:String,
     isActive:{
         type:String,
-        default:'1',
+        default:'1'
     }
 
 },{
