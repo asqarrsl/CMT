@@ -4,26 +4,36 @@ const MaterialDataTable = ({ data }) => {
   var editUrl = (obj) => {
     return `/admin/material/${obj}/edit`;
   };
+  var viewUrl = (obj) => {
+    return `/admin/material/${obj}`;
+  };
   var deleteUrl = (obj) => {
     return `/admin/material/${obj}/edit`;
   };
+  var deletemodal = (obj) => {
+    return `#deleteModal${obj}`;
+  };
   return (
     <tbody>
-      {data.map((materials, i) => (
+      {data.map((material, i) => (
         <tr key={i}>
-          <th scope="row">{i}</th>
-          <td>{materials.name}</td>
-          <td>{materials.type}</td>
-          <td>{materials.eventId.eventName}</td>
-          <td>{materials.uid.name}</td>
-          {console.log(materials)}
+          <th scope="row">{i + 1}</th>
+          <td>{material.name}</td>
+          <td>{material.type}</td>
+          <td>{material.eventId.eventName}</td>
+          <td>{material.uid.name}</td>
           <td>
-            <a href={editUrl(materials._id)}>
+            <a href={viewUrl(material._id)} className="me-3">
+              <i className="far fa-eye"></i>
+            </a>
+            <a href={editUrl(material._id)} className="me-3">
               <i className="fas fa-pen"></i>
             </a>
-          </td>
-          <td>
-            <a href={deleteUrl(materials._id)}>
+            <a
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target={deletemodal(user._id)}
+            >
               <i className="far fa-trash-alt"></i>
             </a>
           </td>

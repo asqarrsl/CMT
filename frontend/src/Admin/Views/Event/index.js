@@ -2,6 +2,7 @@ import React ,{useEffect,useState} from 'react'
 import axios from 'axios';
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import EventDataTable from './EventDataTable';
+import DeleteModals from './DeleteModals';
 
 const EventIndex = () =>{
     var titles = [
@@ -45,11 +46,12 @@ const EventIndex = () =>{
                         <th scope="col">Venue</th>
                         <th scope="col">From</th>
                         <th scope="col">To</th>
-                        <th scope="col" colSpan="2">Action</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <EventDataTable data={events} />
             </table>
+            <DeleteModals data={events} />
         </>
     );
 

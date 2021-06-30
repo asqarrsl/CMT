@@ -1,6 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { removeUserSession, getToken } from "../../../Utils/Common";
+import axios from "axios";
 
 const NavBar = () => {
+  const [loggedin, setloggedin] = useState(false);
+  useEffect(() => {
+    const token = getToken();
+    setloggedin(token);
+  }, []);
+  const handleLogout = (e) => {
+    e.preventDefault();
+    axios
+      .get("http://localhost:3000/users/logout")
+      .then((response) => {
+        removeUserSession();
+        setloggedin(false);
+        window.location = `/`;
+        alert("Successfully logged out");
+      })
+      .catch((error) => {
+        if (error.response) {
+          // if (error.response.status === 401) setError(error.response.data.message);
+          // else setFormError("Something went wrong. Please try again later.");
+        } else if (error.request) {
+        } else {
+        }
+      });
+    // window.location = `/`;
+  };
+
+  const CheckLoggedin = () => {
+    return (
+      <div>
+        {loggedin ? (
+          <div>
+            <a
+              type="button"
+              className="btn btn-outline-primary"
+              style={{ marginRight: "10px", borderRadius: "30px" }}
+              href="/userProfile"
+            >
+              <i className="fas fa-user-circle"></i>
+            </a>
+            <button
+              className="btn btn-outline-warning"
+              type="submit"
+              onClick={handleLogout}
+            >
+              <i className="fas fa-sign-out-alt" /> Logout
+            </button>
+          </div>
+        ) : (
+          <div>
+            <a
+              className="btn btn-outline-warning"
+              href="/login"
+              style={{ marginRight: "10px" }}
+            >
+              <i className="fas fa-sign-in-alt" /> Login
+            </a>
+            <a className="btn btn-outline-warning" href="/register">
+              <i className="fas fa-user-plus" /> Register
+            </a>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -25,10 +92,30 @@ const NavBar = () => {
                 Home
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
+
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Events
               </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a className="dropdown-item" href="/events">
+                    Workshops
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="/conference">
+                    conferences
+                  </a>
+                </li>
+              </ul>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -39,25 +126,17 @@ const NavBar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Dropdown
+                Papers
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Action
+                  <a className="dropdown-item" href="/papers">
+                    Workshop Papers
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
+                  <a className="dropdown-item" href="/research_papers">
+                    Research Papers
                   </a>
                 </li>
               </ul>
@@ -66,17 +145,7 @@ const NavBar = () => {
               {/* <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> */}
             </li>
           </ul>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+          <CheckLoggedin />
         </div>
       </div>
     </nav>

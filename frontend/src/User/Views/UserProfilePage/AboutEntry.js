@@ -2,14 +2,15 @@ import React from "react";
 
 const AboutEntry = (props) => {
   const title = props.data.title;
+  const id = props.data.id;
   const info = props.data.info;
   return (
-    <div class="row">
-      <div class="col-md-6">
-        <label>{title}</label>
+    <div className="row" key={id}>
+      <div className="col-md-3">
+        <p style={{ fontWeight: "bold" }}>{title}</p>
       </div>
-      <div class="col-md-6">
-        <p>{info}</p>
+      <div className="col-md-6">
+        <p style={{ color: "#878787" }}>{info}</p>
       </div>
     </div>
   );

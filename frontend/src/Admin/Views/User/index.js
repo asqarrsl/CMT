@@ -3,15 +3,17 @@ import axios from 'axios';
 
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import UserDataTable from './UserDataTable';
+
 const UserIndex = () =>{
     var titles = [
         {name : 'Admin',link : '/admin'},
         {name : 'Users',link : '/user'}
     ]
+
     const [users,setUsers] = useState([]); 
 
     useEffect(() => {
-        axios.get('http://localhost:3000/users')
+        axios.get('http://localhost:3000/users/')
         .then(response=>{
             setUsers(response.data.Users);
         })
@@ -23,7 +25,6 @@ const UserIndex = () =>{
                 <div className="col-md-6">
                     <Breadcrumb titles={titles} />
                 </div>
-                {console.log("hi",users)}
                 <div className="col-md-6 text-end">
                     <a className="btn btn-primary" href="/admin/user/add">Add Users</a>
                 </div>

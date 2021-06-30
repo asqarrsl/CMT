@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import axios from "axios";
-import { setUserSession } from "../../../Utils/Common";
+import { getRole, setUserSession } from "../../../Utils/Common";
+const check = () => {
+  console.log("hi");
+};
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [formValid, setFormValid] = useState(false);
@@ -31,8 +36,10 @@ const Login = () => {
     }
   };
 
-  const submit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
     setinit(false);
     if (onValidate) {
       let user = {
@@ -44,32 +51,41 @@ const Login = () => {
         .then((response) => {
           console.log(response.data);
           alert("Successfully logged");
+          setLoading(false);
+          setUserSession(response.data.token, response.data.user);
+          // localStorage.setItem('token',response.data.token);
+          // localStorage.setItem('user',response.data.user);
+          // localStorage.setItem('user_id',response.data.user._id);
+          // localStorage.setItem('user_id',response.data.user.role);
 
-          setUserSession(response.data.sessionID, response.data.user);
-
-          // if (response.data.role == "Participants") {
-          //   window.location = `/`;
-          // } else if (response.data.role == "Admin") {
-          //   window.location = `/admin`;
-          // } else if (response.data.role == "Reviewer") {
-          //   window.location = `/reviewer`;
-          // } else if (response.data.role == "Editor") {
-          //   window.location = `/editor`;
-          // } else {
-          //   window.location = `/`;
-          // }
+          if (response.data.role == "Participants") {
+            window.location = `/`;
+          } else if (getRole() == "Admin") {
+            window.location = `/admin`;
+          } else if (getRole() == "Reviewer") {
+            window.location = `/reviewer`;
+          } else if (getRole() == "Editor") {
+            window.location = `/editor`;
+          } else {
+            window.location = `/`;
+          }
         })
         .catch((error) => {
           if (error.response) {
-            setFormError(error.response.data.message);
-            console.log(error.response.data.message);
-            console.log(error.response);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            // setFormError(error.response.data.message);
+            setLoading(false);
+            if (error.response.status === 401)
+              setError(error.response.data.message);
+            else setFormError("Something went wrong. Please try again later.");
+
+            // console.log(error);
+            // console.log(error.response);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
           } else if (error.request) {
-            console.log(error.request);
+            // console.log(error.request);
           } else {
-            console.log("Error", error.message);
+            // console.log("Error", error.message);
           }
         });
     } else {
@@ -79,40 +95,40 @@ const Login = () => {
   };
 
   return (
-    <div class="rootBody">
-      <div class="customCardOne">
-        <div class="card-header">
+    <div className="rootBody">
+      <div className="customCardOne">
+        <div className="card-header">
           <center>
             <h3>Sign In</h3>
           </center>
         </div>
-        <div class="card-body">
-          <form onSubmit={submit} method="POST">
-            <div class="form-group">
+        <div className="card-body">
+          <form onSubmit={handleLogin} method="POST">
+            <div className="form-group">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Username"
                 style={{ border: "1", borderColor: "#1286C1" }}
                 onChange={(event) => setUsername(event.target.value)}
               />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <input
                 type="password"
-                class="form-control"
+                className="form-control"
                 placeholder="Password"
                 style={{ border: "1", borderColor: "#1286C1" }}
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <SuccessButton text="Login" type="submit" position="center" />
             </div>
           </form>
         </div>
-        <div class="card-footer">
-          <div class="form-group">
+        <div className="card-footer">
+          <div className="form-group">
             <a href="#" style={{ color: "#1286C1", fontSize: "14px" }}>
               Don't have an account? Sign Up
             </a>
