@@ -11,7 +11,7 @@ const upload = multer({storage})
 
 router.route('/')
     .get(catchAsync(eventController.index))
-    .post(catchAsync(eventController.store));
+    .post(upload.array('image'),catchAsync(eventController.store));
     // .post(isLoggedIn,upload.array('image'),catchAsync(eventController.store));
 
 // router.get('/new',isLoggedIn,eventController.create);

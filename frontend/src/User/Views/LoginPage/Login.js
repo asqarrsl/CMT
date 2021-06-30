@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import axios from "axios";
-
+import { setUserSession } from '../../../Utils/Common';
 const check = () => {
   console.log("hi");
 };
 
 const Login = () => {
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [formValid, setFormValid] = useState(false);
@@ -34,8 +37,10 @@ const Login = () => {
     }
   };
 
-  const submit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
     setinit(false);
     if (onValidate) {
       let user = {
@@ -47,30 +52,45 @@ const Login = () => {
         .then((response) => {
           console.log(response);
           alert("Successfully logged");
+          setLoading(false);
+          setUserSession(response.data.token, response.data.user);
+          // localStorage.setItem('token',response.data.token);
+          // localStorage.setItem('user',response.data.user);
+          // localStorage.setItem('user_id',response.data.user._id);
+          // localStorage.setItem('user_id',response.data.user.role);
 
-          // if (response.data.role == "Participants") {
-          //   window.location = `/`;
-          // } else if (response.data.role == "Admin") {
-          //   window.location = `/admin`;
-          // } else if (response.data.role == "Reviewer") {
-          //   window.location = `/reviewer`;
-          // } else if (response.data.role == "Editor") {
-          //   window.location = `/editor`;
-          // } else {
-          //   window.location = `/`;
-          // }
+          if (response.data.role == "Participants") {
+            props.history.push('/');
+            // window.location = `/`;
+          } else if (response.data.role == "Admin") {
+            props.history.push('/admin');
+            // window.location = `/admin`;
+          } else if (response.data.role == "Reviewer") {
+            props.history.push('/reviewer');
+            // window.location = `/reviewer`;
+          } else if (response.data.role == "Editor") {
+            props.history.push('/editor');
+            // window.location = `/editor`;
+          } else {
+            props.history.push('/');
+            // window.location = `/`;
+          }
         })
         .catch((error) => {
           if (error.response) {
-            setFormError(error.response.data.message);
-            console.log(error.response.data.message);
-            console.log(error.response);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            // setFormError(error.response.data.message);
+            setLoading(false);
+            if (error.response.status === 401) setError(error.response.data.message);
+            else setFormError("Something went wrong. Please try again later.");
+
+            // console.log(error);
+            // console.log(error.response);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
           } else if (error.request) {
-            console.log(error.request);
+            // console.log(error.request);
           } else {
-            console.log("Error", error.message);
+            // console.log("Error", error.message);
           }
         });
     } else {
@@ -88,7 +108,7 @@ const Login = () => {
           </center>
         </div>
         <div class="card-body">
-          <form onSubmit={submit} method="POST">
+          <form onSubmit={handleLogin} method="POST">
             <div class="form-group">
               <input
                 type="text"

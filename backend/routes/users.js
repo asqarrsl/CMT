@@ -21,11 +21,13 @@ router
 
 router.get("/logout", userController.logout);
 
+router.get("/verify", userController.verify);
+
 router
   .route("/:id")
   .get(catchAsync(userController.show))
   .put(catchAsync(userController.update));
 
-router.get("/logout", userController.logout);
+// router.get("/logout", userController.logout);
 
 module.exports = router;

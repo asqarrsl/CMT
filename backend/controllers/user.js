@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+const token = process.env.TOKEN_SECRET;
+const token_exp = process.env.REFRESH_TOKEN_EXPIRY;
 
 module.exports.index = async (req, res) => {
   const Users = await User.find({
@@ -56,7 +59,14 @@ module.exports.register = async (req, res) => {
   });
 
   const registeredUser = await User.register(newUser, password);
-  res.status(202).send(registeredUser);
+  req.login(registeredUser, (err) => {
+    if (err) return next(err);
+    const token = generateAccessToken({ username: username });
+    res.status(202).send({
+      user: registeredUser,
+      token,
+    });
+  });
 };
 
 module.exports.update = async (req, res) => {
@@ -64,6 +74,7 @@ module.exports.update = async (req, res) => {
   console.log(req.body);
   const users = await User.findByIdAndUpdate(id, { ...req.body });
   await users.save();
+
   res.status(202).send({
     message: "Successfully Updated the users!",
     users,
@@ -71,11 +82,24 @@ module.exports.update = async (req, res) => {
 };
 
 module.exports.login = async (req, res) => {
-  // req.flash('success', 'welcome back!');
-  // console.log(req.session);
-  // const redirectUrl = req.session.returnTo || '/campgrounds'
-  // delete req.session.returnTo;
-  // res.send("redirectUrl");
+  const token = generateAccessToken({ username: req.body.username });
+
+  res.status(202).send({
+    token,
+    user: req.user,
+  });
+};
+
+module.exports.verify = async (req, res) => {
+  const { token } = req.query;
+  console.log(token);
+
+  jwt.verify(token, "shhhhh", function (err, decoded) {
+    res.status(202).send({
+      token,
+      user: req.user,
+    });
+  });
 };
 
 module.exports.logout = (req, res) => {
@@ -84,3 +108,9 @@ module.exports.logout = (req, res) => {
     message: "Successfully Updated the events!",
   });
 };
+
+function generateAccessToken(username) {
+  return jwt.sign(username, process.env.TOKEN_SECRET, {
+    expiresIn: "2592000s",
+  });
+}

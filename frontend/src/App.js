@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LandingPage from "./User/Views/LandingPage/LangingPage";
 import NavBar from "./User/Components/NavBar/Navbar";
@@ -6,7 +6,9 @@ import Footer from "./User/Components/Footer/Footer";
 import "./App.css";
 import Payment from "./User/Views/Payment/Payment";
 import Dashboard from "./Admin/Views/Dashboard/Dashboard";
-import AdminRoute from "./Admin/AdminRoute";
+import AdminRoute from "./Utils/AdminRoute";
+import EditorRoute from "./Utils/EditorRoute";
+import ReviewerRoute from "./Utils/ReviewerRoute";
 import MainAdmin from "./Admin/Components/Layout/MainAdmin";
 import Main from "./User/Components/Layout/Main";
 import UserIndex from "./Admin/Views/User";
@@ -25,67 +27,99 @@ import ViewEvent from "./Admin/Views/Event/View";
 import ViewMaterial from "./Admin/Views/Material/View";
 import WorkshopMgt from "./User/Views/WorkshopMgtPage/WorkshopMgt";
 
-const App = (props) => {
-  return (
-    <>
-      <Router>
-        <Switch>
-          <Route path="/admin/:path?">
-            <MainAdmin>
-              <Switch>
-                <Route
-                  path="/admin/event/:id/edit"
-                  exact
-                  component={EditEvent}
-                />
-                <Route path="/admin/event/:id" exact component={ViewEvent} />
-                <Route path="/admin/event/add" exact component={AddEvent} />
-                <Route path="/admin/event" exact component={EventIndex} />
-                <Route
-                  path="/admin/material/:id/edit"
-                  exact
-                  component={EditMaterial}
-                />
-                <Route
-                  path="/admin/material/:id"
-                  exact
-                  component={ViewMaterial}
-                />
-                <Route
-                  path="/admin/material/add"
-                  exact
-                  component={AddMaterial}
-                />
-                <Route path="/admin/material" exact component={MaterialIndex} />
-                <Route path="/admin/user/:id/edit" exact component={EditUser} />
-                <Route path="/admin/user/add" exact component={AddUser} />
-                <Route path="/admin/user" exact component={UserIndex} />
-                <Route path="/admin" exact component={Dashboard} />
-                <Route path="*" component={Dashboard} />
-              </Switch>
-            </MainAdmin>
-          </Route>
-          <Route>
-            <Main>
-              <Switch>
-                <Route path="/" exact component={LandingPage} />
-                <Route path="/payment" component={Payment} />
-                <Route path="/payment" component={Payment} />
-                <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
-                <Route path="/userprofile" component={UserProfile} />
-                <Route path="/workshopMgt" component={WorkshopMgt} />
-              </Switch>
-            </Main>
-          </Route>
-          {/* <Route path="/admin/dashboard" component={Dashboard} /> */}
-          {/* <AdminRoute path="/admin/dashboard" component={Dashboard}></AdminRoute> */}
-          {/* <AdminRoute path="/user/:id/edit" component={Dashboard}></AdminRoute> */}
-          {/* <Route path="/" component={LandingPage}  exact/>    */}
-        </Switch>
-      </Router>
-    </>
-  );
-};
+import PrivateRoute from './Utils/PrivateRoute';
+import PublicRoute from './Utils/PublicRoute';
+import { getRole, getToken, getUser, removeUserSession, setUserSession } from './Utils/Common';
+import axios from "axios";
+const App = (props) =>{
+
+    const [authLoading, setAuthLoading] = useState(true);
+
+    useEffect(() => {
+      const token = getToken();
+      if (!token) {
+        return;
+      }
+      
+      axios.get(`http://localhost:3000/users/verify?token=${token}`).then(response => {
+        setUserSession(response.data.token, response.data.user);
+        setAuthLoading(false);
+      }).catch(error => {
+        removeUserSession();
+        setAuthLoading(false);
+      });
+    }, []);
+  
+    if (authLoading && getToken()) {
+      return <div className="content">Checking Authentication...</div>
+    }
+
+    return(
+        <>
+            <Router>
+                <Switch>
+                    <Route path='/admin/:path?'>
+                        <MainAdmin>
+                            <Switch>
+                                <AdminRoute path='/admin/event/add' exact component={AddEvent} />
+                                <AdminRoute path='/admin/event/:id/edit' exact component={EditEvent} />
+                                <AdminRoute path='/admin/event/:id' exact component={ViewEvent} />
+                                <AdminRoute path='/admin/event' exact component={EventIndex} />
+                                <AdminRoute path='/admin/material/add' exact component={AddMaterial} />
+                                <AdminRoute path='/admin/material/:id/edit' exact component={EditMaterial} />
+                                <AdminRoute path='/admin/material/:id' exact component={ViewMaterial} />
+                                <AdminRoute path='/admin/material' exact component={MaterialIndex} />
+                                <AdminRoute path='/admin/user/add' exact component={AddUser} />
+                                <AdminRoute path='/admin/user/:id/edit' exact component={EditUser} />
+                                <AdminRoute path='/admin/user' exact component={UserIndex} />
+                                <AdminRoute path='/admin' exact component={Dashboard} />
+                                <AdminRoute path='*' component={Dashboard} />
+                            </Switch>
+                        </MainAdmin>
+                    </Route>
+                    <Route path='/editor/:path?'>
+                        <MainAdmin>
+                            <Switch>
+                                <EditorRoute path='/editor/event/add' exact component={AddEvent} />
+                                <EditorRoute path='/editor/event/:id/edit' exact component={EditEvent} />
+                                <EditorRoute path='/editor/event/:id' exact component={ViewEvent} />
+                                <EditorRoute path='/editor/event' exact component={EventIndex} />
+                                <EditorRoute path='/editor' exact component={Dashboard} />
+                                <EditorRoute path='*' component={Dashboard} />
+                            </Switch>
+                        </MainAdmin>
+                    </Route>
+                    <Route path='/reviewer/:path?'>
+                        <MainAdmin>
+                            <Switch>
+                                <ReviewerRoute path='/reviewer/material/add' exact component={AddMaterial} />
+                                <ReviewerRoute path='/reviewer/material/:id/edit' exact component={EditMaterial} />
+                                <ReviewerRoute path='/reviewer/material/:id' exact component={ViewMaterial} />
+                                <ReviewerRoute path='/reviewer/material' exact component={MaterialIndex} />
+                                <ReviewerRoute path='*' component={Dashboard} />
+                            </Switch>
+                        </MainAdmin>
+                    </Route>
+                    <Route>
+                        <Main>
+                            <Switch>
+                                <Route path='/' exact component={LandingPage} />
+                                <Route path='/payment' component={Payment} />
+                                <PublicRoute path="/login" component={Login} />
+                                <PublicRoute path="/register" component={Register} />
+                                <Route path="/userprofile" component={UserProfile} />
+                                <Route path="/workshopMgt" component={WorkshopMgt} />
+                            </Switch>
+                        </Main>
+                    </Route>
+                    {/* <Route path="/admin/dashboard" component={Dashboard} /> */}
+                    {/* <AdminRoute path="/admin/dashboard" component={Dashboard}></AdminRoute> */}
+                    {/* <AdminRoute path="/user/:id/edit" component={Dashboard}></AdminRoute> */}
+                    {/* <Route path="/" component={LandingPage}  exact/>    */}
+                </Switch>
+            </Router>
+        </>
+    );
+}
 
 export default App;
