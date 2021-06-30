@@ -6,20 +6,23 @@ const DeleteModals = ({ data }) => {
     return `deleteModal${obj}`;
   };
 
-  const onDeleteHandle = () =>{
-    axios.get('http://localhost:3000/users/')
+  const onDeleteHandle = (e,obj) =>{
+    e.preventDefault();
+    axios.delete(`http://localhost:3000/event/${obj}`)
     .then(response=>{
-        setUsers(response.data.Users);
+        console.log(response);
+    })
+    .catch(error=>{
+      console.log(error.message);
     })
   }
 
   return (
-    data.map((material, i) => (
+    data.map((event, i) => (
         <div
           className="modal fade"
           key={i}
-          id={deletemodalid(material._id)}
-        //   tabindex="-1"
+          id={deletemodalid(event._id)}
           aria-labelledby="deleteModalLabel"
           aria-hidden="true"
         >
@@ -27,7 +30,7 @@ const DeleteModals = ({ data }) => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
-                  Delete material
+                  Delete event
                 </h5>
                 <button
                   type="button"
@@ -36,7 +39,7 @@ const DeleteModals = ({ data }) => {
                   aria-label="Close"
                 ></button>
               </div>
-              <div className="modal-body">Are You Sure You need to delete This material</div>
+              <div className="modal-body">Are You Sure You need to delete This event</div>
               <div className="modal-footer">
                 <button
                   type="button"
@@ -45,7 +48,7 @@ const DeleteModals = ({ data }) => {
                 >
                   Close
                 </button>
-                <button type="button" onClick={onDeleteHandle(material._id)} className="btn btn-danger">
+                <button type="button" onClick={e=>{onDeleteHandle(e,event._id)}} className="btn btn-danger">
                   Confirm
                 </button>
               </div>

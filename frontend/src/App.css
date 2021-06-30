@@ -8,6 +8,17 @@ body {
   font-family: "Numans", sans-serif;
 }
 
+header.masthead {
+  position: relative;
+  background-color: #e6e6e6;
+  /* background: url("./img/bg-masthead.jpg") no-repeat center center; */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
 a {
   text-decoration: none;
 }

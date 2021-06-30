@@ -122,6 +122,54 @@ const NavBar = () => {
                 </li>
               </ul>
             </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Events
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a className="dropdown-item" href="/events">
+                    Workshops
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="/conference">
+                    conferences
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Papers
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a className="dropdown-item" href="/papers">
+                    Workshop Papers
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="/research_papers">
+                    Research Papers
+                  </a>
+                </li>
+              </ul>
+            </li>
             <li className="nav-item">
               {/* <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> */}
             </li>

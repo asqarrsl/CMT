@@ -6,10 +6,13 @@ const DeleteModals = ({ data }) => {
     return `deleteModal${obj}`;
   };
 
-  const onDeleteHandle = () =>{
-    axios.get('http://localhost:3000/users/')
+  const onDeleteHandle = (obj) =>{
+    axios.delete(`http://localhost:3000/material/${obj}`)
     .then(response=>{
-        setUsers(response.data.Users);
+      console.log(response);
+    })
+    .catch(err=>{
+      console.log(err);
     })
   }
 

@@ -70,7 +70,7 @@ const sessionConfig = {
     store,
     name:'soner',
     secret,
-    resave:false,
+    resave:true,
     saveUninitialized:true,
     cookie :{
         httpOnly:true,
@@ -102,11 +102,6 @@ app.get('/',(req,res)=>{
     res.send('home');
 });
 
-app.get('/fakeuser',async (req,res)=>{
-    const user = new User({email:'asqarrsl@gmail.com',username:'ashique'});
-    const newUser = await User.register(user,'asqarrsl');
-    res.send(newUser);
-});
 
 app.use('/users',userRoutes);
 app.use('/material',materialRoutes);

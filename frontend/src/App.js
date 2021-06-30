@@ -21,6 +21,15 @@ import EditMaterial from "./Admin/Views/Material/Edit";
 import AddMaterial from "./Admin/Views/Material/Add";
 import MaterialIndex from "./Admin/Views/Material";
 import Login from "./User/Views/LoginPage/Login";
+import Events from "./User/Components/Events/events";
+import Papers from "./User/Components/Papers/papers";
+import EventDetails from "./User/Components/Events/eventDetails";
+import PaperDetails from "./User/Components/Papers/paperDetails";
+import Test from "./User/Components/Test/Test";
+import researchPapers from "./User/Components/Papers/ressearchPapers";
+import conference from "./User/Components/Events/conference";
+import eventMaterials from "./User/Components/Events/eventMaterials";
+
 import Register from "./User/Views/RegisterPage/Register";
 import UserProfile from "./User/Views/UserProfilePage/UserProfile";
 import ViewEvent from "./Admin/Views/Event/View";
@@ -183,6 +192,13 @@ const App = (props) => {
                 <PublicRoute path="/register" component={Register} />
                 <PrivateRoute path="/userprofile" component={UserProfile} />
                 <PrivateRoute path="/workshopMgt" component={WorkshopMgt} />
+                <Route path="/events" component={Events} />
+                <Route path="/papers" component={Papers} />
+                <Route path="/event_details" component={EventDetails} />
+                <Route path="/conference" component={conference} />
+                <Route path="/event_materials" component={eventMaterials} />
+                <Route path="/paper_details" component={PaperDetails} />
+                <Route path="/research_papers" component={researchPapers} />
               </Switch>
             </Main>
           </Route>

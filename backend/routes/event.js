@@ -18,8 +18,9 @@ router.route('/')
 
 router.route('/:id')
     .get(catchAsync(eventController.show))
-    .put(isLoggedIn,isAuthor,upload.array('image'),catchAsync(eventController.update))
-    .delete(isLoggedIn,isAuthor,catchAsync(eventController.delete));
+    .put(isLoggedIn,upload.array('image'),catchAsync(eventController.update))
+    .delete(isLoggedIn,catchAsync(eventController.delete));
+    // .delete(isLoggedIn,catchAsync(eventController.delete));
 
 
 router.post('/:id/approve',catchAsync(eventController.approve));
