@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
 import Select from "react-select";
+import Loader from "../../Components/Loader/Loader";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
 
 const AddMaterial = () => {
   var titles = [
@@ -11,6 +14,7 @@ const AddMaterial = () => {
   ];
   const [init, setinit] = useState(true);
 
+  const [loading,setloading] = useState(false);
   const [uid, setUid] = useState('');
   const [name, setName] = useState('');
   const [tags, setTags] = useState('');
@@ -30,8 +34,10 @@ const AddMaterial = () => {
   const [useroptions, setUseroptions] = useState([]);
   const [formError, setFormError] = useState(false);
 
-  useEffect(() => {
-    axios.get("http://localhost:3000/event").then((response) => {
+  useEffect(async() => {
+    setloading(true);
+
+    await axios.get("http://localhost:3000/event").then((response) => {
       // console.log(response.data);
       let data = [];
       response.data.events.map((item, index) => {
@@ -42,9 +48,10 @@ const AddMaterial = () => {
         data.push(event);
       });
       setEventoptions(data);
+      
     });
 
-    axios.get("http://localhost:3000/users").then((response) => {
+    await axios.get("http://localhost:3000/users").then((response) => {
       let data1 = [];
       response.data.Users.map((item, index) => {
         let user = {
@@ -55,6 +62,7 @@ const AddMaterial = () => {
       });
       setUseroptions(data1);
     });
+    setloading(false);
   }, []);
 
   const checknull = (value) => {
@@ -89,55 +97,39 @@ const AddMaterial = () => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
+    setloading(true);
     setinit(false);
     if (onValidate) {
-      let material = {
-        uid,
-        name,
-        tags,
-        description,
-        // images:[imageSchema],
-        type,
-        eventId,
-        // document[documentSchema],
-        isPaid,
-        status:isApproved,
-      };
       const data = new FormData(form.current)
-            // data.append('image',mainImg);
-      axios({
+     await  axios({
         method: "post",
         url: "http://localhost:3000/material",
         data: data,
         headers: { "Content-Type": "multipart/form-data" },
     })
-      // axios
-        // .post("http://localhost:3000/material", material)
         .then((response) => {
-          // console.log(response);
           alert("Successfully Inserted");
+          window.location = 'admin/material'
         })
         .catch((error) => {
           if (error.response) {
-
-            // console.log(error.response.data);
             setFormError(error.response.data.message);
           } else if (error.request) {
-            // console.log(error.request);
           } else {
-            // console.log("Error", error.message);
           }
         });
     } else {
       setError("Invalid");
     }
+    setloading(false);
   };
   return (
     <>
       <Breadcrumb titles={titles} />
       <hr />
+      {loading && <Loader />} 
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Add Material</h5>

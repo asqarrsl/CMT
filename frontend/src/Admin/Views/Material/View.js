@@ -3,6 +3,9 @@ import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
 import Select from "react-select";
 import { getToken } from "../../../Utils/Common";
+import Loader from "../../Components/Loader/Loader";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
 
 const ViewMaterial = (props) => {
   var titles = [
@@ -11,6 +14,7 @@ const ViewMaterial = (props) => {
     { name: "View", link: "/view" },
   ];
 
+  const [loading,setloading] = useState(false);
   const [init, setinit] = useState(true);
 
   const [uid, setUid] = useState();
@@ -32,8 +36,9 @@ const ViewMaterial = (props) => {
   const [useroptions, setUseroptions] = useState([]);
   const [formError, setFormError] = useState(false);
 
-  useEffect(() => {
-    axios.get("http://localhost:3000/event").then((response) => {
+  useEffect(async() => {
+    setloading(true);
+    await axios.get("http://localhost:3000/event").then((response) => {
       console.log(response.data);
       let data = [];
       response.data.events.map((item, index) => {
@@ -46,7 +51,7 @@ const ViewMaterial = (props) => {
       setEventoptions(data);
     });
 
-    axios.get("http://localhost:3000/users").then((response) => {
+   await  axios.get("http://localhost:3000/users").then((response) => {
       let data1 = [];
       response.data.Users.map((item, index) => {
         let user = {
@@ -58,7 +63,7 @@ const ViewMaterial = (props) => {
       setUseroptions(data1);
     });
 
-    axios
+    await axios
       .get(`http://localhost:3000/material/${props.match.params.id}`)
       .then((response) => {
         setMaterials(response.data.materials);
@@ -74,6 +79,7 @@ const ViewMaterial = (props) => {
         setIsApproved(response.data.materials.status);
         setReason(response.data.materials.message);
       });
+      setloading(false);
   }, []);
 
   const checknull = (value) => {
@@ -108,8 +114,10 @@ const ViewMaterial = (props) => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
+    
+    setloading(true);
     setinit(false);
     const token = getToken();
     if (onValidate) {
@@ -118,7 +126,7 @@ const ViewMaterial = (props) => {
         message: reason,
       };
 
-      axios({
+     await axios({
         method: "post",
         url: `http://localhost:3000/material/${props.match.params.id}/approve`,
         data: material,
@@ -141,6 +149,8 @@ const ViewMaterial = (props) => {
     } else {
       setError("Invalid");
     }
+    
+setloading(false);
   };
   return (
     <>
@@ -148,6 +158,7 @@ const ViewMaterial = (props) => {
       <hr />
       <div className="card">
         <div className="card-body">
+        {loading && <Loader />} 
           <h5 className="card-title">View Material</h5>
           <hr />
           <form method="POST" onSubmit={onSubmit}>

@@ -4,6 +4,9 @@ import axios from "axios";
 import Select from "react-select";
 import moment from "moment";
 import { getToken } from "../../../Utils/Common";
+import Loader from "../../Components/Loader/Loader";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
 
 const EditEvent = (props) => {
   var titles = [
@@ -13,7 +16,7 @@ const EditEvent = (props) => {
   ];
 
   const [init, setinit] = useState(true);
-
+  const [loading,setloading] = useState(false);
   const [eventName, setEventName] = useState("");
   const [description, setDescription] = useState("");
   const [eventType, setEventType] = useState("");
@@ -29,8 +32,8 @@ const EditEvent = (props) => {
 
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    axios
+  useEffect(async() => {
+    await axios
       .get(`http://localhost:3000/event/${props.match.params.id}`)
       .then((response) => {
         setEvents(response.data.events);
@@ -47,6 +50,7 @@ const EditEvent = (props) => {
         );
         setIsApproved(response.data.events.status);
       });
+      setloading(false);
   }, []);
 
   const checknull = (value) => {
@@ -83,9 +87,11 @@ const EditEvent = (props) => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
+    setloading(true);
     setinit(false);
+
     // onValidate();
     const token = getToken();
     // if(1){
@@ -105,7 +111,7 @@ const EditEvent = (props) => {
       // var date = new Date(Date);
       // console.log(event);
 
-      axios({
+      await axios({
         method: "put",
         url: `http://localhost:3000/event/${props.match.params.id}`,
         data: event,
@@ -137,6 +143,7 @@ const EditEvent = (props) => {
     } else {
       setError("Invalid");
     }
+    setloading(false);
   };
 
   return (
@@ -147,6 +154,7 @@ const EditEvent = (props) => {
         <div className="card-body">
           <h5 className="card-title">Edit Event</h5>
           <hr />
+          {loading && <Loader />} 
           <form method="POST" onSubmit={onSubmit}>
             <div className="row">
               <div className="mb-3 col-md-6">

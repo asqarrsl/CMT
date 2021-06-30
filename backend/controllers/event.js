@@ -59,15 +59,15 @@ module.exports.approve = async (req,res)=>{
     // console.log(req.body);
     const events = await Event.findByIdAndUpdate(id, {...req.body});
     await events.save();
-    // console.log(events);
-    const notify_message ={
-      'UID':(events.presenterId)?events.presenterId : '',
-      'Status':events.status,
-      'Description':events.message,
-      'Message':'Event Approval'
-    }
-    const notification = new Notification(notify_message);
+  
+    UID= (events.presenterId) ?events.presenterId : "60dbc9df0e6bd92ee81ae0e1",
+    Status=events.status,
+    Description=events.message,
+    Message='Event Approval'
+
+    const notification = new Notification({UID,Status,Description,Message});
     await notification.save();
+    console.log(notification);
     res
       .status(202)
       .send({
@@ -93,10 +93,11 @@ module.exports.delete = async (req,res)=>{
     const {id} = req.params    
     const events = await Event.findById(id);
     events.isActive = 0;
+    await events.save();
     res
       .status(202)
       .send({
-          message:"Successfully Updated the events!",
+          message:"Successfully Deleted the events!",
           events
         });
 }

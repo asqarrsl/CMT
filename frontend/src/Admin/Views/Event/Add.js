@@ -2,6 +2,10 @@ import React, { useRef, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
 import { getToken } from "../../../Utils/Common";
+import Loader from "../../Components/Loader/Loader";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
+
 const AddEvent = () => {
   var titles = [
     { name: "Admin", link: "/admin" },
@@ -9,6 +13,7 @@ const AddEvent = () => {
     { name: "Add Event", link: "/add" },
   ];
 
+  const [loading,setloading] = useState(false);
   const [init, setinit] = useState(true);
 
   const [eventName, setEventName] = useState("");
@@ -32,31 +37,17 @@ const AddEvent = () => {
       return true;
     }
   };
-};
-const checkstring = (value) => {
-  if (typeof value != "string") {
-    return false;
+  const checkstring = (value) => {
+    if (typeof value != "string") {
+      return false;
+    }
+  };
+  function validateEmail(value) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(value).toLowerCase());
   }
-};
-function validateEmail(value) {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(value).toLowerCase());
-}
-const onValidate = () => {
-  if (
-    checknull(eventName) &&
-    checknull(description) &&
-    checknull(eventType) &&
-    checknull(venue) &&
-    checknull(mainImg) &&
-    checknull(From) &&
-    checknull(To)
-  ) {
-    setFormValid(true);
-  } else {
-    setFormValid(false);
-  }
+
   const onValidate = () => {
     if (
       checknull(eventName) &&
@@ -71,47 +62,52 @@ const onValidate = () => {
       setFormValid(false);
     }
   };
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    setloading(true);
     setinit(false);
     onValidate();
     // if(1){
     if (formValid) {
-      let event = {
-        eventName,
-        description,
-        eventType,
-        venue,
-        image: mainImg,
-        duration: {
-          From,
-          To,
-        },
-        status: isApproved,
-      };
+      // let event = {
+      //   eventName,
+      //   description,
+      //   eventType,
+      //   venue,
+      //   image: mainImg,
+      //   duration: {
+      //     From,
+      //     To,
+      //   },
+      //   status: isApproved,
+      // };
       // var date = new Date(Date);
       // console.log(event);
       const data = new FormData(form.current);
       data.append("image", mainImg);
-      axios({
+     await axios({
         method: "post",
         url: "http://localhost:3000/event",
         data: data,
-        headers: { "Content-Type": "multipart/form-data", authorization:  getToken()},
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: getToken(),
+        },
       })
         // axios.post('http://localhost:3000/event',event)
         .then((response) => {
           // console.log(response);
           alert("Successfully Inserted");
+          window.location = 'admin/event'
         })
         .catch((error) => {
           if (error.response) {
             setFormError(error.response.data.message);
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            // console.log(error.response);
-            // console.log(error.response.status);
-            // console.log(error.response.headers);
+            console.log(error.response);
+            console.log(error.response.status);
+            console.log(error.response.headers);
           } else if (error.request) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the
@@ -126,6 +122,7 @@ const onValidate = () => {
     } else {
       setError("Invalid");
     }
+    setloading(false);
   };
 
   return (
@@ -135,6 +132,7 @@ const onValidate = () => {
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Add Event</h5>
+          {loading && <Loader />} 
           <hr />
           <form ref={form} onSubmit={onSubmit} encType="multipart/form-data">
             <div className="row">

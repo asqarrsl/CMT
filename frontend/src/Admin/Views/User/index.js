@@ -3,6 +3,9 @@ import axios from 'axios';
 
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import UserDataTable from './UserDataTable';
+import Loader from "../../Components/Loader/Loader";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
 
 const UserIndex = () =>{
     var titles = [
@@ -11,12 +14,15 @@ const UserIndex = () =>{
     ]
 
     const [users,setUsers] = useState([]); 
+    const [loading,setloading] = useState(false);
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/users/')
+    useEffect(async () => {
+        setloading(true);
+        await axios.get('http://localhost:3000/users/')
         .then(response=>{
             setUsers(response.data.Users);
         })
+        setloading(false);
     },[])
 
     return(
@@ -30,6 +36,7 @@ const UserIndex = () =>{
                 </div>
             </div>
             <hr />
+            {loading && <Loader />} 
             <div className="fs-4">All Users</div>
             <table className="table table-striped table-hover">
                 <thead>

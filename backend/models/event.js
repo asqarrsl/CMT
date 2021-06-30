@@ -29,6 +29,10 @@ const eventSchema = new Schema ({
         type:Schema.Types.ObjectId,
         ref:'User'
     },
+    link : {
+        type:String,
+        default:"https://zoom.us/linkid"
+    },
     status:{
         type:String,
         default:"Pending"

@@ -3,6 +3,9 @@ import axios from 'axios';
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
 import EventDataTable from './EventDataTable';
 import DeleteModals from './DeleteModals';
+import Loader from "../../Components/Loader/Loader";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
 
 const EventIndex = () =>{
     var titles = [
@@ -16,13 +19,16 @@ const EventIndex = () =>{
         }
     ]
     const [events,setEvents] = useState([]);
+    const [loading,setloading] = useState(false);
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/event')
+    useEffect(async() => {
+        setloading(true);
+        await axios.get('http://localhost:3000/event')
         .then(response=>{
             // console.log(response.data);
             setEvents(response.data.events);
         })
+        setloading(false);
     },[])
         
     return(
@@ -36,6 +42,7 @@ const EventIndex = () =>{
                 </div>
             </div>
             <hr />
+            {loading && <Loader />} 
             <div className="fs-4">All Event</div>
             <table className="table table-striped table-hover">
                 <thead>

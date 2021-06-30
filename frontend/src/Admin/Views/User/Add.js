@@ -2,7 +2,11 @@ import React, {useState} from 'react'
 import axios from 'axios';
 
 import Breadcrumb from '../../Components/Breadcrumb/BreadCrumb';
+import Loader from '../../Components/Loader/Loader';
 import Error from '../../Components/Alert/Error';
+import "core-js/stable";
+import "regenerator-runtime/runtime"
+
 const AddUser = () =>{
     var titles = [
         {name : 'Admin',link : '/admin'},
@@ -23,6 +27,7 @@ const AddUser = () =>{
     const [isPaid,setisPaid] = useState('');
     const [formValid,setFormValid] = useState(false);
     const [formError,setFormError] = useState(false);
+    const [loading,setloading] = useState(false);
     const [init,setinit] = useState(true);
     const [error,setError] = useState(true);
 
@@ -47,30 +52,36 @@ const AddUser = () =>{
             setFormValid(validateEmail(email));
             if(role=="Admin"){
                 setFormValid(true);
+                return true;
             }else if(role=="Reviewer"){
                 if(checknull(specialization)){
                     setFormValid(true);
+                    return true;
                 }
             }else if(role=="Editor"){
                 setFormValid(true);
+                return true;
             }else if(role=="Participants"){
                 if(checknull(ptype) && checknull(designation) && checknull(affiliation) && checknull(isPaid)){
                     setFormValid(true);
+                    return true;
                 }
             }else{
                 setFormValid(false);
+                return false;
             }
 
         }else{
             setFormValid(false);
+            return true;
         }
     }
 
-    const onSubmit = (e) =>{
+    const onSubmit = async(e) =>{
         e.preventDefault();
+        setloading(true);
         setinit(false);
-        onValidate();
-        if(formValid){
+        if(onValidate){
             let user = {
                 name,
                 mobile,
@@ -84,30 +95,11 @@ const AddUser = () =>{
                 username,
                 password
             }
-            // let user1 = {
-            //     "name": "Re D. D1",
-            //     "mobile": "+947778888771",
-            //     "role": "Editor",
-            //     "email": "testing@gmail1.com",
-            //     "reviewer": {
-            //         "specialization": "BLOG"
-            //     },
-            //     "username" : "testing1",
-            //     "password" : "1234561",
-            //     "participants": {
-            //         "type": "researcher",
-            //         "qualification": "PHD",
-            //         "designation": "Professor",
-            //         "affiliation": "SLIIT",
-            //         "isPaid": "false"
-            //     },
-            //     "bio": "Researcher in collaborating",
-            //     "isActive": "true"
-            // }
-            axios.post('http://localhost:3000/users/register',user)
+            await axios.post('http://localhost:3000/users/register',user)
             .then(response=>{
                 console.log(response);
                 alert("Successfully Inserted")
+                window.location = 'admin/user'
             })
             .catch((error)=>{
                 if (error.response) {
@@ -129,9 +121,11 @@ const AddUser = () =>{
                 }
                 // console.log(error.config);
             })
+            
         }else{
             setError("Invalid");
         }
+        setloading(false);
     }
     return(
         <>
@@ -141,6 +135,7 @@ const AddUser = () =>{
                 <div className="card-body">
                     <h5 className="card-title">Add User</h5>
                     <hr />
+                    {loading && <Loader />} 
                     {(formError) && <Error message={formError} />}
                     <form onSubmit={onSubmit} method="POST">
                         <div className="row">
@@ -276,8 +271,6 @@ const AddUser = () =>{
                                     <label className="form-check-label" htmlFor="prole3">Participant</label>
                                 </div>
                             </div>
-                        {/* </div>
-                        <div className="row"> */}
                             <div className="mb-3 col-md-6">
                                 <label htmlFor="designation" className="form-label">Designation</label>
                                 <input 
@@ -354,7 +347,7 @@ const AddUser = () =>{
                                 />
                             </div>
                         </div>
-                        <button className="btn btn-primary">Submit</button>
+                        <button className="btn btn-primary" type="submit" onClick={onSubmit}>Submit</button>
                     </form>
                 </div>
             </div>

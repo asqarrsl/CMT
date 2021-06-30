@@ -3,6 +3,8 @@ import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
 import axios from "axios";
 import Select from "react-select";
 import { getToken } from "../../../Utils/Common";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
 
 const EditMaterial = (props) => {
   var titles = [
@@ -31,8 +33,8 @@ const EditMaterial = (props) => {
   const [useroptions, setUseroptions] = useState([]);
   const [formError, setFormError] = useState(false);
 
-  useEffect(() => {
-    axios.get("http://localhost:3000/event").then((response) => {
+  useEffect(async() => {
+    await axios.get("http://localhost:3000/event").then((response) => {
       //    console.log(response.data);
       let data = [];
       response.data.events.map((item, index) => {
@@ -45,7 +47,7 @@ const EditMaterial = (props) => {
       setEventoptions(data);
     });
 
-    axios.get("http://localhost:3000/users").then((response) => {
+    await axios.get("http://localhost:3000/users").then((response) => {
       let data1 = [];
       response.data.Users.map((item, index) => {
         let user = {
@@ -57,7 +59,7 @@ const EditMaterial = (props) => {
       setUseroptions(data1);
     });
 
-    axios
+    await axios
       .get(`http://localhost:3000/material/${props.match.params.id}`)
       .then((response) => {
         setMaterials(response.data.materials);
@@ -107,7 +109,7 @@ const EditMaterial = (props) => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
     setinit(false);
     const token = getToken();
@@ -125,7 +127,7 @@ const EditMaterial = (props) => {
         status: isApproved,
       };
 
-      axios({
+     await axios({
         method: "put",
         url: `http://localhost:3000/material/${props.match.params.id}`,
         data: material,

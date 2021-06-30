@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Breadcrumb from "../../Components/Breadcrumb/BreadCrumb";
+import Loader from "../../Components/Loader/Loader";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
 
 const EditUser = (props) => {
   var titles = [
@@ -22,6 +25,7 @@ const EditUser = (props) => {
   const [isPaid, setisPaid] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [formError, setFormError] = useState(false);
+  const [loading,setloading] = useState(false);
 
   const [user, setUser] = useState(true);
   const [init, setinit] = useState(true);
@@ -29,8 +33,9 @@ const EditUser = (props) => {
 
   // const { id } = useParams();
 
-  useEffect(() => {
-    axios
+  useEffect(async() => {
+    setloading(true);
+    await axios
       .get(`http://localhost:3000/users/${props.match.params.id}`)
       .then((response) => {
         setUser(response.data.user);
@@ -45,10 +50,12 @@ const EditUser = (props) => {
         setDesignation(response.data.user.participants.designation);
         setAffiliation(response.data.user.participants.affiliation);
         setisPaid(response.data.user.isPaid);
+
       })
       .catch((error) => {
         console.log(error);
       });
+      setloading(false);
   }, []);
 
   const checknull = (value) => {
@@ -103,8 +110,9 @@ const EditUser = (props) => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault();
+    setloading(true);
     setinit(false);
     onValidate();
     if (formValid) {
@@ -121,7 +129,7 @@ const EditUser = (props) => {
         username,
         password,
       };
-      axios
+      await axios
         .put(`http://localhost:3000/users/${props.match.params.id}`, user)
         .then((response) => {
           console.log(response);
@@ -132,24 +140,25 @@ const EditUser = (props) => {
             setFormError(error.response.data.message);
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            // console.log(error.response.data);
-            // console.log(error.response.status);
-            // console.log(error.response.headers);
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
           } else if (error.request) {
             // The request was made but no response was received
             // `error.request` is an instance of XMLHttpRequest in the
             // browser and an instance of
             // http.ClientRequest in node.js
-            // console.log(error.request);
+            console.log(error.request);
           } else {
             // Something happened in setting up the request that triggered an Error
-            // console.log('Error', error.message);
+            console.log('Error', error.message);
           }
-          // console.log(error.config);
+          console.log(error.config);
         });
     } else {
       setError("Invalid");
     }
+    setloading(false);
   };
 
   return (
@@ -160,6 +169,7 @@ const EditUser = (props) => {
         <div className="card-body">
           <h5 className="card-title">Edit User</h5>
           <hr />
+          {loading && <Loader />} 
           {formError && <Error message={formError} />}
           <form onSubmit={onSubmit}>
             <div className="row">

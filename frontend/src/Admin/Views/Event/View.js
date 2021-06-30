@@ -4,6 +4,10 @@ import axios from "axios";
 import Select from "react-select";
 import moment from "moment";
 import { getToken } from "../../../Utils/Common";
+import Loader from "../../Components/Loader/Loader";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
+
 const ViewEvent = (props) => {
   var titles = [
     { name: "Admin", link: "/admin" },
@@ -12,7 +16,7 @@ const ViewEvent = (props) => {
   ];
 
   const [init, setinit] = useState(true);
-
+  const [loading,setloading] = useState(false);
   const [eventName, setEventName] = useState("");
   const [description, setDescription] = useState("");
   const [eventType, setEventType] = useState("");
@@ -29,8 +33,9 @@ const ViewEvent = (props) => {
 
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    axios
+  useEffect(async() => {
+    setloading(true);
+    await axios
       .get(`http://localhost:3000/event/${props.match.params.id}`)
       .then((response) => {
         setEvents(response.data.events);
@@ -48,6 +53,7 @@ const ViewEvent = (props) => {
         );
         setIsApproved(response.data.events.status);
       });
+      setloading(false);
   }, []);
 
   const checknull = (value) => {
@@ -84,7 +90,7 @@ const ViewEvent = (props) => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setinit(false);
     const token = getToken();
@@ -94,7 +100,7 @@ const ViewEvent = (props) => {
         message: reason,
       };
 
-      axios({
+      await axios({
         method: "post",
         url: `http://localhost:3000/event/${props.match.params.id}/approve`,
         data: event,
@@ -126,6 +132,7 @@ const ViewEvent = (props) => {
     } else {
       setError("Invalid");
     }
+    setloading(false);
   };
 
   return (
@@ -136,6 +143,7 @@ const ViewEvent = (props) => {
         <div className="card-body">
           <h5 className="card-title">View Event</h5>
           <hr />
+          {loading && <Loader />} 
           <form method="POST" onSubmit={onSubmit}>
             <div className="row">
               <div className="mb-3 col-md-6">

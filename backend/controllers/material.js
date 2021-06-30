@@ -134,8 +134,9 @@ module.exports.delete = async (req, res) => {
   const { id } = req.params;
   const materials = await Material.findById(id);
   materials.isActive = "0";
+  await materials.save();
   res.status(202).send({
-    message: "Successfully Updated the materials!",
+    message: "Successfully Deleted the materials!",
     materials,
   });
 };
