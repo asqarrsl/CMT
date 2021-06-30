@@ -10,9 +10,10 @@ function MouseOut(event) {
   event.target.style.background = "#FFFFFF";
 }
 
-const SuccessButton = ({ text, onClick, position }) => {
+const SuccessButton = ({ text, onClick, position, type }) => {
   return (
     <button
+      type={type}
       onClick={onClick}
       onMouseOut={MouseOut}
       onMouseOver={MouseOver}

@@ -14,6 +14,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 var cors = require('cors')
+const jwt = require('jsonwebtoken');
 
 const ExpressError = require('./utils/ExpressError');
 const User = require('./models/user');
