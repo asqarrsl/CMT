@@ -100,40 +100,40 @@ const Login = () => {
   };
 
   return (
-    <div class="rootBody">
-      <div class="customCardOne">
-        <div class="card-header">
+    <div className="rootBody">
+      <div className="customCardOne">
+        <div className="card-header">
           <center>
             <h3>Sign In</h3>
           </center>
         </div>
-        <div class="card-body">
+        <div className="card-body">
           <form onSubmit={handleLogin} method="POST">
-            <div class="form-group">
+            <div className="form-group">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Username"
                 style={{ border: "1", borderColor: "#1286C1" }}
                 onChange={(event) => setUsername(event.target.value)}
               />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <input
                 type="password"
-                class="form-control"
+                className="form-control"
                 placeholder="Password"
                 style={{ border: "1", borderColor: "#1286C1" }}
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
-            <div class="form-group">
+            <div className="form-group">
               <SuccessButton text="Login" type="submit" position="center" />
             </div>
           </form>
         </div>
-        <div class="card-footer">
-          <div class="form-group">
+        <div className="card-footer">
+          <div className="form-group">
             <a href="#" style={{ color: "#1286C1", fontSize: "14px" }}>
               Don't have an account? Sign Up
             </a>

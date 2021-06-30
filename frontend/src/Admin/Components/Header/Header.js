@@ -108,24 +108,24 @@ const Header = () => {
             <div>
               <a
                 type="button"
-                class="btn btn-outline-primary"
+                className="btn btn-outline-primary"
                 style={{ marginRight: "10px", borderRadius: "30px" }}
                 href="/userProfile"
               >
-                <i class="fas fa-user-circle"></i>
+                <i className="fas fa-user-circle"></i>
               </a>
               <button
                 className="btn btn-outline-warning"
                 type="submit"
                 onClick={handleLogout}
               >
-                <i class="fas fa-sign-out-alt" /> Logout
+                <i className="fas fa-sign-out-alt" /> Logout
               </button>
             </div>
           ) : (
             <div>
               <a className="btn btn-outline-warning" href="/login">
-                <i class="fas fa-sign-in-alt" /> Login
+                <i className="fas fa-sign-in-alt" /> Login
               </a>
             </div>
           )}
