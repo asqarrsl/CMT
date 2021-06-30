@@ -44,13 +44,12 @@ const EditProfile = (props) => {
   }, []);
 
   const checkNull = (value) => {
-    if (value.trim() == null || value.trim() == "") {
+    if (value == null) {
       return false;
     } else {
       return true;
     }
   };
-
   const checkstring = (value) => {
     if (typeof value != "string") {
       return false;
@@ -103,7 +102,6 @@ const EditProfile = (props) => {
         .then((response) => {
           console.log(response);
           alert("Successfully Inserted");
-          window.location = `/userprofile`;
         })
         .catch((error) => {
           if (error.response) {
@@ -128,6 +126,8 @@ const EditProfile = (props) => {
     } else {
       setError("Invalid");
     }
+
+    window.location = `/userprofile`;
   };
 
   return (

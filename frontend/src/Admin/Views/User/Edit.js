@@ -113,15 +113,11 @@ const EditUser = (props) => {
         mobile,
         role,
         email,
-        reviewer: {
-          specialization,
-        },
-        participants: {
-          type: ptype,
-          designation,
-          affiliation,
-          isPaid,
-        },
+        specialization,
+        participant: ptype,
+        designation,
+        affiliation,
+        isPaid,
         username,
         password,
       };
@@ -130,7 +126,6 @@ const EditUser = (props) => {
         .then((response) => {
           console.log(response);
           alert("Successfully Inserted");
-          window.location = `/admin/user`;
         })
         .catch((error) => {
           if (error.response) {

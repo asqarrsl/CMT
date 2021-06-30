@@ -257,7 +257,7 @@ const WorkshopMgt = () => {
             <input
               type="text"
               id="eventName"
-              class="form-control"
+              className="form-control"
               placeholder="Workshop name"
               onChange={(event) => setEventName(event.target.value)}
               required
@@ -267,7 +267,7 @@ const WorkshopMgt = () => {
             <input
               type="text"
               id="eventVenue"
-              class="form-control"
+              className="form-control"
               placeholder="Venue link"
               onChange={(event) => setVenue(event.target.value)}
               required
@@ -277,14 +277,14 @@ const WorkshopMgt = () => {
             <textarea
               type="text"
               id="eventDescription"
-              class="form-control"
+              className="form-control"
               placeholder="Workshop description"
               onChange={(event) => setDescription(event.target.value)}
               required
             />
           </div>
         </div>
-        <label for="from" class="addFile">
+        <label for="from" className="addFile">
           Date and duration
         </label>
         <div className="row">
@@ -310,7 +310,7 @@ const WorkshopMgt = () => {
           </div>
         </div>
         <div style={{ marginBottom: "10px" }} />
-        <label for="wsCover" class="addFile">
+        <label for="wsCover" className="addFile">
           Submit Workshop cover photo below
         </label>
         <input
@@ -338,7 +338,7 @@ const WorkshopMgt = () => {
             <input
               type="text"
               id="materialName"
-              class="form-control"
+              className="form-control"
               placeholder="Material name"
               onChange={(event) => setName(event.target.value)}
               required
@@ -348,7 +348,7 @@ const WorkshopMgt = () => {
             <input
               type="text"
               id="tags"
-              class="form-control"
+              className="form-control"
               placeholder="Tags"
               onChange={(event) => setTags(event.target.value)}
               required
@@ -358,14 +358,14 @@ const WorkshopMgt = () => {
             <textarea
               type="text"
               id="descrip"
-              class="form-control"
+              className="form-control"
               placeholder="Material description"
               onChange={(event) => setDescrip(event.target.value)}
               required
             />
           </div>
         </div>
-        <label for="materialCover" class="addFile">
+        <label for="materialCover" className="addFile">
           Presentation cover photo below
         </label>
         <input
@@ -381,7 +381,7 @@ const WorkshopMgt = () => {
           required
         />
 
-        <label for="presentation" class="addFile">
+        <label for="presentation" className="addFile">
           Submit Presentation below
         </label>
         <input
@@ -405,8 +405,8 @@ const WorkshopMgt = () => {
   );
 
   return (
-    <div class="rootBody">
-      <div class="workshopForm">
+    <div className="rootBody">
+      <div className="workshopForm">
         <h4
           style={{
             fontWeight: "bold",
@@ -416,21 +416,21 @@ const WorkshopMgt = () => {
         >
           Workshop
         </h4>
-        <div class="workshopFormInput">
-          <div id="stepper1" class="bs-stepper">
-            <div class="bs-stepper-header">
+        <div className="workshopFormInput">
+          <div id="stepper1" className="bs-stepper">
+            <div className="bs-stepper-header">
               {step == 0 ? (
                 <Step title="Event Data" dis="false" />
               ) : (
                 <Step title="Event Data" dis="true" />
               )}
-              <div class="line"></div>
+              <div className="line"></div>
               {step == 1 ? (
                 <Step title="Material Data" dis="false" />
               ) : (
                 <Step title="Material Data" dis="true" />
               )}
-              <div class="line"></div>
+              <div className="line"></div>
               {step == 2 ? (
                 <Step title="Confirmation" dis="false" />
               ) : (
