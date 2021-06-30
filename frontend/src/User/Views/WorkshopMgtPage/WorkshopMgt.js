@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import Step from "../../Components/Stepper/step";
@@ -6,7 +6,7 @@ import DatetimeRangePicker from "react-datetime-range-picker";
 import axios from "axios";
 import moment from "moment";
 const WorkshopMgt = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const [presenterId, setPresenterId] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [formError, setFormError] = useState(false);
@@ -24,6 +24,8 @@ const WorkshopMgt = () => {
   const [To, setTo] = useState("");
   const [isApproved, setIsApproved] = useState("");
 
+
+  const form = useRef(null)
   const [uid, setUid] = useState();
   const [name, setName] = useState();
   const [tags, setTags] = useState();
@@ -134,16 +136,16 @@ const WorkshopMgt = () => {
         .catch((error) => {
           if (error.response) {
             setFormError(error.response.data.message);
-            // console.log(error.response.data);
-            // console.log(error.response.status);
-            // console.log(error.response.headers);
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
           } else if (error.request) {
-            // console.log(error.request);
-            // console.log(error.request);
+            console.log(error.request);
+            console.log(error.request);
           } else {
-            // console.log("Error", error.message);
+            console.log("Error", error.message);
           }
-          // console.log(error.config);
+          console.log(error.config);
         });
     } else {
       setError("Invalid");
@@ -195,12 +197,13 @@ const WorkshopMgt = () => {
         isPaid,
         status: isApproved,
       };
+      const data = new FormData(form.current)
       // console.log(material);
-      axios
-        .post("http://localhost:3000/material", material)
-        .then((response) => {
-          // console.log(response);
-          alert("Successfully Inserted");
+      axios({
+        method: "post",
+        url: "http://localhost:3000/material",
+        data: data,
+        headers: { "Content-Type": "multipart/form-data" },
         })
         .catch((error) => {
           if (error.response) {
@@ -332,7 +335,7 @@ const WorkshopMgt = () => {
 
   const MaterialData = (
     <div>
-      <form onSubmit={submitMaterial} method="POST">
+      <form ref={form} onSubmit={submitMaterial} method="POST">
         <div className="row">
           <div className="mb-3 col-md-12">
             <input
@@ -365,12 +368,13 @@ const WorkshopMgt = () => {
             />
           </div>
         </div>
-        <label for="materialCover" className="addFile">
+        <label for="image" className="addFile">
           Presentation cover photo below
         </label>
         <input
           type="file"
-          id="materialCover"
+          name="image"
+          id="image"
           className="form-control"
           style={{
             maxWidth: "400px",
@@ -381,12 +385,13 @@ const WorkshopMgt = () => {
           required
         />
 
-        <label for="presentation" className="addFile">
+        <label for="document" className="addFile">
           Submit Presentation below
         </label>
         <input
           type="file"
-          id="presentation"
+          name="document"
+          id="document"
           className="form-control"
           style={{
             maxWidth: "400px",
