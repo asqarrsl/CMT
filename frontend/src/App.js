@@ -21,6 +21,7 @@ import EditMaterial from "./Admin/Views/Material/Edit";
 import AddMaterial from "./Admin/Views/Material/Add";
 import MaterialIndex from "./Admin/Views/Material";
 import Login from "./User/Views/LoginPage/Login";
+
 import Events from "./User/Components/Events/events";
 import Papers from "./User/Components/Papers/papers";
 import EventDetails from "./User/Components/Events/eventDetails";
