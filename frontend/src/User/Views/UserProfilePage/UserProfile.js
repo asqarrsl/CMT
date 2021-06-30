@@ -1,15 +1,30 @@
-import React, { useState } from "react";
-// import "../../../App.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "../../../App.css";
 import About from "./About";
 import Inbox from "./Inbox";
-const UserProfile = () => {
+import { getUserId } from "../../../Utils/Common";
+const UserProfile = (props) => {
   const [togBtn, setTogBtn] = useState("about");
+  const [users, setUsers] = useState([]);
+  const [user_id, setUser_ID] = useState();
+  useEffect(() => {
+    setUser_ID(getUserId());
+    console.log(user_id);
+    axios.get(`http://localhost:3000/users/${user_id}`).then((response) => {
+      setUsers(response.data.Users);
+      console.log(users);
+    });
+  }, []);
 
-  const aboutUser = [
-    { id: "1", title: "userID", info: "UID1" },
-    { id: "2", title: "Name", info: "User1" },
+  const userDetails = [
+    { id: "0", title: "Name", info: users.name },
+    { id: "1", title: "Email", info: users.email },
+    { id: "2", title: "Mobile", info: users.mobile },
+    { id: "3", title: "Designation", info: users.designation },
+    { id: "4", title: "Affiliation", info: users.affiliation },
   ];
+
   return (
     <div>
       <div class="container profile">
@@ -75,7 +90,7 @@ const UserProfile = () => {
               style={{ backgroundColor: "#FFFFFF", minHeight: "200px" }}
             >
               <div class="tab-content inbox-tab" id="myTabContent">
-                {togBtn == "about" && <About about={aboutUser} />}
+                {togBtn == "about" && <About about={userDetails} />}
                 {togBtn == "inbox" && <Inbox />}
               </div>
             </div>

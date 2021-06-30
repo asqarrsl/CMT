@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import "../../../App.css";
 import SuccessButton from "../../Components/Button/SuccessButton";
 import axios from "axios";
-import { setUserSession } from '../../../Utils/Common';
+import { setUserSession } from "../../../Utils/Common";
 const check = () => {
   console.log("hi");
 };
 
 const Login = () => {
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -60,27 +59,23 @@ const Login = () => {
           // localStorage.setItem('user_id',response.data.user.role);
 
           if (response.data.role == "Participants") {
-            props.history.push('/');
-            // window.location = `/`;
+            window.location = `/`;
           } else if (response.data.role == "Admin") {
-            props.history.push('/admin');
-            // window.location = `/admin`;
+            window.location = `/admin`;
           } else if (response.data.role == "Reviewer") {
-            props.history.push('/reviewer');
-            // window.location = `/reviewer`;
+            window.location = `/reviewer`;
           } else if (response.data.role == "Editor") {
-            props.history.push('/editor');
-            // window.location = `/editor`;
+            window.location = `/editor`;
           } else {
-            props.history.push('/');
-            // window.location = `/`;
+            window.location = `/`;
           }
         })
         .catch((error) => {
           if (error.response) {
             // setFormError(error.response.data.message);
             setLoading(false);
-            if (error.response.status === 401) setError(error.response.data.message);
+            if (error.response.status === 401)
+              setError(error.response.data.message);
             else setFormError("Something went wrong. Please try again later.");
 
             // console.log(error);
