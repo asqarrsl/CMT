@@ -23,11 +23,9 @@ import MaterialIndex from "./Admin/Views/Material";
 import Login from "./User/Views/LoginPage/Login";
 
 import Events from "./User/Components/Events/events";
-import Papers from "./User/Components/Papers/papers";
+
 import EventDetails from "./User/Components/Events/eventDetails";
-import PaperDetails from "./User/Components/Papers/paperDetails";
-import Test from "./User/Components/Test/Test";
-import researchPapers from "./User/Components/Papers/ressearchPapers";
+
 import eventMaterials from "./User/Components/Events/eventMaterials";
 
 import Register from "./User/Views/RegisterPage/Register";
@@ -47,6 +45,8 @@ import {
   setUserSession,
 } from "./Utils/Common";
 import axios from "axios";
+import MaterialDetails from "./User/Components/Materials/materialDetails";
+import Materials from "./User/Components/Materials/materials";
 const App = (props) => {
   const [authLoading, setAuthLoading] = useState(true);
 
@@ -196,11 +196,10 @@ const App = (props) => {
 
                 <PrivateRoute path="/workshopMgt" component={WorkshopMgt} />
                 <Route path="/events" component={Events} />
-                <Route path="/papers" component={Papers} />
-                <Route path="/event_details" component={EventDetails} />
+                <Route path="/materials" component={Materials} />
+                <Route path="/event_details/:id" component={EventDetails} />
                 <Route path="/event_materials" component={eventMaterials} />
-                <Route path="/paper_details" component={PaperDetails} />
-                <Route path="/research_papers" component={researchPapers} />
+                <Route path="/material_details/:id" component={MaterialDetails} />
               </Switch>
             </Main>
           </Route>
