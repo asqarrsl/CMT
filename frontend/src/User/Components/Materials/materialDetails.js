@@ -45,6 +45,7 @@ const MaterialDetails = (props) => {
               <label>Description : {description} </label>
             </div>
             <br></br>
+            <div className="col-md-6">
             </div>
             <div className="col-md-6">
               <form method="get" action="/:id" download>
@@ -55,7 +56,6 @@ const MaterialDetails = (props) => {
         </div>
       </div>
     </div>
-
   );
 };
 
