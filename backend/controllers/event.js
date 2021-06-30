@@ -1,6 +1,5 @@
 const Event = require('../models/event');
 const Notification = require('../models/notification');
-const {cloudinary} = require('../cloudinary')
 
 module.exports.index = async (req,res)=>{
     const events = await Event.find({isActive:'1'});
@@ -39,7 +38,7 @@ module.exports.show = async (req,res)=>{
 module.exports.update = async (req,res)=>{
 
     const {id} = req.params
-    console.log(req.body);
+    // console.log(req.body);
     const events = await Event.findByIdAndUpdate(id, {...req.body});
     const mainImg = req.files.map(f=>({url:f.path,filename:f.filename}))
     events.editorId = req.user._id;
@@ -56,21 +55,22 @@ module.exports.update = async (req,res)=>{
 
 module.exports.approve = async (req,res)=>{
     const {id} = req.params
-    console.log(req.body);
+    // console.log(req.body);
     const events = await Event.findByIdAndUpdate(id, {...req.body});
     await events.save();
-    const notify_message ={
-      'UID':events.presenterId,
-      'Status':events.status,
-      'Description':events.message,
-      'Message':'Event Approval'
-    }
-    const notification = new Notification(notify_message);
+  
+    UID= (events.presenterId) ?events.presenterId : "60dbc9df0e6bd92ee81ae0e1",
+    Status=events.status,
+    Description=events.message,
+    Message='Event Approval'
+
+    const notification = new Notification({UID,Status,Description,Message});
     await notification.save();
+    console.log(notification);
     res
       .status(202)
       .send({
-          message:"Successfully Updated the events!",
+          message:"Successfully Approved the events!",
           events
         });
 }
@@ -82,20 +82,21 @@ module.exports.deleteRequest = async (req,res)=>{
     res
       .status(202)
       .send({
-          message:"Successfully Updated the events!",
+          message:"Successfully Requested to Deleted the events!",
           events
         });
 }
 
 module.exports.delete = async (req,res)=>{
-  console.log(req);
+  // console.log(req);
     const {id} = req.params    
     const events = await Event.findById(id);
     events.isActive = 0;
+    await events.save();
     res
       .status(202)
       .send({
-          message:"Successfully Updated the events!",
+          message:"Successfully Deleted the events!",
           events
         });
 }

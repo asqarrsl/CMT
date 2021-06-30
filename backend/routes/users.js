@@ -7,7 +7,6 @@ const catchAsync = require("../utils/catchAsync");
 router.route("/").get(catchAsync(userController.index));
 
 router.route("/register").post(catchAsync(userController.register));
-// .post(catchAsync(userController.register));
 
 router
   .route("/login")
@@ -28,6 +27,5 @@ router
   .get(catchAsync(userController.show))
   .put(catchAsync(userController.update));
 
-// router.get("/logout", userController.logout);
 
 module.exports = router;

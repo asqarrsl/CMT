@@ -1,15 +1,24 @@
-import React from "react";
+import React,{useState} from "react";
 import axios from "axios";
-const DeleteModals = ({ data }) => {
+import { getToken } from "../../../Utils/Common";
+import "core-js/stable";
+import "regenerator-runtime/runtime"
 
+const DeleteModals = ({ data }) => {
   var deletemodalid = (obj) => {
     return `deleteModal${obj}`;
   };
-
-  const onDeleteHandle = (obj) =>{
-    axios.delete(`http://localhost:3000/material/${obj}`)
+  const onDeleteHandle = async(e,obj) =>{
+    e.preventDefault();
+    const token = getToken();
+   await axios({
+      method: "delete",
+      url: `http://localhost:3000/material/${obj}`,
+      headers: { authorization: token },
+    })
     .then(response=>{
       console.log(response);
+      location.reload();
     })
     .catch(err=>{
       console.log(err);
@@ -48,7 +57,7 @@ const DeleteModals = ({ data }) => {
                 >
                   Close
                 </button>
-                <button type="button" onClick={onDeleteHandle(material._id)} className="btn btn-danger">
+                <button type="button" onClick={e=>{onDeleteHandle(e,material._id)}} className="btn btn-danger">
                   Confirm
                 </button>
               </div>

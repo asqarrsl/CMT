@@ -14,4 +14,4 @@ const NotificationSchema = new Schema ({
     timestamps: true
 });
 
-module.exports = mongoose.model('Payment',NotificationSchema);
+module.exports = mongoose.model('Notification',NotificationSchema);

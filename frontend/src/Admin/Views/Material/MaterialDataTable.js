@@ -18,10 +18,10 @@ const MaterialDataTable = ({ data }) => {
       {data.map((material, i) => (
         <tr key={i}>
           <th scope="row">{i + 1}</th>
-          <td>{material.name}</td>
-          <td>{material.type}</td>
-          <td>{material.eventId.eventName}</td>
-          <td>{material.uid.name}</td>
+          <td>{(material.name)?material.name:''}</td>
+          <td>{(material.type)?material.type:''}</td>
+          <td>{(material.eventId)?material.eventId.eventName:''}</td>
+          <td>{(material.uid)?material.uid.name:''}</td>
           <td>
             <a href={viewUrl(material._id)} className="me-3">
               <i className="far fa-eye"></i>
@@ -32,7 +32,7 @@ const MaterialDataTable = ({ data }) => {
             <a
               href="#"
               data-bs-toggle="modal"
-              data-bs-target={deletemodal(user._id)}
+              data-bs-target={deletemodal(material._id)}
             >
               <i className="far fa-trash-alt"></i>
             </a>

@@ -6,7 +6,6 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const passport = require('passport');
 const localStratergy = require('passport-local');
@@ -21,8 +20,6 @@ const User = require('./models/user');
 const userRoutes = require('./routes/users'); 
 const materialRoutes = require('./routes/material'); 
 const eventRoutes = require('./routes/event'); 
-const campgroundsRoutes = require('./routes/campground'); 
-const reviewsRoutes = require('./routes/reviews'); 
 
 const dbUrl = process.env.DB_URL;
 
@@ -54,6 +51,7 @@ app.use(cors())
 app.use(mongoSanitize({
     replaceWith: '_'
 }));
+
 const secret = process.env.SECRET||'testsectret';
 
 const store = new MongoStore({
@@ -80,7 +78,6 @@ const sessionConfig = {
     }
 }
 app.use(session(sessionConfig));
-// app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -106,8 +103,6 @@ app.get('/',(req,res)=>{
 app.use('/users',userRoutes);
 app.use('/material',materialRoutes);
 app.use('/event',eventRoutes);
-app.use('/campgrounds',campgroundsRoutes);
-app.use('/campgrounds/:id/reviews',reviewsRoutes);
 
 app.all('*',(req,res,next)=>{
     next(new ExpressError('Page Not Found',404));

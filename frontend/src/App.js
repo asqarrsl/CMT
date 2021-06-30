@@ -23,22 +23,20 @@ import MaterialIndex from "./Admin/Views/Material";
 import Login from "./User/Views/LoginPage/Login";
 
 import Events from "./User/Components/Events/events";
-import Papers from "./User/Components/Papers/papers";
+
 import EventDetails from "./User/Components/Events/eventDetails";
-import PaperDetails from "./User/Components/Papers/paperDetails";
-import Test from "./User/Components/Test/Test";
-import researchPapers from "./User/Components/Papers/ressearchPapers";
-import conference from "./User/Components/Events/conference";
+
 import eventMaterials from "./User/Components/Events/eventMaterials";
 
 import Register from "./User/Views/RegisterPage/Register";
 import UserProfile from "./User/Views/UserProfilePage/UserProfile";
+import EditProfile from "./User/Views/UserProfilePage/EditProfile";
 import ViewEvent from "./Admin/Views/Event/View";
 import ViewMaterial from "./Admin/Views/Material/View";
 import WorkshopMgt from "./User/Views/WorkshopMgtPage/WorkshopMgt";
-
 import PrivateRoute from "./Utils/PrivateRoute";
 import PublicRoute from "./Utils/PublicRoute";
+
 import {
   getRole,
   getToken,
@@ -47,12 +45,14 @@ import {
   setUserSession,
 } from "./Utils/Common";
 import axios from "axios";
+import MaterialDetails from "./User/Components/Materials/materialDetails";
+import Materials from "./User/Components/Materials/materials";
 const App = (props) => {
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const token = getToken();
-    console.log(token);
+    // console.log(token);
     if (!token) {
       return;
     }
@@ -60,7 +60,7 @@ const App = (props) => {
     axios
       .get(`http://localhost:3000/users/verify?token=${token}`)
       .then((response) => {
-        setUserSession(response.data.token, response.data.user);
+        setUserSession(response.data.token, response.data.username, response.data.role,  response.data.id);
         setAuthLoading(false);
       })
       .catch((error) => {
@@ -192,14 +192,14 @@ const App = (props) => {
                 <PublicRoute path="/login" component={Login} />
                 <PublicRoute path="/register" component={Register} />
                 <PrivateRoute path="/userprofile" component={UserProfile} />
+                <Route path="/editprofile/:id" exact component={EditProfile} />
+
                 <PrivateRoute path="/workshopMgt" component={WorkshopMgt} />
                 <Route path="/events" component={Events} />
-                <Route path="/papers" component={Papers} />
-                <Route path="/event_details" component={EventDetails} />
-                <Route path="/conference" component={conference} />
+                <Route path="/materials" component={Materials} />
+                <Route path="/event_details/:id" component={EventDetails} />
                 <Route path="/event_materials" component={eventMaterials} />
-                <Route path="/paper_details" component={PaperDetails} />
-                <Route path="/research_papers" component={researchPapers} />
+                <PrivateRoute path="/material_details/:id" component={MaterialDetails} />
               </Switch>
             </Main>
           </Route>

@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer'
 
 export default ({children}) => {
 
-    console.log('render Main Admin')
+    // console.log('render Main Admin')
 
     return (
         <>

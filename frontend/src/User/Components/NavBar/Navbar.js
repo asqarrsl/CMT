@@ -36,24 +36,31 @@ const NavBar = () => {
           <div>
             <a
               type="button"
-              className="btn btn-outline-primary"
+              class="btn btn-outline-primary"
               style={{ marginRight: "10px", borderRadius: "30px" }}
               href="/userProfile"
             >
-              <i className="fas fa-user-circle"></i>
+              <i class="fas fa-user-circle"></i>
             </a>
             <button
               className="btn btn-outline-warning"
               type="submit"
               onClick={handleLogout}
             >
-              <i className="fas fa-sign-out-alt" /> Logout
+              <i class="fas fa-sign-out-alt" /> Logout
             </button>
           </div>
         ) : (
           <div>
-            <a className="btn btn-outline-warning" href="/login">
+            <a
+              className="btn btn-outline-warning"
+              href="/login"
+              style={{ marginRight: "10px" }}
+            >
               <i className="fas fa-sign-in-alt" /> Login
+            </a>
+            <a className="btn btn-outline-warning" href="/register">
+              <i className="fas fa-user-plus" /> Register
             </a>
           </div>
         )}
@@ -85,43 +92,7 @@ const NavBar = () => {
                 Home
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-            </li>
+
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -140,7 +111,7 @@ const NavBar = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/conference">
+                  <a className="dropdown-item" href="/events">
                     conferences
                   </a>
                 </li>
@@ -155,16 +126,16 @@ const NavBar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Papers
+                Materials
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="/papers">
+                  <a className="dropdown-item" href="/materials">
                     Workshop Papers
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/research_papers">
+                  <a className="dropdown-item" href="/materials">
                     Research Papers
                   </a>
                 </li>
@@ -180,6 +151,5 @@ const NavBar = () => {
     </nav>
   );
 };
-
 
 export default NavBar;
