@@ -28,7 +28,6 @@ import EventDetails from "./User/Components/Events/eventDetails";
 import PaperDetails from "./User/Components/Papers/paperDetails";
 import Test from "./User/Components/Test/Test";
 import researchPapers from "./User/Components/Papers/ressearchPapers";
-import conference from "./User/Components/Events/conference";
 import eventMaterials from "./User/Components/Events/eventMaterials";
 
 import Register from "./User/Views/RegisterPage/Register";
@@ -199,7 +198,6 @@ const App = (props) => {
                 <Route path="/events" component={Events} />
                 <Route path="/papers" component={Papers} />
                 <Route path="/event_details" component={EventDetails} />
-                <Route path="/conference" component={conference} />
                 <Route path="/event_materials" component={eventMaterials} />
                 <Route path="/paper_details" component={PaperDetails} />
                 <Route path="/research_papers" component={researchPapers} />

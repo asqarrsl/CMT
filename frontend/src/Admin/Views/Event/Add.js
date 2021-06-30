@@ -32,31 +32,17 @@ const AddEvent = () => {
       return true;
     }
   };
-};
-const checkstring = (value) => {
-  if (typeof value != "string") {
-    return false;
+  const checkstring = (value) => {
+    if (typeof value != "string") {
+      return false;
+    }
+  };
+  function validateEmail(value) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(value).toLowerCase());
   }
-};
-function validateEmail(value) {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(value).toLowerCase());
-}
-const onValidate = () => {
-  if (
-    checknull(eventName) &&
-    checknull(description) &&
-    checknull(eventType) &&
-    checknull(venue) &&
-    checknull(mainImg) &&
-    checknull(From) &&
-    checknull(To)
-  ) {
-    setFormValid(true);
-  } else {
-    setFormValid(false);
-  }
+
   const onValidate = () => {
     if (
       checknull(eventName) &&
@@ -77,18 +63,18 @@ const onValidate = () => {
     onValidate();
     // if(1){
     if (formValid) {
-      let event = {
-        eventName,
-        description,
-        eventType,
-        venue,
-        image: mainImg,
-        duration: {
-          From,
-          To,
-        },
-        status: isApproved,
-      };
+      // let event = {
+      //   eventName,
+      //   description,
+      //   eventType,
+      //   venue,
+      //   image: mainImg,
+      //   duration: {
+      //     From,
+      //     To,
+      //   },
+      //   status: isApproved,
+      // };
       // var date = new Date(Date);
       // console.log(event);
       const data = new FormData(form.current);
@@ -97,7 +83,10 @@ const onValidate = () => {
         method: "post",
         url: "http://localhost:3000/event",
         data: data,
-        headers: { "Content-Type": "multipart/form-data", authorization:  getToken()},
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: getToken(),
+        },
       })
         // axios.post('http://localhost:3000/event',event)
         .then((response) => {
