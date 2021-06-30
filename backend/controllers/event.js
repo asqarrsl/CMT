@@ -88,6 +88,7 @@ module.exports.deleteRequest = async (req,res)=>{
 }
 
 module.exports.delete = async (req,res)=>{
+  console.log(req);
     const {id} = req.params    
     const events = await Event.findById(id);
     events.isActive = 0;

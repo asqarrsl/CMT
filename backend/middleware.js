@@ -3,10 +3,9 @@ const {reviewSchema,campgroundSchema} = require('./Schemas.js');
 const Campground = require('./models/campground');
 const Review = require('./models/reviews');
 module.exports.isLoggedIn = (req,res,next)=>{
+    console.log(req.isAuthenticated());
     if(!req.isAuthenticated()){
-        req.session.returnTo = req.originalUrl
-        req.flash('error',"You Must Login First");
-        return res.redirect('/login');
+        req.status(401).send('error',"You Must Login First");
     }
     next();
 }

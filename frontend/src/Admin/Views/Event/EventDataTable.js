@@ -25,7 +25,7 @@ const EventDataTable = ({ data }) => {
           <td>{event.duration && event.duration.To}</td>
           <td>
             <a href={viewUrl(event._id)} className="me-3">
-              <i class="far fa-eye"></i>
+              <i className="far fa-eye"></i>
             </a>
             <a href={editUrl(event._id)} className="me-3">
               <i className="fas fa-pen"></i>
@@ -33,7 +33,7 @@ const EventDataTable = ({ data }) => {
             <a
               href="#"
               data-bs-toggle="modal"
-              data-bs-target={deletemodal(user._id)}
+              data-bs-target={deletemodal(event._id)}
             >
               <i className="far fa-trash-alt"></i>
             </a>

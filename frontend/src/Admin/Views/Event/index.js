@@ -51,7 +51,7 @@ const EventIndex = () =>{
                 </thead>
                 <EventDataTable data={events} />
             </table>
-            <DeleteModals data={materials} />
+            <DeleteModals data={events} />
         </>
     );
 
